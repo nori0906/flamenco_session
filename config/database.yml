@@ -82,5 +82,5 @@ test:
 production:
   <<: *default
   database: flamenco_session_production
-  username: flamenco_session
+  username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['FLAMENCO_SESSION_DATABASE_PASSWORD'] %>
