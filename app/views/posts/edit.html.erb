@@ -1,0 +1,30 @@
+<h1>posts#edit</h1>
+
+<div>
+  <%= link_to "一覧へ", posts_path %>
+</div>
+
+<br>
+
+
+<div>
+  <p>投稿フォーム</p>
+  <%= form_with model: @post, local: true do |f| %>
+
+    
+    <div>
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </div>
+
+    <div>
+      <%= f.label :body %>
+      <%= f.text_area :body %>
+    </div>
+
+    <div>
+      <%= f.submit %>
+    </div>
+
+  <% end %>
+</div>

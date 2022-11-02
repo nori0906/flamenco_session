@@ -10,8 +10,18 @@
   </div>
 </div>
 
-<div>
-  <%= link_to "一覧へ", posts_path %>
+<br>
+
+<div class="collaborative-record">
+  <p>同時録音</p>
+  <div>
+    <button type="button" id="collaboButtonStart">Start</button>
+    <button type="button" id="collaboButtonStop" disabled>Stop</button>
+  </div>
+  <div>
+    <%#= audio_tag( "tempfile.webm", controls: true, id: "collaboPlayer") %>
+  </div>
 </div>
+
 
 <%= javascript_pack_tag 'main' %>

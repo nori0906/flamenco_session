@@ -1,25 +1,25 @@
-<h1>How to record audio using the MediaStream Recording API in JavaScript</h1>
-<div class="record">
-  <div>
-    <p>単体録音</p>
-    <button type="button" id="buttonStart">Start</button>
-    <button type="button" id="buttonStop" disabled>Stop</button>
-  </div>
-  <div>
-    <audio controls id="player"></audio>
-  </div>
+<h1>posts#index</h1>
+
+<div>
+  <%= link_to "新規作成", new_post_path %>
+
 </div>
 
-<br>
+<div>
+  <p>投稿一覧</p>
+  <% @posts.each do |p| %>
+    <p>タイトル</p>
+    <span><%= p.title %></span>
+    <span><%= p.body %></span>
+    <p>内容</p>
+    
+  <% end %>
+</div>
 
-<div class="collaborative-record">
-  <p>同時録音</p>
+<div class="record">
   <div>
-    <button type="button" id="collaboButtonStart">Start</button>
-    <button type="button" id="collaboButtonStop" disabled>Stop</button>
-  </div>
-  <div>
-    <%= audio_tag( "tempfile.webm", controls: true, id: "collaboPlayer") %>
+    <%# <p>音声一覧</p> %>
+    <%#= audio_tag( "tempfile.webm", controls: true) %>
   </div>
 </div>
 

@@ -45,7 +45,7 @@ async function main () {
       
       axios({
         method: 'post',
-        url: 'http://localhost:3000/blob',
+        url: 'http://localhost:3000/posts.js',
         data: {
           voice: base64
         },
@@ -59,46 +59,46 @@ async function main () {
   
   
   // コラボ用の録音機能
-  const collaboButtonStart = document.querySelector('#collaboButtonStart')
-  const collaboButtonStop = document.querySelector('#collaboButtonStop')
-  const collaboPlayer = document.querySelector("#collaboPlayer");
+  // const collaboButtonStart = document.querySelector('#collaboButtonStart')
+  // const collaboButtonStop = document.querySelector('#collaboButtonStop')
+  // const collaboPlayer = document.querySelector("#collaboPlayer");
   
   
-  collaboButtonStart.addEventListener('click', () => {
-    collaboPlayer.play()
-    mediaRecorder.start() // <4>
-    collaboButtonStart.setAttribute('disabled', '')
-    collaboButtonStop.removeAttribute('disabled')
-  })
+  // collaboButtonStart.addEventListener('click', () => {
+  //   collaboPlayer.play()
+  //   mediaRecorder.start() // <4>
+  //   collaboButtonStart.setAttribute('disabled', '')
+  //   collaboButtonStop.removeAttribute('disabled')
+  // })
   
-  collaboButtonStop.addEventListener('click', () => {
-    mediaRecorder.stop() // <5>
-    collaboButtonStart.removeAttribute('disabled')
-    collaboButtonStop.setAttribute('disabled', '')
-  })
+  // collaboButtonStop.addEventListener('click', () => {
+  //   mediaRecorder.stop() // <5>
+  //   collaboButtonStart.removeAttribute('disabled')
+  //   collaboButtonStop.setAttribute('disabled', '')
+  // })
   
-  mediaRecorder.addEventListener('dataavailable', event => { // <6>
-    collaboPlayer.src = URL.createObjectURL(event.data) //ブラウザのプレイヤーにセットするため
+  // mediaRecorder.addEventListener('dataavailable', event => { // <6>
+  //   collaboPlayer.src = URL.createObjectURL(event.data) //ブラウザのプレイヤーにセットするため
     
-    //base64形式に変換しサーバーに送る処理
-    let reader = new FileReader(); 
-    reader.readAsDataURL(event.data);
-    reader.onloadend = () => {
-      base64 = reader.result; 
-      base64 = base64.split(',')[1];
-      console.log(base64);
+  //   //base64形式に変換しサーバーに送る処理
+  //   let reader = new FileReader(); 
+  //   reader.readAsDataURL(event.data);
+  //   reader.onloadend = () => {
+  //     base64 = reader.result; 
+  //     base64 = base64.split(',')[1];
+  //     console.log(base64);
       
-      axios({
-        method: 'post',
-        url: 'http://localhost:3000/blob',
-        data: {
-          voice: base64
-        },
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        }
-      });
-    }
-  })
+  //     axios({
+  //       method: 'post',
+  //       url: 'http://localhost:3000/blob',
+  //       data: {
+  //         voice: base64
+  //       },
+  //       headers: {
+  //         'X-Requested-With': 'XMLHttpRequest',
+  //         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+  //       }
+  //     });
+  //   }
+  // })
 }
