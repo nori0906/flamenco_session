@@ -2,17 +2,12 @@ class PostsController < ApplicationController
   
   def index
     @posts = Post.all
+    @post = Post.find(40)
   end
 
   def new
     @post = Post.new
   end
-
-  # def create
-  #   @post = Post.new(post_params)
-  #   @post.save!
-  #   redirect_to posts_path, notice: "投稿しました"
-  # end
 
   def create
     voice_data = voice_params[:voice]
@@ -21,16 +16,16 @@ class PostsController < ApplicationController
       f.write(Base64.decode64(voice_data))
     end
 
-    post = Post.new(title: "sample1")
+    post = Post.new(title: "")
     post.voice.attach(io: File.open("tempfile.webm"), filename: "newfile.webm")
-    post.save
-    File.delete("tempfile.webm")
-    # render 'create'
-    respond_to do |format|
-      format.html { binding.pry }
-      format.json { binding.pry }
-      format.js { "create.js.erb" }
+    if post.save
+      File.delete("tempfile.webm")
+      render json: { id: post.id }
     end
+  end
+
+  def show
+    redirect_to edit_post_path(params[:id])
   end
 
   def edit

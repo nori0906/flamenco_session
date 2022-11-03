@@ -4,20 +4,20 @@ async function main () {
   const buttonStart = document.querySelector('#buttonStart')
   const buttonStop = document.querySelector('#buttonStop')
   const player = document.querySelector('#player')
-
+  
   const stream = await navigator.mediaDevices.getUserMedia({ // <1>
     video: false,
     audio: true,
   })
-
+  
   if (!MediaRecorder.isTypeSupported('audio/webm')) { // <2>
     console.warn('audio/webm is not supported')
   }
-
+  
   const mediaRecorder = new MediaRecorder(stream, { // <3>
     mimeType: 'audio/webm',
   })
-
+  
   buttonStart.addEventListener('click', () => {
     mediaRecorder.start() // <4>
     buttonStart.setAttribute('disabled', '')
@@ -29,7 +29,6 @@ async function main () {
     buttonStart.removeAttribute('disabled')
     buttonStop.setAttribute('disabled', '')
   })
-  
   
   
   mediaRecorder.addEventListener('dataavailable', event => { // <6>
@@ -45,7 +44,7 @@ async function main () {
       
       axios({
         method: 'post',
-        url: 'http://localhost:3000/posts.js',
+        url: 'http://localhost:3000/posts',
         data: {
           voice: base64
         },
@@ -53,6 +52,13 @@ async function main () {
           'X-Requested-With': 'XMLHttpRequest',
           'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
+      })
+      // 追加
+      .then(function (response) {
+        console.log(window.location.href = '/posts/' + response.data.id);
+      })
+      .catch(function (error) {
+        console.log("error");
       });
     }
   })
@@ -87,7 +93,7 @@ async function main () {
   //     base64 = reader.result; 
   //     base64 = base64.split(',')[1];
   //     console.log(base64);
-      
+
   //     axios({
   //       method: 'post',
   //       url: 'http://localhost:3000/blob',

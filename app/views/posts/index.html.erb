@@ -2,26 +2,19 @@
 
 <div>
   <%= link_to "新規作成", new_post_path %>
-
 </div>
 
 <div>
   <p>投稿一覧</p>
-  <% @posts.each do |p| %>
-    <p>タイトル</p>
-    <span><%= p.title %></span>
-    <span><%= p.body %></span>
-    <p>内容</p>
-    
+  <% @posts.each do |post| %>
+    <p>
+      <%= post.title %>
+      <%= post.body %>
+      <% if post.voice.attached? %>
+        <%= audio_tag(polymorphic_path(post.voice), controls: true) %>
+        <%= audio_tag(url_for(post.voice), controls: true) %>
+      <% end %>
+    </p>
+    <br>
   <% end %>
 </div>
-
-<div class="record">
-  <div>
-    <%# <p>音声一覧</p> %>
-    <%#= audio_tag( "tempfile.webm", controls: true) %>
-  </div>
-</div>
-
-
-<%= javascript_pack_tag 'main' %>
