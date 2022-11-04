@@ -25,6 +25,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    @post = Post.find(params[:id])
     redirect_to edit_post_path(params[:id])
   end
 
@@ -36,6 +37,12 @@ class PostsController < ApplicationController
     post = Post.find(params[:id])
     post.update(post_params)
     redirect_to posts_path
+  end
+  
+  def destroy
+    post = Post.find(params[:id])
+    post.destroy
+    redirect_to posts_path, notice: "削除しました。"
   end
 
   private
