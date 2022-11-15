@@ -1,0 +1,30 @@
+<h1>posts#edit</h1>
+<div>
+  <%= link_to "一覧へ", posts_path %>
+</div>
+
+<br>
+
+<p>投稿フォーム</p>
+<div>
+  <%= audio_tag(url_for(@post.voice), id: "btn_audio", controls: true) %>
+  <button type="button" id="audio">再生する</button>
+</div>
+
+<div>
+  <%= form_with model: @post, local: true do |f| %>
+    <div>
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </div>
+    <div>
+      <%= f.label :body %>
+      <%= f.text_area :body %>
+    </div>
+    <div>
+      <%= f.submit %>
+    </div>
+  <% end %>
+</div>
+
+<%= javascript_pack_tag 'playback-audio' %>
