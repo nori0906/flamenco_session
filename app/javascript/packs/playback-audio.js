@@ -36,35 +36,14 @@ async function playbackAudio () {
   // 同時再生ボタン
   if(collabPlayback){
     collabPlayback.addEventListener('click', () => {
-        
-      if(rootRecord && refRecord && record){
-        record.currentTime = 0.35; //連続クリックに対応
-        refRecord.currentTime = 0.175;
-        rootRecord.currentTime = 0;
-        record.play();
-        refRecord.play();
-        rootRecord.play();
-      }else if(refRecord && record){
-        record.currentTime = 0.175;
-        refRecord.currentTime = 0;
-        record.play();
-        refRecord.play();
-      }else{
-      record.currentTime = 0;
-      record.play();
-      };
-
       // for of文
-      // let offset = 0.4;
-      // for(const r of manyRecords){
-      //   console.log(r);
-      //   r.currentTime = offset; //連続クリックに対応
-      //   r.play();
-      //   offset = offset - 0.2
-      // };
-
+      let offset = 0.4;
+      for(const r of manyRecords){
+        console.log(r);
+        r.currentTime = offset; //連続クリックに対応
+        r.play();
+        offset = offset - 0.2
+      };
     });
   };  
-  
-  
-}
+};
