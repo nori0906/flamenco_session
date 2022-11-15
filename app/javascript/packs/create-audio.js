@@ -54,7 +54,7 @@ async function createAudio () {
 
       axios({
         method: 'post',
-        url: 'http://localhost:3000/posts' + queryParam,
+        url: '/posts' + queryParam,
         data: {
           voice: base64
         },
