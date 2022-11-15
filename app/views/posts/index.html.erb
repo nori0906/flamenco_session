@@ -8,11 +8,11 @@
   <p>投稿一覧</p>
   <% @posts.each do |post| %>
     <p>
+      <%= post.id %>
       <%= post.title %>
       <%= post.body %>
       <% if post.voice.attached? %>
-        <%= audio_tag(polymorphic_path(post.voice), controls: true) %>
-        <%#= audio_tag(url_for(post.voice), controls: true) %>
+        <%= audio_tag(url_for(post.voice), controls: true) %>
       <% end %>
       <%= link_to '詳細', post_path(post) %>
       <%= link_to '削除', post_path(post), method: :delete, data: { confirm: "削除しますか？"}   %>

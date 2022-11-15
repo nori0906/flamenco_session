@@ -1,4 +1,19 @@
 <h1>How to record audio using the MediaStream Recording API in JavaScript</h1>
+
+<div>
+  <% if @ref_post %>
+    <p>セッション元</p>
+    <%= @ref_post.id %>
+    <p><%= audio_tag(url_for(@ref_post.voice), controls: true, id: "refRecord") %></p>
+  <% end %>
+  
+  <% if @root_post %>
+    <p>セッション大元</p>
+    <%= @root_post.id %>
+    <p><%= audio_tag(url_for(@root_post.voice), controls: true, id: "refRecord") %></p>
+  <% end %>
+</div>
+
 <div class="record">
   <div>
     <p>単体録音</p>
@@ -14,4 +29,4 @@
   <%= link_to "一覧へ", posts_path %>
 </div>
 
-<%= javascript_pack_tag 'main' %>
+<%= javascript_pack_tag 'create-audio' %>
