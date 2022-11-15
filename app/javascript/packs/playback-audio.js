@@ -37,12 +37,12 @@ async function playbackAudio () {
   if(collabPlayback){
     collabPlayback.addEventListener('click', () => {
       // for of文
-      let offset = 0.4;
+      let offset = 0.350;
       for(const r of manyRecords){
         console.log(r);
         r.currentTime = offset; //連続クリックに対応
         r.play();
-        offset = offset - 0.2
+        offset = offset - 0.175
       };
     });
   };  
