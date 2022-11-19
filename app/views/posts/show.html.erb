@@ -21,18 +21,21 @@
   <% if @post.voice.attached? %>
     <p>音源:</p>
     <p><%= @post.id %></p>
+    <p><%= @post.title %></p>
     <p><%= audio_tag(url_for(@post.voice), controls: true, id: "record", class: "manyRecords") %></p>
   <% end %>
   
   <% if @ref_post %>
     <p>セッション元音源:</p>
     <p><%= @ref_post.id %></p>
+    <p><%= @post.title %></p>
     <p><%= audio_tag(url_for(@ref_post.voice), controls: true, id: "refRecord", class: "manyRecords") %></p>
   <% end %>
   
   <% if @root_post %>
     <p>ベース音源</p>
     <%= @root_post.id %>
+    <p><%= @post.title %></p>
     <p><%= audio_tag(url_for(@root_post.voice), controls: true, id: "rootRecord", class: "manyRecords") %></p>
   <% end %>
   
