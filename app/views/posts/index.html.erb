@@ -7,6 +7,12 @@
 <div>
   <p>投稿一覧</p>
   <% @posts.each do |post| %>
+    <%# 条件定義でpresent?をつけるかどうか？ %>
+    <% if post.collab_src.present? %>
+      <p><%= "【コラボ投稿】" %></p>
+    <% else %>
+      <p><%= "【投稿】" %></p>
+    <% end %>
     <p>
       <%= post.id %>
       <%= post.title %>
