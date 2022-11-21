@@ -6,13 +6,6 @@
     <%= @ref_post.id %>
     <p><%= audio_tag(url_for(@ref_post.voice), controls: true, id: "refRecord") %></p>
   <% end %>
-  
-  <%# 表示させる必要はなさそう（コラボ済みの録音を表示すればいい） %>
-  <% if @root_post %>
-    <p>セッション大元</p>
-    <%= @root_post.id %>
-    <p><%= audio_tag(url_for(@root_post.voice), controls: true, id: "refRecord") %></p>
-  <% end %>
 </div>
 
 <div class="record">

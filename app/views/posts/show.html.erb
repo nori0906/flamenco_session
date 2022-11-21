@@ -7,17 +7,19 @@
 
 <div>
   <p>内容</p>
-    <p><%= @post.id %></p>
-    <p><%= @post.title %></p>
-    <p><%= @post.body %></p>
+    <% if @post.collab_src.present? %>
+      <p><%= "【コラボ投稿】" %></p>
+    <% else %>
+      <p><%= "【投稿】" %></p>
+    <% end %>
+    <p><%= "ID: #{@post.id}" %></p>
+    <p><%="タイトル:  #{@post.title}"  %></p>
+    <p><%= "内容: #{@post.body}" %></p>
     <br>
   
   <%# ボタン %>
   <div class="btn">
       <button type="button" id="playback">再生</button>
-    <% if @ref_post || @root_post %>
-      <button type="button" id="collabPlayback">同時再生</button>
-    <% end %>
   </div>
 
   <%# 音源 %>
@@ -25,25 +27,10 @@
     <p>音源:</p>
     <p><%= @post.id %></p>
     <p><%= @post.title %></p>
-    <p><%= audio_tag(url_for(@post.voice), controls: true, id: "record", class: "manyRecords") %></p>
+    <p><%= audio_tag(url_for(@post.voice), controls: true, id: "record") %></p>
   <% end %>
   
   <br>
-  
-  <%# 元音源参照 %>
-  <% if @ref_post %>
-    <p>セッション元音源:</p>
-    <p><%= @ref_post.id %></p>
-    <p><%= @ref_post.title %></p>
-    <p><%= audio_tag(url_for(@ref_post.voice), controls: true, id: "refRecord", class: "manyRecords") %></p>
-  <% end %>
-  
-  <% if @root_post %>
-    <p>ベース音源</p>
-    <%= @root_post.id %>
-    <p><%= @root_post.title %></p>
-    <p><%= audio_tag(url_for(@root_post.voice), controls: true, id: "rootRecord", class: "manyRecords") %></p>
-  <% end %>
   
   <% unless @root_post %>
     <p><%= link_to 'セッションする', new_post_path(ref_id: @post.id) %></p>
