@@ -22,6 +22,10 @@
       <%= f.text_area :body %>
     </div>
     <div>
+      <%= f.label :status %>
+      <%= f.select :status, Post.statuses.keys.map {|k| [k, k]}, {}, { class: 'form-control', style: 'margin-bottom: 15px;', data: {} }  %>
+    </div>
+    <div>
       <%= f.submit %>
     </div>
   <% end %>

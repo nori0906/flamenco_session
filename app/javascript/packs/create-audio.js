@@ -36,7 +36,6 @@ async function createAudio () {
     buttonStop.setAttribute('disabled', '')
   })
   
-  
   mediaRecorder.addEventListener('dataavailable', event => { // <6>
     player.src = URL.createObjectURL(event.data) //ブラウザのプレイヤーにセットするため
     
@@ -47,7 +46,6 @@ async function createAudio () {
       base64 = reader.result; 
       base64 = base64.split(',')[1];
       console.log(base64);
-      
 
       // クエリパラメーター取得
       const queryParam = window.location.search
