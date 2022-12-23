@@ -1,29 +1,58 @@
-<h1>posts#index</h1>
+<div class="bkg-img">
+  <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">投稿一覧</h1>
+  <div class="container">
 
-<div>
-  <%= link_to "新規作成", new_post_path %>
-</div>
+    <div class="col-12 d-flex justify-content-center mb-5 ">
+      <%= link_to "新規作成", new_post_path, class: "btn btn-primary bg-new-btn col-5 py-3 me-5 btn-lg text-white", type: "button" %>
+      <%= link_to "セッションする", new_post_path, class: "btn btn-primary bg-colb-btn col-5 py-3 btn-lg text-white", type: "button" %>
+    </div>
 
-<div>
-  <p>投稿一覧</p>
-  <% @posts.each do |post| %>
-    <%# 条件定義でpresent?をつけるかどうか？ %>
-    <% if post.collab_src.present? %>
-      <p><%= "【コラボ投稿】" %></p>
-    <% else %>
-      <p><%= "【投稿】" %></p>
-    <% end %>
-    
-    <p>
-      <%= post.id %>
-      <%= post.title %>
-      <%= post.body %>
-      <% if post.voice.attached? %>
-        <%= audio_tag(url_for(post.voice), controls: true) %>
+    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+      <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+      <label class="btn btn-outline-danger" for="btnradio1">すべて</label>
+
+      <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+      <label class="btn btn-outline-danger" for="btnradio2">セッション待ち</label>
+
+      <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+      <label class="btn btn-outline-danger" for="btnradio3">セッション</label>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-5 pb-5">
+      <% @posts.each do |post| %>
+        <div class="col">
+          <div class="card">
+            <%# 条件定義でpresent?をつけるかどうか？ %>
+            <% if post.collab_src.present? %>
+              <p><%= "【コラボ投稿】" %></p>
+            <% else %>
+              <p><%= "【投稿】" %></p>
+            <% end %>
+            <p><%= post.id %></p>
+            
+
+            <div class="card-body">
+              <p>
+                <h5 class="card-title"><%= post.title %></h5>
+                <p class="card-text"><%= post.body %></p>
+                <p class="my-2">
+                  <% if post.voice.attached? %>
+                    <%= audio_tag(url_for(post.voice), controls: true) %>
+                  <% end %>
+                </p>
+                <div class="btn-toolbar">
+                  <div class="btn-group ms-auto" role="group" aria-label="Basic outlined example">
+                    <%= link_to '詳細', post_path(post), class: "btn btn-outline-primary", type: "button"  %>
+                    <%= link_to '削除', post_path(post), method: :delete, data: { confirm: "削除しますか？"}, class: "btn btn-outline-primary", type: "button"   %> 
+                  </div>
+                </div>
+              </p>
+            </div>
+          </div>
+        </div>
       <% end %>
-      <%= link_to '詳細', post_path(post) %>
-      <%= link_to '削除', post_path(post), method: :delete, data: { confirm: "削除しますか？"}   %>
-    </p>
-    <br>
-  <% end %>
+    </div>
+  </div>
 </div>
+
+

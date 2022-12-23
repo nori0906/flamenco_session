@@ -67,6 +67,10 @@ class PostsController < ApplicationController
     redirect_to posts_path, notice: "削除しました。"
   end
 
+  def example
+    
+  end
+
   private
 
   def voice_params

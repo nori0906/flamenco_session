@@ -13,15 +13,15 @@
 
 <div>
   <%= form_with model: @post, local: true do |f| %>
-    <div>
+    <div  class="mb-3">
       <%= f.label :title %>
       <%= f.text_field :title %>
     </div>
-    <div>
+    <div  class="mb-3">
       <%= f.label :body %>
       <%= f.text_area :body %>
     </div>
-    <div>
+    <div  class="mb-3">
       <%= f.label :status %>
       <%= f.select :status, Post.statuses.keys.map {|k| [k, k]}, {}, { class: 'form-control', style: 'margin-bottom: 15px;', data: {} }  %>
     </div>

@@ -1,41 +1,49 @@
-<h1>posts#show</h1>
+<div class="bkg-img">
+  <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">詳細</h1>
+  <div class="container">
 
-
-<div>
-  <%= link_to "一覧へ", posts_path %>
-</div>
-
-<div>
-  <p>内容</p>
-    <% if @post.collab_src.present? %>
-      <p><%= "【コラボ投稿】" %></p>
-    <% else %>
-      <p><%= "【投稿】" %></p>
+    <% unless @root_post %>
+        <div class="d-grid gap-2">
+          <%= link_to 'セッションする', new_post_path(ref_id: @post.id), type: "button", class: "btn btn-primary bg-colb-btn  text-white" %>
+        </div>
     <% end %>
-    <p><%= "ID: #{@post.id}" %></p>
-    <p><%="タイトル:  #{@post.title}"  %></p>
-    <p><%= "内容: #{@post.body}" %></p>
-    <p><%= "ステータス: #{@post.status}" %></p>
-    <br>
-  
-  <%# ボタン %>
-  <div class="btn">
-      <button type="button" id="playback">再生</button>
-  </div>
 
-  <%# 音源 %>
-  <% if @post.voice.attached? %>
-    <p>音源:</p>
-    <p><%= @post.id %></p>
-    <p><%= @post.title %></p>
-    <p><%= audio_tag(url_for(@post.voice), controls: true, id: "record") %></p>
-  <% end %>
-  
-  <br>
-  
-  <% unless @root_post %>
-    <p><%= link_to 'セッションする', new_post_path(ref_id: @post.id) %></p>
-  <% end %>
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title"><%= "#{@post.title}" %></h2>
+        
+        <%# 音源 %>
+        <% if @post.voice.attached? %>
+
+          <p><%= audio_tag(url_for(@post.voice), controls: true, id: "record") %></p>
+          
+          <div class="">
+              <button type="button" class="btn btn-outline-secondary mb-3" id="playback">再生</button>
+          </div>
+        <% end %>
+
+        <p class="card-text "><%= "#{@post.body}" %></p>
+        <%# 自身のみ表示 %>
+        <p class="card-text"><%= "#{@post.status}" %></p>
+
+        <p class="card-text"><%= "ユーザー名: #{}" %></p>
+        
+        
+        <p class="card-text"><%= "ID: #{@post.id}" %></p>
+        
+        <% if @post.collab_src.present? %>
+          <p class="card-text"><%= "コラボ投稿" %></p>
+        <% else %>
+          <p class="card-text"><%= "通常投稿" %></p>
+        <% end %>
+
+      </div>
+    </div>
+
+  </div>
 </div>
+
+
+
 
 <%= javascript_pack_tag 'playback-audio' %>

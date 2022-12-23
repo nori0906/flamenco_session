@@ -1,1 +1,47 @@
 @import "~bootstrap/scss/bootstrap.scss";
+
+.navbar {
+  height: 50px;
+  background-color: #BD1A37;
+}
+
+.bg-new-btn {
+  background-color: #BD1A37;
+}
+
+.bg-colb-btn {
+  background-color: #BD1A37;
+}
+
+.start-btn {
+  background-color: #BD1A37;
+}
+
+.stop-btn {
+  background-color: #16239C;
+}
+
+.bg-height {
+  min-height: calc(100vh - 100px);
+}
+
+
+
+.bkg-img {
+  min-height: calc(100vh - 100px);
+  max-width: 100%;
+  background-image: url(../../assets/images/fla12.png);
+  background-size:cover;
+  background-position: center;
+  }
+
+.bkg-img-index {
+  min-height: calc(100vh - 100px);
+  max-width: 100%;
+  background-image: url(../../assets/images/unsplash_recording.png);
+  background-size:cover;
+  background-position: center;
+}
+
+  // 背景画像url:  ( ../../assets/images/unsplash_recording.png)
+  

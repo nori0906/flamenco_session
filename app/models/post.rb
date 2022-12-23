@@ -2,7 +2,7 @@ class Post < ApplicationRecord
   has_one_attached :voice
 
   validates :title, presence: true, on: :update
-  validates :body, length: { maximum: 30 } 
+  validates :body, length: { maximum: 100 } 
   validates :collab_src, numericality: true, if: :collab_src? 
 
 
