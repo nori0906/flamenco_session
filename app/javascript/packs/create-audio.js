@@ -5,6 +5,7 @@ async function createAudio () {
   const buttonStop = document.querySelector('#buttonStop')
   const player = document.querySelector('#player')
   const refRecord = document.querySelector('#refRecord')
+  const mime = 'audio/aac'
   
   const stream = await navigator.mediaDevices.getUserMedia({ // <1>
     video: false,
