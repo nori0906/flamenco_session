@@ -31,7 +31,7 @@ class PostsController < ApplicationController
   def create
     voice_data = voice_params[:voice]
     
-    File.open("tempfile.webm", "wb") do |f|
+    File.open("tempfile.m4a", "wb") do |f|
       f.write(Base64.decode64(voice_data))
     end
 
@@ -39,9 +39,9 @@ class PostsController < ApplicationController
     # クエリパラメータのref_idに値があれば、collab_srcカラムにidを格納する
     post.collab_src = params[:ref_id] if params[:ref_id].present?
 
-    post.voice.attach(io: File.open("tempfile.webm"), filename: "newfile.webm")
+    post.voice.attach(io: File.open("tempfile.m4a"), filename: "newfile.m4a")
     if post.save!
-      File.delete("tempfile.webm")
+      File.delete("tempfile.m4a")
       render json: { id: post.id }
     else
       # TODO: 後で実装する
