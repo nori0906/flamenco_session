@@ -21,10 +21,11 @@
   </head>
 
   <body>
-    <%= render 'layouts/header' %>
+    <%= render 'shared/header' %>
+
     <div class="bg-dark bg-gradient bg-height">
       <%= yield %>
     </div>
-    <%=  render 'layouts/footer'%>
+    <%=  render 'shared/footer'%>
   </body>
 </html>

@@ -5,18 +5,19 @@ async function createAudio () {
   const buttonStop = document.querySelector('#buttonStop')
   const player = document.querySelector('#player')
   const refRecord = document.querySelector('#refRecord')
+  const mime = 'audio/mp4'
   
   const stream = await navigator.mediaDevices.getUserMedia({ // <1>
     video: false,
     audio: true,
   })
   
-  if (!MediaRecorder.isTypeSupported('audio/webm')) { // <2>
-    console.warn('audio/webm is not supported')
+  if (!MediaRecorder.isTypeSupported(mime)) { // <2>
+    alert( mime + 'is not supported')
   }
   
   const mediaRecorder = new MediaRecorder(stream, { // <3>
-    mimeType: 'audio/webm',
+    mimeType: mime,
   })
   
   buttonStart.addEventListener('click', () => {

@@ -1,0 +1,27 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light shadow-sm sticky-top">
+    <div class="container-fluid">
+      <div>
+        <%= image_tag "music_icon.png", class: "mb-2", size: 5*5 %>
+        <a class="navbar-brand text-white fw-bold" href="/posts">フラッと×セッション</a>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <% if logged_in? %>
+            <li><%= link_to "投稿一覧", posts_path, class: "nav-link text-white active" %></li>
+            <li><%= link_to "録音する", new_post_path, class: "nav-link text-white" %></li>
+            <li><%= link_to "プロフィール編集",  posts_path, class: "nav-link text-white" %></li>
+            <%# edit_user_path(current_user.id) %>
+            <li><%= link_to 'ログアウト', logout_path, class: 'dropdown-item nav-link text-white', method: :delete %> </li>
+          <% else %>
+            <li><%= link_to "登録", new_user_path, class:"nav-link text-white" %></li>
+            <li><%= link_to 'ログイン', login_path, class: 'nav-link text-white' %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
