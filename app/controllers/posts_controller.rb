@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  skip_before_action :require_login
   
   def index
     @posts = Post.published.order(created_at: :desc)
@@ -65,10 +66,6 @@ class PostsController < ApplicationController
     post = Post.find(params[:id])
     post.destroy
     redirect_to posts_path, notice: "削除しました。"
-  end
-
-  def example
-    
   end
 
   private
