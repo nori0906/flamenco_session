@@ -2,7 +2,12 @@ class PostsController < ApplicationController
   skip_before_action :require_login
   
   def index
-    @posts = Post.published.order(created_at: :desc)
+    browser = request.browser 
+    if browser == "Chrome"
+      @posts = Post.published.where(ext_type: "webm").order(created_at: :desc)
+    elsif browser == "Safari"
+      @posts = Post.published.where(ext_type: "m4a").order(created_at: :desc)
+    end
   end
 
   def show
@@ -31,18 +36,18 @@ class PostsController < ApplicationController
   
   def create
     voice_data = voice_params[:voice]
+    ext = ext_params[:ext]
     
-    File.open("tempfile.m4a", "wb") do |f|
+    File.open("tempfile." + ext, "wb") do |f|
       f.write(Base64.decode64(voice_data))
     end
 
-    post = Post.new(title: "")
+    post = Post.new(title: "", ext_type: ext)
     # クエリパラメータのref_idに値があれば、collab_srcカラムにidを格納する
     post.collab_src = params[:ref_id] if params[:ref_id].present?
-
-    post.voice.attach(io: File.open("tempfile.m4a"), filename: "newfile.m4a")
+    post.voice.attach(io: File.open("tempfile." + ext ), filename: "newfile." + ext )
     if post.save!
-      File.delete("tempfile.m4a")
+      File.delete("tempfile." + ext )
       render json: { id: post.id }
     else
       # TODO: 後で実装する
@@ -73,8 +78,13 @@ class PostsController < ApplicationController
   def voice_params
     params.permit(:voice)
   end
+  
+  def ext_params
+    params.permit(:ext)
+  end
+
 
   def post_params
-    params.require(:post).permit(:title, :body, :status)
+    params.require(:post).permit(:title, :body, :status, :ext_type)
   end
 end

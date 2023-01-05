@@ -5,8 +5,8 @@
 
   <p class="text-white">投稿フォーム</p>
   <div>
-    <%= audio_tag(url_for(@post.voice), id: "btn_audio", controls: true) %>
-    <button type="button" class="btn btn-outline-secondary mb-3" id="audio">再生する</button>
+    <%= audio_tag(url_for(@post.voice), id: "record", controls: true) %>
+    <button type="button" class="btn btn-outline-secondary mb-3" id="playback">再生する</button>
   </div>
 
   <div>
