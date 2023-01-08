@@ -16,14 +16,15 @@
         <% if @post.voice.attached? %>
           <p><%= audio_tag(url_for(@post.voice), controls: true, id: "record") %></p>
           <p><span id= "output">0.000</span></p>
-          <% if @post.collab_src.present? %>
-            <p>コラボ元</p>
-            <p><%= audio_tag(url_for(@ref_post.voice), controls: true, id: "refRecord") %></p>
+          <% if !@post.collab_src.present? %>
+            <p><%= audio_tag(url_for(@post.voice), controls: true, id: "refRecord") %></p>
             <p><span id= "output2">0.000</span></p>
+            <p>コラボ元</p>
           <% end %>
+          <p><span id= "output3">0.000</span></p>
           <div>
               <button type="button" class="btn btn-outline-secondary mb-3" id="playback">再生</button>
-              <button type="button" class="btn btn-outline-secondary mb-3" id="stop">停止</button>
+              <button type="button" class="btn btn-outline-secondary mb-3" id="stopBtn">停止</button>
           </div>
         <% end %>
 

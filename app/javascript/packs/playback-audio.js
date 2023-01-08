@@ -7,24 +7,29 @@ async function playbackAudio () {
   const refRecord = document.querySelector('#refRecord')
   const rootRecord = document.querySelector('#rootRecord')
   const playback = document.querySelector('#playback')
-  const stop = document.querySelector('#stop')
+  const stopBtn = document.querySelector('#stopBtn')
   
   
 
   // 再生時間表示
   let output = document.querySelector('#output')
   let output2 = document.querySelector('#output2')
+  let output3 = document.querySelector('#output3')
 
   
-  // record.addEventListener('timeupdate', () => {
-  //   let time = record.currentTime;
-  //   console.log( output.textContent = String(time));
-  // });
+  record.addEventListener('timeupdate', () => {
+    let time = record.currentTime;
+    output.textContent = String(time)
+  });
 
-  // refRecord.addEventListener('timeupdate', () => {
-  //   let time2 = refRecord.currentTime;
-  //   console.log( output2.textContent = String(time2));
-  // });
+  if(refRecord) {
+    refRecord.addEventListener('timeupdate', () => {
+      let time2 = refRecord.currentTime;
+      output2.textContent = String(time2)
+      console.log(output3.textContent = Number(output2.textContent) - Number(output.textContent));
+    });
+  };
+  
   
 
   
@@ -41,22 +46,23 @@ async function playbackAudio () {
   
   if(playback){
     playback.addEventListener('click', () => {
-      let audiotest = function(){
-          record.play();
-          refRecord.play();
-      }
-      setTimeout(audiotest, 3000);
+      if (refRecord) {
+        record.play();
+        refRecord.play();
+      } else {
+        record.play();
+      };
+      // let audiotest = function(){
+      // }
+      // setTimeout(audiotest, 1000);
+    });
+  };
+
+  if(stopBtn){
+    stopBtn.addEventListener('click', () => {
+      record.pause();
+      refRecord.pause();
     });
   }; 
-
-  // if(stop){
-  //   stop.addEventListener('click', () => {
-  //     let audioTestStop = function(){
-  //         record.stop();
-  //         refRecord.stop();
-  //     }
-  //     setTimeout(audioTestStop, 0000);
-  //   });
-  // }; 
 
 };
