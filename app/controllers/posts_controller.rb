@@ -3,7 +3,8 @@ class PostsController < ApplicationController
   
   def index
     browser = request.browser 
-    if browser == "Chrome"
+
+    if browser == "Chrome" || browser == "Edge"
       @posts = Post.published.where(ext_type: "webm").order(created_at: :desc)
     elsif browser == "Safari"
       @posts = Post.published.where(ext_type: "m4a").order(created_at: :desc)
