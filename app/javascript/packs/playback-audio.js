@@ -31,9 +31,6 @@ async function playbackAudio () {
   };
   
   
-
-  
-  
   // 再生ボタン
   // if(playback){
   //   playback.addEventListener('click', () => {
@@ -45,17 +42,34 @@ async function playbackAudio () {
   // };
   
   if(playback){
-    playback.addEventListener('click', () => {
+
+    function prepareSound() {
+      if (refRecord) {
+        record.play();
+        record.pause();
+        refRecord.play();
+        refRecord.pause();
+      } else {
+        record.play();
+        record.pause();
+      };
+    };
+
+    function playSound() {
       if (refRecord) {
         record.play();
         refRecord.play();
       } else {
         record.play();
       };
-      // let audiotest = function(){
-      // }
-      // setTimeout(audiotest, 1000);
+    };
+    
+    
+    playback.addEventListener('click', () => {
+      prepareSound();
+      setTimeout(playSound, 5000);
     });
+
   };
 
   if(stopBtn){
