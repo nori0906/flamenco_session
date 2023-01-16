@@ -1,0 +1,43 @@
+.top-wrapper {
+  background-image: url(bkg_image.jpg);
+  height: calc(100vh - 50px);
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  
+
+  .top-inner-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    font-size: 8rem;
+    color: white;
+
+    // @media screen and (max-width: 767px) {
+    //   font-size: 2rem;
+    // }
+  }
+}
+
+.top-title {
+  font-size: 3.5rem;
+}
+
+/* 画像を暗くするオーバーレイ (参考： https://dezanari.com/css-img-darken/)  */
+.top-wrapper::before {
+  content: '';
+  /* ↓暗いオーバーレイを半透明で配置 */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* ↓全体を覆うように配置 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
