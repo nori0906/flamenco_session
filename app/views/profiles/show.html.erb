@@ -1,22 +1,30 @@
-<div class="container pt-3">
-  <div class="row">
-    <div class="col-md-10 offset-md-1">
-      <h1 class="float-left mb-5">プロフィール</h1>
-      <%= link_to '編集', '#', class: 'btn btn-success float-right' %>
-      <table class="table">
-        <tr>
-          <th scope="row">メールアドレス</th>
-          <td>メールアドレス</td>
-        </tr>
-        <tr>
-          <th scope="row">氏名</th>
-          <td>氏名</td>
-        </tr>
-        <tr>
-          <th scope="row">アバター</th>
-          <td>アバター</td>
-        </tr>
-      </table>
+<div class="bkg-img-pro">
+  <h1 class="text-white  text-left ps-5 py-3 mb-5">プロフィール詳細</h1>
+  <div class="container">
+    <div>
+      <div class=" px-5 mx-5 py-3">
+        <div class="d-flex justify-content-start">
+          <%= link_to '編集', edit_profile_path, class: 'btn btn-success float-right' %>
+        </div>
+        <div class="card bg-color-pro ">
+          <div class="card-body">
+            <table class="table mt-3 text-white">
+              <tr>
+                <th scope="row">メールアドレス</th>
+                <td><%= @user.email %></td>
+              </tr>
+              <tr>
+                <th scope="row">氏名</th>
+                <td><%= @user.name %></td>
+              </tr>
+              <tr>
+                <th scope="row">アバター</th>
+                <td><%= image_tag("#{@user.avatar}", size: '100x100', class: 'rounded-circle') %></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
