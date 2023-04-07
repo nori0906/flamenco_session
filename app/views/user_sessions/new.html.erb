@@ -1,6 +1,7 @@
 <div class='bg-dark bg-gradient bg-height'>
   <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">ログイン</h1>
   <div class="container">
+    <%= render partial: 'layouts/flash' %>
     <div class="row ">
       <div class=" col-md-10 offset-md-1 col-lg-8 offset-lg-2">
         <%= form_with url: login_path, local: true do |f| %>

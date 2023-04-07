@@ -2,7 +2,7 @@
 <div class="bkg-img-pro">
   <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">投稿画面</h1>
   <div class="container">
-
+    <%= render partial: 'layouts/flash' %>
     <p class="text-white">投稿フォーム</p>
     <div>
       <%= audio_tag(url_for(@post.voice), id: "record", controls: true) %>

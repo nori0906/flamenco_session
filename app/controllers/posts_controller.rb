@@ -53,7 +53,7 @@ class PostsController < ApplicationController
     else
       # TODO: 後で実装する
     end
-  end  
+  end
 
   def edit
     @post = Post.find(params[:id])
@@ -62,16 +62,17 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
-      redirect_to posts_path
+      redirect_to posts_path, flash: {success: "投稿しました"}
     else
+      flash.now[:danger] = @post.errors.full_messages.to_sentence
       render :edit
     end
   end
-  
+
   def destroy
     post = Post.find(params[:id])
     post.destroy
-    redirect_to posts_path, notice: "削除しました。"
+    redirect_to posts_path, flash: {danger: "削除しました。"}
   end
 
   private
@@ -79,7 +80,7 @@ class PostsController < ApplicationController
   def voice_params
     params.permit(:voice)
   end
-  
+
   def ext_params
     params.permit(:ext)
   end
