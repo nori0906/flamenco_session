@@ -13,9 +13,22 @@
           <li><%= link_to "投稿一覧", posts_path, class: "nav-link text-white active" %></li>
           <% if logged_in? %>
             <li><%= link_to "録音する", new_post_path, class: "nav-link text-white" %></li>
-            <li><%= link_to "プロフィール編集",  posts_path, class: "nav-link text-white" %></li>
-            <%# edit_user_path(current_user.id) %>
-            <li><%= link_to 'ログアウト', logout_path, class: 'dropdown-item nav-link text-white', method: :delete %> </li>
+            
+            <li>
+              <div class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <%= image_tag current_user.avatar_url, class: 'rounded-circle mr15', size: '30x30'%>
+                </a>
+                
+                <div class='dropdown-menu dropdown-menu-end'>
+                  <div class='dropdown-item'><%= current_user.name %></div>
+                  <div class='dropdown-divider'></div>
+                  <%= link_to 'プロフィール詳細', profile_path, class: 'dropdown-item' %>
+                  <%= link_to 'ログアウト', logout_path, class: 'dropdown-item', method: :delete %> 
+                </div>
+              </div>
+            </li>
+            
           <% else %>
             <li><%= link_to "登録", new_user_path, class:"nav-link text-white" %></li>
             <li><%= link_to 'ログイン', login_path, class: 'nav-link text-white' %></li>

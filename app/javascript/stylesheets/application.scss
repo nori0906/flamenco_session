@@ -8,6 +8,10 @@
   background-color: #BD1A37;
 }
 
+.bg-color-pro {
+  background-color: rgba(90,95,95,0.93);
+}
+
 .btn-custom {
   background-color: #BD1A37;
 }
@@ -31,7 +35,25 @@
   background-image: url(../../assets/images/fla12.png);
   background-size:cover;
   background-position: center;
-  }
+
+
+}
+
+.bkg-img-pro {
+  min-height: calc(100vh - 100px);
+  max-width: 100%;
+  background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0)), url(../../assets/images/bkg-25160896_m.jpg);
+  background-size:cover;
+  background-position: center;
+}
+
+.bkg-img-pro2 {
+  min-height: calc(100vh - 100px);
+  max-width: 100%;
+  background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(../../assets/images/fla9.png);
+  background-size:cover;
+  background-position: center;
+}
 
 .bkg-img-index {
   min-height: calc(100vh - 100px);
