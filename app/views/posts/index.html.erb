@@ -1,7 +1,7 @@
 <div class="bkg-img">
   <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">投稿一覧</h1>
   <div class="container">
-
+    <%= render partial: 'layouts/flash' %>
     <div class="col-12 d-flex justify-content-center mb-5 ">
       <%= link_to "新規作成", new_post_path, class: "btn btn-custom col-5 py-3 me-5 btn-lg text-white border border-dark", type: "button" %>
       <%= link_to "セッションする", new_post_path, class: "btn btn-custom col-5 py-3 btn-lg text-white border border-dark", type: "button" %>

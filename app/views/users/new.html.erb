@@ -1,28 +1,31 @@
-<h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">ユーザー登録</h1>
-<div class="container">
-  <div class="row">
-    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
-      <%= form_with model: @user, local: true do |f| %>
-        <div class="form-group">
-          <%= f.label :name, class: "text-white" %>
-          <%= f.text_field :name, class: 'form-control' %>
+<div class='bg-dark bg-gradient bg-height'>
+  <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">ユーザー登録</h1>
+  <div class="container">
+    <div class="row">
+      <%= render partial: 'layouts/flash' %>
+      <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+        <%= form_with model: @user, local: true do |f| %>
+          <div class="form-group">
+            <%= f.label :name, class: "text-white" %>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :email, class: "text-white" %>
+            <%= f.email_field :email, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :password, class: "text-white" %>
+            <%= f.password_field :password, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :password_confirmation, class: "text-white" %>
+            <%= f.password_field :password_confirmation, class: 'form-control' %>
+          </div>
+          <%= f.submit '登録', class: 'btn btn-custom text-white' %>
+        <% end %>
+        <div class='text-center'>
+          <%= link_to 'ログインページへ', login_path %>
         </div>
-        <div class="form-group">
-          <%= f.label :email, class: "text-white" %>
-          <%= f.email_field :email, class: 'form-control' %>
-        </div>
-        <div class="form-group">
-          <%= f.label :password, class: "text-white" %>
-          <%= f.password_field :password, class: 'form-control' %>
-        </div>
-        <div class="form-group">
-          <%= f.label :password_confirmation, class: "text-white" %>
-          <%= f.password_field :password_confirmation, class: 'form-control' %>
-        </div>
-        <%= f.submit '登録', class: 'btn btn-custom text-white' %>
-      <% end %>
-      <div class='text-center'>
-        <%= link_to 'ログインページへ', login_path %>
       </div>
     </div>
   </div>

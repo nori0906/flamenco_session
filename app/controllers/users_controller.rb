@@ -7,9 +7,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save!
-      redirect_to login_path
+    if @user.save
+      redirect_to login_path, flash: {success: "登録しました"}
     else
+      flash.now[:danger] = @user.errors.full_messages.to_sentence
       render :new
     end
   end
