@@ -45,7 +45,7 @@ async function createAudio () {
 
 
   // 変数mimeにMIMEタイプを格納 [2]変更
-  let mime = '';
+  let mime;
 
   // mp4がtrueならmimeにmp4を格納し、falseならwebmがtrueかを確認する。どちらもfalseだったらアラートを返す。
   if (MediaRecorder.isTypeSupported('audio/mp4')) {
@@ -147,6 +147,5 @@ async function createAudio () {
         });
       };
     });
-
   });
 };

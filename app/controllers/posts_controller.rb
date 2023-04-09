@@ -1,8 +1,8 @@
 class PostsController < ApplicationController
   skip_before_action :require_login
-  
+
   def index
-    browser = request.browser 
+    browser = request.browser
 
     if browser == "Chrome" || browser == "Edge"
       @posts = Post.published.where(ext_type: "webm").order(created_at: :desc)
@@ -22,7 +22,7 @@ class PostsController < ApplicationController
       @root_post = Post.find(@ref_post.collab_src)
     end
   end
-  
+
   def new
     @post = Post.new
     # 「ref_id」 クエリパラメータの値があるかを確認し、idがあればその投稿データを取得
@@ -34,11 +34,12 @@ class PostsController < ApplicationController
       @root_post = Post.find(@ref_post.collab_src)
     end
   end
-  
+
   def create
     voice_data = voice_params[:voice]
     ext = ext_params[:ext]
-    
+
+
     File.open("tempfile." + ext, "wb") do |f|
       f.write(Base64.decode64(voice_data))
     end
