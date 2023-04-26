@@ -7,16 +7,45 @@ async function createAudio () {
   const buttonNext = document.querySelector('#buttonNext')
   const player = document.querySelector('#player')
   const refRecord = document.querySelector('#refRecord')
-  
-  const stream = await navigator.mediaDevices.getUserMedia({ // <1>
-    video: false,
-    audio: true,
-  })
-  
+
+
+  ua = window.navigator.userAgent.toLowerCase() //ブラウザのユーザーエージェントを取得（小文字に変換）し変数uaに格納
+  chrome = (ua.indexOf('chrome') !== -1) && (ua.indexOf('edge') === -1) && (ua.indexOf('opr') === -1); // ブラウザがchromeかどうかを確認し、結果の真偽値を変数に格納
+
+  let constraints;  // 制約を設定するためのグローバル変数を定義
+  if(chrome){
+    constraints = {
+      "video": false,
+      "audio": {
+        "mandatory": { // 参考: https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings#instance_properties_of_audio_tracks
+          "googEchoCancellation" : false, // エコーキャンセルが必須か優先かを指定するオブジェクト
+          "googAutoGainControl" : false, // 自動ゲイン制御が優先か必須かどうか
+          "googNoiseSuppression" : false, // ノイズ抑制が優先か必要か
+          "googHighpassFilter" : false // 指定した周波数以上を通過させ、低域をカットできるフィルターを指定するか
+        },
+        "optional": [] // ??
+      }
+    };
+  // FireFox/Edge(旧)
+  }else{
+    constraints = {
+      "video": false,
+      "audio": {
+        "mandatory": {
+          "echoCancellation" : false,
+          "autoGainControl" : false,
+          "noiseSuppression" : false
+        }
+      }
+    };
+  }
+
+  const stream = await navigator.mediaDevices.getUserMedia(constraints)
+
 
 
   // 変数mimeにMIMEタイプを格納 [2]変更
-  let mime = '';
+  let mime;
 
   // mp4がtrueならmimeにmp4を格納し、falseならwebmがtrueかを確認する。どちらもfalseだったらアラートを返す。
   if (MediaRecorder.isTypeSupported('audio/mp4')) {
@@ -30,11 +59,11 @@ async function createAudio () {
   // 確認
   console.log(mime);
 
-  
+
   const mediaRecorder = new MediaRecorder(stream, { // <3>
     mimeType: mime,
   })
-  
+
   buttonStart.addEventListener('click', () => {
     if(refRecord){
       console.log(refRecord);
@@ -45,7 +74,7 @@ async function createAudio () {
       buttonStart.setAttribute('disabled', '')
       buttonStop.removeAttribute('disabled')
   })
-  
+
   buttonStop.addEventListener('click', () => {
     mediaRecorder.stop() // <5>
     buttonStop.setAttribute('disabled', '')
@@ -54,7 +83,7 @@ async function createAudio () {
     buttonRestart.style.display = 'inline-block'
     buttonNext.style.display = 'inline-block'
   })
-  
+
   buttonRestart.addEventListener('click', () => {
     if(refRecord){
       console.log(refRecord);
@@ -75,15 +104,15 @@ async function createAudio () {
 
 
     buttonNext.addEventListener('click', () => {
-    
+
       //base64形式に変換しサーバーに送る処理
-      let reader = new FileReader(); 
+      let reader = new FileReader();
       reader.readAsDataURL(event.data);
       reader.onloadend = () => {
-        base64 = reader.result; 
+        base64 = reader.result;
         base64 = base64.split(',')[1];
         console.log(base64);
-  
+
         // クエリパラメーター取得
         const queryParam = window.location.search
 
@@ -95,7 +124,7 @@ async function createAudio () {
           extType = 'webm'
         };
 
-  
+
         axios({
           method: 'post',
           url: '/posts' + queryParam,
@@ -118,6 +147,5 @@ async function createAudio () {
         });
       };
     });
-
   });
 };
