@@ -5,6 +5,14 @@ Rails.application.routes.draw do
   post 'login', to: "user_sessions#create"
   delete 'logout', to: 'user_sessions#destroy'
 
+
+  namespace :guest_tutorial do
+    resources :introductions, only: %i[index]
+  end
+  namespace :guest_tutorial do
+    resources :how_to_recordings, only: %i[index]
+  end
+
   resources :posts
   resources :users, only: %i[new create]
   resource :profile, only: %i[show edit update]
