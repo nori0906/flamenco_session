@@ -6,10 +6,10 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
 
 
-  namespace :guest_tutorial do
+  namespace :guest_tutorial, path: "tutorial" do
     resources :introductions, only: %i[index]
   end
-  namespace :guest_tutorial do
+  namespace :guest_tutorial, path: "tutorial" do
     resources :how_to_recordings, only: %i[index]
   end
 
