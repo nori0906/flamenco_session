@@ -1,2 +1,46 @@
-<h1>GuestTutorial::HowToRecordings#index</h1>
-<p>Find me in app/views/guest_tutorial/how_to_recordings/index.html.erb</p>
+<div class="bkg-img-index">
+  <div class="container">
+
+    <h1 class="text-white py-5">RECORDING</h1>
+
+    <div class="text-white mb-5">
+      <h2>クリック音に合わせてパルマを叩いてみよう!!</h2>
+      <div>
+        <h3>使い方説明</h3>
+          <ol>
+            <li>録音開始ボタンで開始</li>
+            <li>リズムに合わせて手拍子!</li>
+            <li>停止ボタンで停止</li>
+            <li>再生ボタンで聞いてみよう</li>
+          </ol>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div>
+        <h3 class="text-white">お手本</h3>
+        <p><%= audio_tag(url_for(), controls: true, id: "refRecord") %></p>
+        <button type="button" class="btn btn-custom btn-lg text-white">再生</button>
+      </div>
+
+      <div class="record">
+        <h3 class="text-white">チャレンジ</h3>
+        <audio controls class="" id="player"></audio>
+        <div>
+          <button type="button" class="btn btn-custom btn-lg text-white" id="buttonStart">Start</button>
+          <button type="button" class="btn btn-custom btn-lg text-white ms-3 none" id="buttonRestart" >Restart</button>
+          <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="buttonStop" disabled>Stop</button>
+          <%# <button type="button" class="btn stop-btn btn-lg text-white ms-3 none" id="buttonNext" >Next</button> %>
+        </div>
+      </div>
+    </div>
+
+
+    <div>
+      <button>次へ進む</button>
+    </div>
+
+  </div>
+</div>
+
+<%= javascript_pack_tag 'create-audio' %>
