@@ -1,46 +1,37 @@
-<div class="bkg-img-index">
+<div class="bkg-img-index text-white">
+  <h1 class="py-5 ps-3">RECORDING</h1>
   <div class="container">
 
-    <h1 class="text-white py-5">RECORDING</h1>
+    <%= render "shared/guest_tutorial/easy_rec_text" %>
 
-    <div class="text-white mb-5">
-      <h2>クリック音に合わせてパルマを叩いてみよう!!</h2>
-      <div>
-        <h3>使い方説明</h3>
-          <ol>
-            <li>録音開始ボタンで開始</li>
-            <li>リズムに合わせて手拍子!</li>
-            <li>停止ボタンで停止</li>
-            <li>再生ボタンで聞いてみよう</li>
-          </ol>
-      </div>
+    <h3>お手本</h3>
+    <div class="mb-4">
+      <%= audio_tag(url_for(), controls: true, id: "refRecord") %>
+      <button type="button" class="btn btn-custom btn-lg text-white">再生</button>
     </div>
 
-    <div class="mb-5">
-      <div>
-        <h3 class="text-white">お手本</h3>
-        <p><%= audio_tag(url_for(), controls: true, id: "refRecord") %></p>
-        <button type="button" class="btn btn-custom btn-lg text-white">再生</button>
-      </div>
-
-      <div class="record">
-        <h3 class="text-white">チャレンジ</h3>
-        <audio controls class="" id="player"></audio>
-        <div>
-          <button type="button" class="btn btn-custom btn-lg text-white" id="buttonStart">Start</button>
-          <button type="button" class="btn btn-custom btn-lg text-white ms-3 none" id="buttonRestart" >Restart</button>
-          <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="buttonStop" disabled>Stop</button>
-          <%# <button type="button" class="btn stop-btn btn-lg text-white ms-3 none" id="buttonNext" >Next</button> %>
-        </div>
-      </div>
+    <h3>チャレンジ</h3>
+    <p>音源</p>
+    <div class="record mb-5">
+      <audio controls class="" id="audio-player" src="/test.mp3"></audio>
+      <button type="button" class="btn btn-custom btn-lg text-white ms-3" id="play-audio-button">Play</button>
+      <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="stop-audio-button" disabled>Stop</button>
+    </div>
+    <p>録音</p>
+    <div class="record mb-5">
+      <audio controls class="" id="record-audio-player"></audio>
+      <button type="button" class="btn btn-custom btn-lg text-white" id="record-button">Start</button>
+      <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="stop-button" disabled>Stop</button>
+      <button type="button" class="btn btn-custom btn-lg text-white ms-3" id="play-recording-button" disabled>Play</button>
+      <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="stop-recording-button" disabled>Stop</button>
     </div>
 
 
-    <div>
-      <button>次へ進む</button>
+    <div class="pb-5">
+      <%= link_to "次のステップへ", guest_tutorial_introductions_path, class: "btn btn-lg btn-custom text-white rounded-pill px-3 py-3 fw-bold" , type: "button" %>
     </div>
 
   </div>
 </div>
 
-<%= javascript_pack_tag 'create-audio' %>
+<%= javascript_pack_tag 'tutorial-audio' %>

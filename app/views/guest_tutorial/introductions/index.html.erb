@@ -1,37 +1,54 @@
 <div class="bg-color-tutorial">
   <div class="container">
 
-    <div class="text-white">
-      <h1>チュートリアル</h1>
-      <p>パルマを叩いてフラメンコを体験!!</p>
+    <div class="d-flex justify-content-center text-white py-5">
+      <div class="flex-column">
+        <h1 class="fw-bold">チュートリアル</h1>
+        <p class="text-center">パルマを叩いてフラメンコを体験!!</p>
+      </div>
     </div>
 
     <div class="text-white pb-5">
-      <h2>〜はじめに〜</h2>
+      <div class="col">
+        <h2>〜はじめに〜</h2>
+      </div>
 
-      <div>
-        <h3>パルマの叩き方を知ろう</h3>
-        <div>
-          <h4>パルマとは？</h4>
-          <p>手拍子のこと。フラメンコでは高い音(セコ)・低い音(ソルダ)の二種類の叩き方があり、リズムを支えるドラムのような役割がある。<br>本場スペインでは手拍子専門のアーティスト(パルメーロ)もいるほど。</p>
-        </div>
-        <div>
-          <h4>叩き方紹介</h4>
-          <div>
-            <h5>セコ（高い音）</h5>
-            <video src=""></video>
-            <h5>ソルダ（低い音）</h5>
-            <video src=""></video>
-            <p>比較的ソルダ(低い音)の方が簡単に叩くことができます！<br>まずは形から好きな叩き方で真似てみてみましょう！</p>
-          </div>
+      <h3>パルマの叩き方を知ろう</h3>
+      <div class="card rounded bg-color-tutorial-card border border-white border-3 mb-5 mx-5">
+        <div class="card-body">
+          <h4 class="card-title">パルマとは？</h4>
+          <p class="card-text">手拍子のこと。フラメンコでは高い音(セコ)・低い音(ソルダ)の二種類の叩き方があり、リズムを支えるドラムのような役割がある。<br>本場スペインでは手拍子専門のアーティスト(パルメーロ)もいるほど。</p>
         </div>
       </div>
 
-      <div>
-        <h3>実践!パルマを叩こう</h3>
-        <div>
+      <div class="card rounded bg-color-tutorial-card border border-white border-3 mb-5 mx-5">
+        <div class="card-body">
+          <h4 class="card-title">叩き方紹介</h4>
+
+          <div class="row row-cols-2">
+            <div class="col">
+              <h5 class="card-title">セコ（高い音）</h5>
+              <video class="border border-white" src=""></video>
+            </div>
+            <div class="col">
+              <h5 class="card-title">ソルダ（低い音）</h5>
+              <video class="border border-white" src=""></video>
+            </div>
+          </div>
+          <p class="card-text">比較的ソルダ(低い音)の方が簡単に叩くことができます！<br>まずは形から好きな叩き方で真似てみてみましょう！</p>
+        </div>
+      </div>
+
+      <%# 下記はリンクできるように後に変更 %>
+      <h3>実践!パルマを叩こう</h3>
+      <div class="row row-cols-1 mx-5">
+        <div class="col card rounded-pill bg-color-tutorial-card border border-white border-3 mb-3 p-2">
           <h4>初級：テンポに合わせて叩こう(難易度☆)</h4>
+        </div>
+        <div class="col card rounded-pill bg-color-tutorial-card border border-white border-3 mb-3 p-2">
           <h4>中級：リズムに合わせて叩こう(難易度☆☆)</h4>
+        </div>
+        <div class="col card rounded-pill bg-color-tutorial-card border border-white border-3 mb-3 p-2">
           <h4>上級：メロディーに合わせて叩こう(難易度☆☆☆)</h4>
         </div>
       </div>
