@@ -11,25 +11,27 @@
     </div>
 
     <h3>チャレンジ</h3>
+    
     <p>音源</p>
     <div class="record mb-5">
-      <audio controls class="" id="audio-player" src="/test.mp3"></audio>
+      <%# <audio controls class="" id="audio-player" src="/test.mp3"></audio>
+      <button type="button" class="btn btn-custom btn-lg text-white ms-3" id="play-audio-button">Play</button>
+      <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="stop-audio-button" disabled>Stop</button> %>
+      <audio controls class="" id="audio-player" src="/test.mp3" preload="metadata"></audio>
       <button type="button" class="btn btn-custom btn-lg text-white ms-3" id="play-audio-button">Play</button>
       <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="stop-audio-button" disabled>Stop</button>
     </div>
+
     <p>録音</p>
     <div class="record mb-5">
+
       <%# WebAudioAPIでコントローラー作成 %>
       <%# style属性が反映されないためscssファイルに一旦記載 %>
-      <div class="bg-secondary p-3">
-        <div class="mb-2" id="progress-container" style="width: 100%; height: 10px; background-color: #eee; position: relative;">
-          <div id="progress-bar" style="width: 0; height: 100%; background-color: #007bff;"></div>
-          <div id="playhead" style="width: 5px; height: 100%; background-color: red; position: absolute;"></div>
-        </div>
+      <div class="bg-dark border border-secondary border-3 rounded-pill d-flex w-50 p-3 mb-2">
         <span id="playback-time">0:00</span>
+        <input id="slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
       </div>
 
-      <%# <audio controls class="" id="record-audio-player"></audio> %>
       <button type="button" class="btn btn-custom btn-lg text-white" id="record-button">Start</button>
       <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="stop-button" disabled>Stop</button>
       <button type="button" class="btn btn-custom btn-lg text-white ms-3" id="play-recording-button" disabled>Play</button>
