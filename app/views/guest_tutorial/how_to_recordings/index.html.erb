@@ -14,10 +14,12 @@
     
     <p>音源</p>
     <div class="record mb-5">
-      <%# <audio controls class="" id="audio-player" src="/test.mp3"></audio>
-      <button type="button" class="btn btn-custom btn-lg text-white ms-3" id="play-audio-button">Play</button>
-      <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="stop-audio-button" disabled>Stop</button> %>
-      <audio controls class="" id="audio-player" src="/test.mp3" preload="metadata"></audio>
+      <%# WebAudioAPIでコントローラー作成 %>
+      <div class="bg-dark border border-secondary border-3 rounded-pill d-flex w-50 p-3 mb-2">
+        <span id="playback-audio-time">0:00</span>
+        <input id="audio-slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
+      </div>
+
       <button type="button" class="btn btn-custom btn-lg text-white ms-3" id="play-audio-button">Play</button>
       <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="stop-audio-button" disabled>Stop</button>
     </div>
@@ -25,11 +27,10 @@
     <p>録音</p>
     <div class="record mb-5">
 
-      <%# WebAudioAPIでコントローラー作成 %>
-      <%# style属性が反映されないためscssファイルに一旦記載 %>
+      <%# scssファイルに一旦記載 %>
       <div class="bg-dark border border-secondary border-3 rounded-pill d-flex w-50 p-3 mb-2">
-        <span id="playback-time">0:00</span>
-        <input id="slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
+        <span id="playback-recording-time">0:00</span>
+        <input id="recording-slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
       </div>
 
       <button type="button" class="btn btn-custom btn-lg text-white" id="record-button">Start</button>
@@ -47,3 +48,4 @@
 </div>
 
 <%= javascript_pack_tag 'tutorial-audio' %>
+<%= javascript_pack_tag 'tutorial-recording' %>
