@@ -42,15 +42,9 @@
       <%# 下記はリンクできるように後に変更 %>
       <h3>実践!パルマを叩こう</h3>
       <div class="row row-cols-1 mx-5">
-        <div class="col card rounded-pill bg-color-tutorial-card border border-white border-3 mb-3 p-2">
-          <h4>初級：テンポに合わせて叩こう(難易度☆)</h4>
-        </div>
-        <div class="col card rounded-pill bg-color-tutorial-card border border-white border-3 mb-3 p-2">
-          <h4>中級：リズムに合わせて叩こう(難易度☆☆)</h4>
-        </div>
-        <div class="col card rounded-pill bg-color-tutorial-card border border-white border-3 mb-3 p-2">
-          <h4>上級：メロディーに合わせて叩こう(難易度☆☆☆)</h4>
-        </div>
+        <%= link_to "初級：テンポに合わせて叩こう(難易度☆)", guest_tutorial_how_to_recordings_path(level: "easy"), class: "btn btn-default text-white col rounded-pill bg-color-tutorial-card border border-white border-3 mb-3" %>
+        <%= link_to "中級：リズムに合わせて叩こう(難易度☆☆)", guest_tutorial_how_to_recordings_path(level:"normal"), class: "btn btn-default text-white col rounded-pill bg-color-tutorial-card border border-white border-3 mb-3" %>
+        <%= link_to "上級：メロディーに合わせて叩こう(難易度☆☆☆)", guest_tutorial_how_to_recordings_path(level: "hard"), class: "btn btn-default text-white col rounded-pill bg-color-tutorial-card border border-white border-3 mb-3" %>
       </div>
 
     </div>
