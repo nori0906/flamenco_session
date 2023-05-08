@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const playAudioButton = document.getElementById('play-audio-button');
-  const stopAudioButton = document.getElementById('stop-audio-button');
-
-  
+  const audioPLayback = document.getElementById('audio-playback');
+  const audioStop = document.getElementById('audio-stop');
+  const levelSelectText = document.getElementById('level-select').textContent;
+  console.log(levelSelectText);
   
   // コンローラー追加
-  const playbackTime = document.getElementById('playback-audio-time');
+  const playbackTime = document.getElementById('audio-playback-time');
   const slider = document.getElementById('audio-slider');
   let source;
   let startTime;
@@ -15,6 +15,31 @@ document.addEventListener('DOMContentLoaded', function () {
   // WebAudioAPI
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   let buffer;
+
+
+
+  // 既存音声ファイルを読み込み
+  async function fetchAudio(url) {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    // 音声ファイルのデータがデコードされ、WebaudioAPIで使用できるようになる
+    buffer = await audioContext.decodeAudioData(arrayBuffer);
+    
+    // 再生時間を更新するためのスライダーの最大値を設定
+    slider.max = buffer.duration;
+  }
+  // ページの読み込み時に音声ファイルをフェッチ・難易度別に音声ファイルを分岐
+  // お手本音声を後で格納（23/5/8）
+  function levelSelecter() {
+    if (levelSelectText.includes('初級')) {
+      fetchAudio('/test.mp3');
+    } else if (levelSelectText.includes('中級')) {
+      fetchAudio('/test.mp3');
+    } else if (levelSelectText.includes('上級')) {
+      fetchAudio('/test.mp3');
+    }
+  }
+  levelSelecter()
 
 
 
@@ -32,8 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
       source.buffer = buffer;
       source.connect(audioContext.destination);
       source.start(0, resumeTime);
-      playAudioButton.disabled = true;
-      stopAudioButton.disabled = false;
+      audioPLayback.disabled = true;
+      audioStop.disabled = false;
 
       // 再生を開始する前にupdateProgress関数を呼び出す
       updateProgress();
@@ -51,8 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
       source = null;
 
       // ボタンの状態を更新
-      playAudioButton.disabled = false;
-      stopAudioButton.disabled = true;
+      audioPLayback.disabled = false;
+      audioStop.disabled = true;
     }
   }
 
@@ -76,8 +101,8 @@ document.addEventListener('DOMContentLoaded', function () {
       playbackTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
       if (elapsedTime >= buffer.duration) {
-        playAudioButton.disabled = false;
-        stopAudioButton.disabled = true;
+        audioPLayback.disabled = false;
+        audioStop.disabled = true;
 
         // 再生が終了した場合、再生時間をリセット
         resetPlayback();
@@ -121,8 +146,8 @@ document.addEventListener('DOMContentLoaded', function () {
   
       // 再生が停止したら、ボタンの状態を更新
       source.onended = () => {
-        playAudioButton.disabled = false;
-        stopAudioButton.disabled = true;
+        audioPLayback.disabled = false;
+        audioStop.disabled = true;
       };
   
       updateProgress();
@@ -130,21 +155,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   
 
-
-
-
-  // 既存音声ファイルを読み込み
-  async function fetchAudio(url) {
-    const response = await fetch(url);
-    const arrayBuffer = await response.arrayBuffer();
-    // 音声ファイルのデータがデコードされ、WebaudioAPIで使用できるようになる
-    buffer = await audioContext.decodeAudioData(arrayBuffer);
-    
-    // 再生時間を更新するためのスライダーの最大値を設定
-    slider.max = buffer.duration;
-  }
-  // ページの読み込み時に音声ファイルをフェッチ
-  fetchAudio('/test.mp3');
 
 
   // エラーハンドリングをまとめる
@@ -163,8 +173,8 @@ document.addEventListener('DOMContentLoaded', function () {
   //イベントリスナー
   // withErrorHandlingで各関数をラップしてエラーハンドリングおこなう
   function addEventListeners() {
-    playAudioButton.addEventListener('click', () => withErrorHandling(playAudio)());
-    stopAudioButton.addEventListener('click', () => withErrorHandling(stopAudio)());
+    audioPLayback.addEventListener('click', () => withErrorHandling(playAudio)());
+    audioStop.addEventListener('click', () => withErrorHandling(stopAudio)());
   }
   addEventListeners();
 });

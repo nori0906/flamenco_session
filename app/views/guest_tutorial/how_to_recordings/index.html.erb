@@ -2,41 +2,34 @@
   <h1 class="py-5 ps-3">RECORDING</h1>
   <div class="container">
 
-    <%= render "layouts/guest_tutorial/#{@level}_help_text" %>
+    <%= render "layouts/guest_tutorial/#{@level}_help_text", level_name: @level %>
 
-    <h3>お手本</h3>
-    <div class="mb-4">
-      <%= audio_tag(url_for(), controls: true, id: "refRecord") %>
-      <button type="button" class="btn btn-custom btn-lg text-white">再生</button>
-    </div>
 
-    <h3>チャレンジ</h3>
-    
-    <p>音源</p>
-    <div class="record mb-5">
-      <%# WebAudioAPIでコントローラー作成 %>
-      <div class="bg-dark border border-secondary border-3 rounded-pill d-flex w-50 p-3 mb-2">
-        <span id="playback-audio-time">0:00</span>
-        <input id="audio-slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
+    <div class="pt-4 pb-3">
+      <h3>チャレンジ</h3>
+      <p>音源</p>
+      <div class="record mb-5">
+        <%# WebAudioAPIでコントローラー作成 %>
+        <div class="bg-dark border border-secondary border-3 rounded-pill d-flex w-50 p-3 mb-2">
+          <span id="audio-playback-time">0:00</span>
+          <input id="audio-slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
+        </div>
+        <button type="button" class="btn btn-custom btn-lg border-bottom border-end border-5 border-dark shadow text-white ms-3" id="audio-playback">Play</button>
+        <button type="button" class="btn stop-btn btn-lg border-bottom border-end border-5 border-dark shadow text-white ms-3" id="audio-stop" disabled>Stop</button>
       </div>
 
-      <button type="button" class="btn btn-custom btn-lg text-white ms-3" id="play-audio-button">Play</button>
-      <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="stop-audio-button" disabled>Stop</button>
-    </div>
-
-    <p>録音</p>
-    <div class="record mb-5">
-
-      <%# scssファイルに一旦記載 %>
-      <div class="bg-dark border border-secondary border-3 rounded-pill d-flex w-50 p-3 mb-2">
-        <span id="playback-recording-time">0:00</span>
-        <input id="recording-slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
+      <p>録音</p>
+      <div class="record mb-5">
+        <%# scssファイルに一旦記載 %>
+        <div class="bg-dark border border-secondary border-3 rounded-pill d-flex w-50 p-3 mb-2">
+          <span id="recording-playback-time">0:00</span>
+          <input id="recording-slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
+        </div>
+        <button type="button" class="btn btn-custom border-bottom border-end border-5 border-dark shadow btn-lg text-white" id="record-button">Start</button>
+        <button type="button" class="btn stop-btn border-bottom border-end border-5 border-dark shadow btn-lg text-white ms-3" id="stop-button" disabled>Stop</button>
+        <button type="button" class="btn btn-custom border-bottom border-end border-5 border-dark shadow btn-lg text-white ms-3" id="record-playback" disabled>Play</button>
+        <button type="button" class="btn stop-btn border-bottom border-end border-5 border-dark shadow btn-lg text-white ms-3" id="record-stop" disabled>Stop</button>
       </div>
-
-      <button type="button" class="btn btn-custom btn-lg text-white" id="record-button">Start</button>
-      <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="stop-button" disabled>Stop</button>
-      <button type="button" class="btn btn-custom btn-lg text-white ms-3" id="play-recording-button" disabled>Play</button>
-      <button type="button" class="btn stop-btn btn-lg text-white ms-3" id="stop-recording-button" disabled>Stop</button>
     </div>
 
 
@@ -47,5 +40,7 @@
   </div>
 </div>
 
+<%# ここで一旦js読み込み %>
+<%= javascript_pack_tag 'tutorial-model-audio' %>
 <%= javascript_pack_tag 'tutorial-audio' %>
 <%= javascript_pack_tag 'tutorial-recording' %>

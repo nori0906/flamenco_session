@@ -1,7 +1,9 @@
 <div class="card border border-3 border-white bg-color-tutorial-card mb-5">
   <div class="card-body text-white">
-    <h2 class="card-title mb-3">クリック音に合わせてパルマを叩いてみよう!!</h2>
-    <div class="card-text">
+    <div class="card-title mb-4" id="level-select">
+      <h2><%= by_level(level_name) %>： クリック音に合わせてパルマを叩いてみよう!!</h2>
+    </div>
+    <div class="card-text mb-5">
       <h3 >使い方説明</h3>
       <ol>
         <li>録音開始ボタンで開始</li>
@@ -9,6 +11,18 @@
         <li>停止ボタンで停止</li>
         <li>再生ボタンで聞いてみよう</li>
       </ol>
+    </div>
+    <div class="card-text">
+      <h3>お手本</h3>
+      <div class="record mb-1">
+        <%# WebAudioAPIでコントローラー作成 %>
+        <div class="bg-dark border border-secondary border-3 rounded-pill d-flex w-50 p-3 mb-3">
+          <span id="model-audio-playback-time">0:00</span>
+          <input id="model-audio-slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
+        </div>
+        <button type="button" class="btn btn-custom btn-lg border-bottom border-end border-5 border-dark shadow text-white ms-3" id="model-audio-playback">Play</button>
+        <button type="button" class="btn stop-btn btn-lg border-bottom border-end border-5 border-dark shadow text-white ms-3" id="model-audio-stop" disabled>Stop</button>
+      </div>
     </div>
   </div>
 </div>
