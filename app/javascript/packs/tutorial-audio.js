@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
   // 録音コントローラー
   function resetPlayback() {
     slider.value = 0;
@@ -79,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (elapsedTime >= buffer.duration) {
         playAudioButton.disabled = false;
         stopAudioButton.disabled = true;
-        
+
         // 再生が終了した場合、再生時間をリセット
         resetPlayback();
         resumeTime = 0; // 追加: 再生が最後まで終了した場合にresumeTimeをリセット
@@ -120,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
       source.connect(audioContext.destination);
       source.start(0, newTime);
   
-      // ボタンの状態を更新
+      // 再生が停止したら、ボタンの状態を更新
       source.onended = () => {
         playAudioButton.disabled = false;
         stopAudioButton.disabled = true;
@@ -164,8 +163,6 @@ document.addEventListener('DOMContentLoaded', function () {
   //イベントリスナー
   // withErrorHandlingで各関数をラップしてエラーハンドリングおこなう
   function addEventListeners() {
-    // recordButton.addEventListener('click', () => withErrorHandling(startRecording)());
-    // stopButton.addEventListener('click', () => withErrorHandling(stopRecording)());
     playAudioButton.addEventListener('click', () => withErrorHandling(playAudio)());
     stopAudioButton.addEventListener('click', () => withErrorHandling(stopAudio)());
   }

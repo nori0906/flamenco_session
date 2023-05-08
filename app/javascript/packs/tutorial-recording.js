@@ -8,16 +8,19 @@ document.addEventListener('DOMContentLoaded', function () {
   // コンローラー追加
   const playbackTime = document.getElementById('playback-recording-time');
   const slider = document.getElementById('recording-slider');
-  let source;
   let startTime;
   let resumeTime = 0; // 一時停止時間を保存する変数
-
-
+  
+  
   // WebAudioAPI
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   let mediaRecorder;
   let recordedChunks = [];
   let buffer;
+  let audioBuffer; // 既存音声バッファを格納
+  let source;
+  let audioSource; // 既存音声ソースを格納
+
 
   const constraints = {
     "video": false,
@@ -47,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     mediaRecorder = new MediaRecorder(stream); // 「mediaRecorder」とは？: 録音機能とそのデータを取得ができる
     mediaRecorder.start();
+    startAudio();
 
     mediaRecorder.addEventListener('dataavailable', (event) => {
       recordedChunks.push(event.data);
@@ -72,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   async function stopRecording() {
     if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      stopAudio();
       mediaRecorder.stop();
       stopButton.disabled = true;
       recordButton.disabled = false;
@@ -120,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
       stopRecordingButton.disabled = true;
     }
   }
+
 
 
   // 録音コントローラー
@@ -193,6 +199,36 @@ document.addEventListener('DOMContentLoaded', function () {
       updateProgress();
     }
   });
+
+
+
+  // 既存音声ファイルを読み込み
+  async function fetchAudio(url) {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    // 音声ファイルのデータがデコードされ、WebaudioAPIで使用できるようになる
+    audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+  }
+  // ページの読み込み時に音声ファイルをフェッチ
+  fetchAudio('/test.mp3');
+
+
+function startAudio() {
+  if (audioBuffer) {
+    audioSource = audioContext.createBufferSource();
+    audioSource.buffer = audioBuffer;
+    audioSource.connect(audioContext.destination);
+    audioSource.start();
+  }
+};
+
+function stopAudio() {
+  if (audioSource) {
+    // ソースを停止
+    audioSource.stop();
+  }
+};
+
 
 
 
