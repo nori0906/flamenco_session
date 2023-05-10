@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
   console.log(levelSelectText);
   
   // コンローラー追加
-  const playbackTime = document.getElementById('recording-playback-time');
-  const slider = document.getElementById('recording-slider');
+  const playbackTime = document.getElementById('record-playback-time');
+  const slider = document.getElementById('record-slider');
   let startTime;
   let resumeTime = 0; // 一時停止時間を保存する変数
   
@@ -153,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
   
+
   // 録音開始時に音声ファイルを再生
   function startAudio() {
     if (audioBuffer) {
@@ -253,6 +254,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const arrayBuffer = await response.arrayBuffer();
     // 音声ファイルのデータがデコードされ、WebaudioAPIで使用できるようになる
     audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+    recordPlayback.disabled = true;
   }
   // ページの読み込み時に音声ファイルをフェッチ
   fetchAudio('/test.mp3');

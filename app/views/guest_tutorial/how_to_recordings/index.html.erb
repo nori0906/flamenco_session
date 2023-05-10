@@ -1,39 +1,28 @@
 <div class="bkg-img-index text-white">
-  <h1 class="py-5 ps-3">RECORDING</h1>
+  <p class="fs-2 pt-2 ps-4">RECORDING</p>
   <div class="container">
+    <div class="text-center mb-4" id="level-select">
+      <h1 class="fs-2 fw-bold"><%= by_level_title(@level) %></h1>
+    </div>
+    <div class="d-flex justify-content-center mb-4">
+      <%= render "layouts/guest_tutorial/#{@level}_help_text", level_name: @level %>
+    </div>
 
-    <%= render "layouts/guest_tutorial/#{@level}_help_text", level_name: @level %>
-
-
-    <div class="pt-4 pb-3">
-      <h3>チャレンジ</h3>
-      <p>音源</p>
-      <div class="record mb-5">
-        <%# WebAudioAPIでコントローラー作成 %>
-        <div class="bg-dark border border-secondary border-3 rounded-pill d-flex w-50 p-3 mb-2">
-          <span id="audio-playback-time">0:00</span>
-          <input id="audio-slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
+    <div class="pt-4 pb-3 mb-5">
+      <h3 class="text-center mb-4">↓↓ レコーディング開始!! ↓↓</h3>
+      <div class="mb-3">
+        <div class="mb-5 d-flex justify-content-center">
+          <%= render "layouts/guest_tutorial/recording_btn" %>
         </div>
-        <button type="button" class="btn btn-custom btn-lg border-bottom border-end border-5 border-dark shadow text-white ms-3" id="audio-playback">Play</button>
-        <button type="button" class="btn stop-btn btn-lg border-bottom border-end border-5 border-dark shadow text-white ms-3" id="audio-stop" disabled>Stop</button>
+        <div class="d-flex justify-content-center">
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "record", size: "50" %>
+        </div>
       </div>
 
-      <p>録音</p>
-      <div class="record mb-5">
-        <%# scssファイルに一旦記載 %>
-        <div class="bg-dark border border-secondary border-3 rounded-pill d-flex w-50 p-3 mb-2">
-          <span id="recording-playback-time">0:00</span>
-          <input id="recording-slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
-        </div>
-        <button type="button" class="btn btn-custom border-bottom border-end border-5 border-dark shadow btn-lg text-white" id="record-button">Start</button>
-        <button type="button" class="btn stop-btn border-bottom border-end border-5 border-dark shadow btn-lg text-white ms-3" id="stop-button" disabled>Stop</button>
-        <button type="button" class="btn btn-custom border-bottom border-end border-5 border-dark shadow btn-lg text-white ms-3" id="record-playback" disabled>Play</button>
-        <button type="button" class="btn stop-btn border-bottom border-end border-5 border-dark shadow btn-lg text-white ms-3" id="record-stop" disabled>Stop</button>
-      </div>
     </div>
 
 
-    <div class="pb-5">
+    <div class="d-flex justify-content-center pb-5">
       <%= link_to "次のステップへ", guest_tutorial_introductions_path, class: "btn btn-lg btn-custom text-white rounded-pill px-3 py-3 fw-bold" , type: "button" %>
     </div>
 
