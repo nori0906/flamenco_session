@@ -1,15 +1,15 @@
 <div class="bg-color-tutorial">
   <div class="container">
 
-    <div class="row justify-content-center text-white pt-2 pb-5">
+    <div class="row justify-content-center text-white pt-1 pb-5">
       <div class="text-center py-5 mb-5">
-        <h1 class="fw-bold">チュートリアル</h1>
-        <p class="fs-5">パルマを叩いてフラメンコ体験!!</p>
+        <h1 class="fw-bold ">チュートリアル</h1>
+        <%# <p class="fs-5">パルマを叩いてフラメンコ体験!!</p> %>
       </div>
 
-      <div class="w-75">
-        <h3>STEP1： パルマの叩き方を知ろう</h3>
-        <div class="card rounded bg-color-tutorial-card  border border-white border-3 mt-3 mb-5">
+      <div class="w-75 mb-5">
+        <h2 class="text-center mb-4">STEP1： パルマの叩き方を知ろう!!</h2>
+        <div class="card rounded bg-color-tutorial-card  border border-white border-3 p-4">
           <div class="card-body text-start mb-5">
             <h4 class="card-title fs-3 mb-3">パルマとは？</h4>
             <p class="card-text fs-5">フラメンコでは手拍子を表します。<br>高い音(セコ)・低い音(ソルダ)の二種類の叩き方があり、リズムを支えるドラムのような役割があります。本場スペインでは手拍子専門のアーティスト(パルメーロ)がいるほど、フラメンコを支える重要な役割を担っています。</p>
@@ -37,12 +37,13 @@
         </div>
       </div>
 
-      <div class="w-75">
-        <h3>STEP3: 実践!!流れる音に合わせてパルマを叩こう！</h3>
-        <div class="row row-cols-1">
-          <%= link_to "難易度☆：テンポに合わせて叩こう", guest_tutorial_how_to_recordings_path(level: "easy"), class: "btn btn-default text-white col rounded-pill bg-color-tutorial-card mb-3" %>
-          <%= link_to "難易度☆☆：リズムに合わせて叩こう", guest_tutorial_how_to_recordings_path(level:"normal"), class: "btn btn-default text-white col rounded-pill bg-color-tutorial-card mb-3" %>
-          <%= link_to "難易度☆☆☆：メロディーに合わせて叩こう", guest_tutorial_how_to_recordings_path(level: "hard"), class: "btn btn-default text-white col rounded-pill bg-color-tutorial-card mb-3" %>
+      <div class="d-flex flex-column align-items-center w-75 mt-5">
+        <h2 class="mb-5">STEP2: 流れる音に合わせてパルマを叩こう！</h2>
+        <p class="fs-4 mb-4">↓↓好きな難易度を選択して録音開始！↓↓</p>
+        <div>
+          <%= render "layouts/guest_tutorial/level_btn", {btn_name: "難易度☆：テンポに合わせて叩こう", level_name: "easy" }%>
+          <%= render "layouts/guest_tutorial/level_btn", {btn_name: "難易度☆☆：リズムに合わせて叩こう", level_name: "normal" }%>
+          <%= render "layouts/guest_tutorial/level_btn", {btn_name: "難易度☆☆☆：メロディーに合わせて叩こう", level_name: "hard" }%>
         </div>
       </div>
     </div>

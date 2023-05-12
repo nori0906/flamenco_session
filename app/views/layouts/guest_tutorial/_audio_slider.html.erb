@@ -1,8 +1,8 @@
 
 <%# WebAudioAPIでコントローラー作成 %>
-<div class="bg-dark border border-secondary border-3 rounded-pill d-flex align-items-center w-<%= "#{size}" %> py-1 px-4">
+<div class="bg-dark border border-secondary border-3 rounded-pill d-flex align-items-center w-<%= "#{size}" %> py-2 px-4">
   <button type="button" id="<%= "#{slider_type}" %>-playback" class="btn btn-custom btn-lg text-white me-3">Play</button>
-  <button type="button" id="<%= "#{slider_type}" %>-stop" class="btn stop-btn btn-lg text-white me-3" disabled>Stop</button>
+  <button type="button" id="<%= "#{slider_type}" %>-stop" class="btn stop-btn btn-lg text-white me-3" disabled>Pause</button>
   <span id="<%= "#{slider_type}" %>-playback-time">0:00</span>
   <input id="<%= "#{slider_type}" %>-slider" class="ms-2" type="range" min="0" max="100" value="0" style="width: 80%;">
 </div>
