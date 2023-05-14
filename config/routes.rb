@@ -13,6 +13,11 @@ Rails.application.routes.draw do
     resources :how_to_recordings, only: %i[index]
   end
 
+  # ゲスト投稿閲覧についての設定
+  scope :guest do
+    resources :posts, only: %i[index show], as: :guest
+  end
+
   resources :posts
   resources :users, only: %i[new create]
   resource :profile, only: %i[show edit update]

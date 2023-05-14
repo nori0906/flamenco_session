@@ -11,7 +11,7 @@
     <div class="card">
       <div class="card-body">
         <h2 class="card-title"><%= "#{@post.title}" %></h2>
-        
+
         <%# 音源 %>
         <% if @post.voice.attached? %>
           <p><%= audio_tag(url_for(@post.voice), controls: true, id: "record") %></p>
