@@ -1,0 +1,29 @@
+<div class="card border border-3 border-white bg-color-tutorial-card w-75">
+  <div class="card-body text-white">
+    <div class="card-text">
+      <div class="mb-5">
+        <h3>タパとは？</h3>
+        <p>ギター奏法の一つ。音をミュートしてジャカジャカと鳴らす弾き方<br>リズム出しなどに使われる。</p>
+      </div>
+      <%# <div class="mb-4">
+        <h3>使い方説明</h3>
+        <ol>
+          <li>録音開始ボタンで開始</li>
+          <li>リズムに合わせて手拍子!</li>
+          <li>停止ボタンで停止</li>
+          <li>再生ボタンで聞いてみよう</li>
+        </ol>
+      </div> %>
+      <div class="row">
+        <div class="col">
+          <h3>お手本</h3>
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "model-audio", size: "100" %>
+        </div>
+        <div class="col">
+          <h3>コラボ音源</h3>
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", size: "100" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

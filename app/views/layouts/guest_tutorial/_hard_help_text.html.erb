@@ -1,0 +1,23 @@
+<div class="card border border-3 border-white bg-color-tutorial-card mb-5">
+  <div class="card-body text-white">
+    <div class="card-text">
+      <div class="mb-5">
+        <h3>ポイント</h3>
+        <ol>
+          <li>最初に始まるクリック音に合わせてパルマを叩き始めよう!</li>
+          <li>ギターのメロディにつられないようにキープ!</li>
+        </ol>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h3>お手本</h3>
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "model-audio", size: "100" %>
+        </div>
+        <div class="col">
+          <h3>コラボ音源</h3>
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", size: "100" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

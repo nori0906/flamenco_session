@@ -1,0 +1,2 @@
+module GuestTutorial::IntroductionsHelper
+end

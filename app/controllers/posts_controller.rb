@@ -1,9 +1,12 @@
 class PostsController < ApplicationController
-  skip_before_action :require_login
+  # 実際の使用するコード
+  before_action :require_login, except: %i[index show]
+
+  # 一時利用
+  # skip_before_action :require_login
 
   def index
     browser = request.browser
-
     if browser == "Chrome" || browser == "Edge"
       @posts = Post.published.where(ext_type: "webm").order(created_at: :desc)
     elsif browser == "Safari"
@@ -37,8 +40,7 @@ class PostsController < ApplicationController
 
   def create
     voice_data = voice_params[:voice]
-    ext = ext_params[:ext]
-
+    ext = ext_params[:ext] # ファイルの拡張子を取得
 
     File.open("tempfile." + ext, "wb") do |f|
       f.write(Base64.decode64(voice_data))
@@ -85,7 +87,6 @@ class PostsController < ApplicationController
   def ext_params
     params.permit(:ext)
   end
-
 
   def post_params
     params.require(:post).permit(:title, :body, :status, :ext_type)
