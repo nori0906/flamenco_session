@@ -95,7 +95,9 @@ document.addEventListener('DOMContentLoaded', function () {
       });
       
       const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+      // 録音時に格納したデータをリセット
       recordedChunks = [];
+      
       buffer = audioBuffer;
       recordPlayback.disabled = false;
     });

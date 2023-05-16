@@ -38,25 +38,40 @@ class PostsController < ApplicationController
     end
   end
 
+
   def create
-    voice_data = voice_params[:voice]
-    ext = ext_params[:ext] # ファイルの拡張子を取得
+    @post = Post.new(post_params)
 
-    File.open("tempfile." + ext, "wb") do |f|
-      f.write(Base64.decode64(voice_data))
-    end
+    # attach voice recording to post
+    recording_blob = ActiveStorage::Blob.find_signed(recording_params[:id])
+    @post.voice.attach(recording_blob)
 
-    post = Post.new(title: "", ext_type: ext)
-    # クエリパラメータのref_idに値があれば、collab_srcカラムにidを格納する
-    post.collab_src = params[:ref_id] if params[:ref_id].present?
-    post.voice.attach(io: File.open("tempfile." + ext ), filename: "newfile." + ext )
-    if post.save!
-      File.delete("tempfile." + ext )
-      render json: { id: post.id }
+    if @post.save
+      redirect_to @post
     else
-      # TODO: 後で実装する
+      # handle error...
     end
   end
+
+  # def create
+  #   voice_data = audio_params[:voice]
+  #   ext = audio_params[:ext] # ファイルの拡張子を取得
+
+  #   File.open("tempfile." + ext, "wb") do |f|
+  #     f.write(Base64.decode64(voice_data))
+  #   end
+
+  #   post = Post.new(title: "", ext_type: ext)
+  #   # クエリパラメータのref_idに値があれば、collab_srcカラムにidを格納する
+  #   post.collab_src = params[:ref_id] if params[:ref_id].present?
+  #   post.voice.attach(io: File.open("tempfile." + ext ), filename: "newfile." + ext )
+  #   if post.save!
+  #     File.delete("tempfile." + ext )
+  #     render json: { id: post.id }
+  #   else
+  #     # TODO: 後で実装する
+  #   end
+  # end
 
   def edit
     @post = Post.find(params[:id])
@@ -80,15 +95,16 @@ class PostsController < ApplicationController
 
   private
 
-  def voice_params
-    params.permit(:voice)
-  end
 
-  def ext_params
-    params.permit(:ext)
+  def audio_params
+    params.permit(:voice, :ext)
   end
 
   def post_params
     params.require(:post).permit(:title, :body, :status, :ext_type)
+  end
+
+  def recording_params
+    params.require(:post).permit(:voice_blob_id)
   end
 end

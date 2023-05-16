@@ -59,10 +59,11 @@ async function createAudio () {
   // 確認
   console.log(mime);
 
-
-  const mediaRecorder = new MediaRecorder(stream, { // <3>
-    mimeType: mime,
+  const mediaRecorder = new MediaRecorder(stream, {
+    mimeType: mime
   })
+  const audioChunks = [];
+
 
   buttonStart.addEventListener('click', () => {
     if(refRecord){
@@ -70,7 +71,7 @@ async function createAudio () {
       // 録音開始時と同時に元音声を再生させる
       refRecord.play()
     }
-      mediaRecorder.start() // <4>
+      mediaRecorder.start()
       buttonStart.setAttribute('disabled', '')
       buttonStop.removeAttribute('disabled')
   })
@@ -99,53 +100,46 @@ async function createAudio () {
     buttonNext.style.display = 'none'
   })
 
-  mediaRecorder.addEventListener('dataavailable', event => { // <6>
+
+  mediaRecorder.addEventListener('dataavailable', event => {
+    // 「event.data」はすでにblob形式をデータを持っている
     player.src = URL.createObjectURL(event.data) //ブラウザのプレイヤーにセットするため
+    audioChunks.push(event.data);
+  });
 
+  // 録音完了時のボタンをクリックした際に発火・サーバーに送信する処理を実行
+  buttonNext.addEventListener('click', () => {
 
-    buttonNext.addEventListener('click', () => {
-
-      //base64形式に変換しサーバーに送る処理
-      let reader = new FileReader();
-      reader.readAsDataURL(event.data);
-      reader.onloadend = () => {
-        base64 = reader.result;
-        base64 = base64.split(',')[1];
-        console.log(base64);
-
-        // クエリパラメーター取得
-        const queryParam = window.location.search
-
-        // MIMEタイプによって、拡張子を変数に代入
-        let extType = ''
-        if (mime == 'audio/mp4') {
-          extType = 'm4a'
-        } else if (mime == 'audio/webm') {
-          extType = 'webm'
-        };
-
-
-        axios({
-          method: 'post',
-          url: '/posts' + queryParam,
-          data: {
-            voice: base64,
-            ext: extType
-          },
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-          }
-        })
-
-        // 追加
-        .then(function (response) {
-          console.log(window.location.href = '/posts/' + response.data.id + '/edit');
-        })
-        .catch(function (error) {
-          console.log("error");
-        });
-      };
+    const audioBlob = new Blob(audioChunks);
+    // クエリパラメーター取得
+    const queryParam = window.location.search
+  
+    // MIMEタイプによって、拡張子を変数に代入
+    let extType = ''
+    if (mime == 'audio/mp4') {
+      extType = 'm4a'
+    } else if (mime == 'audio/webm') {
+      extType = 'webm'
+    };
+  
+    const formData = new FormData();
+    formData.append('voice', audioBlob);
+    formData.append('ext', extType);
+  
+    axios({
+      method: 'post',
+      url: '/posts' + queryParam,
+      data: formData,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+    })
+    .then(function (response) {
+      console.log(window.location.href = '/posts/' + response.data.id + '/edit');
+    })
+    .catch(function (error) {
+      console.log("error");
     });
   });
 };
