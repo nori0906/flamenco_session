@@ -123,7 +123,7 @@ async function createAudio () {
     };
 
     const formData = new FormData();
-    formData.append('recording[voice]', audioBlob, 'recording.${subType}');
+    formData.append('recording[voice]', audioBlob, `recording.${subType}`);
 
 
 
@@ -139,7 +139,9 @@ async function createAudio () {
     }).then((response) => {
       // サーバーから返されたBlob IDを取得
       const blobId = response.data.id;
-  
+      const blobUrl = response.data.blob_url;
+
+
       // 投稿フォームを表示
       const form = document.getElementById('post_form');
       form.style.display = 'block';
@@ -147,10 +149,15 @@ async function createAudio () {
       // 録音画面を非表示にする
       const recordingScreen = document.getElementById('recording_screen');
       recordingScreen.style.display = 'none';
+
+      const record = document.getElementById('record');
+      // Blobのsigned_idからURLを取得
+      record.src = blobUrl;
   
       // フォームの隠しフィールドにBlob IDを設定
       const blobIdInput = document.getElementById('post_voice_blob_id');
       blobIdInput.value = blobId;
+
     }).catch(function (error) {
       console.log(error);
     });

@@ -14,11 +14,12 @@ class RecordingsController < ApplicationController
         filename: audio_params[:voice].original_filename,
         content_type: audio_params[:voice].content_type
       )
+      blob_url = rails_blob_path(blob)
 
       # 保存済みかのチェック
       if blob.persisted?
         # クライアントへblob Idを渡す
-        render json: { id: blob.signed_id }
+        render json: { id: blob.signed_id, blob_url: blob_url}
       else
         render json: { error: 'Failed to create blob' }, status: 500
       end

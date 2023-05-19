@@ -93,6 +93,7 @@ class PostsController < ApplicationController
 
 
   def post_params
+    # 「:voice_blob_id」は仮属性として一時的に使用している
     params.require(:post).permit(:title, :body, :status, :ext_type, :voice_blob_id)
   end
 end
