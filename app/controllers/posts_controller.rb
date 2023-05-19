@@ -40,38 +40,33 @@ class PostsController < ApplicationController
 
 
   def create
-    @post = Post.new(post_params)
+    @post = Post.new(
+      title: post_params[:title],
+      body: post_params[:body],
+      status: post_params[:status]
+    )
+    
+    # Blob IDから録音データを取得
+    voice_blob = ActiveStorage::Blob.find(post_params[:voice_blob_id])
 
-    # attach voice recording to post
-    recording_blob = ActiveStorage::Blob.find_signed(recording_params[:id])
-    @post.voice.attach(recording_blob)
+    # Postに録音データをアタッチ
+    @post.voice.attach(voice_blob)
+    
+    #MMIMEタイプ（サブタイプ名）をPostに格納
+    mime_type = @post.voice.content_type
+    mime_subtype = mime_type.split("/").last
+    @post.ext_type = mime_subtype
 
     if @post.save
-      redirect_to @post
+      # 成功したときの処理
+      redirect_to posts_path, flash: {success: "投稿しました"}
     else
-      # handle error...
+      # 失敗したときの処理
+      flash.now[:danger] = @post.errors.full_messages.to_sentence
+      render :new
     end
   end
 
-  # def create
-  #   voice_data = audio_params[:voice]
-  #   ext = audio_params[:ext] # ファイルの拡張子を取得
-
-  #   File.open("tempfile." + ext, "wb") do |f|
-  #     f.write(Base64.decode64(voice_data))
-  #   end
-
-  #   post = Post.new(title: "", ext_type: ext)
-  #   # クエリパラメータのref_idに値があれば、collab_srcカラムにidを格納する
-  #   post.collab_src = params[:ref_id] if params[:ref_id].present?
-  #   post.voice.attach(io: File.open("tempfile." + ext ), filename: "newfile." + ext )
-  #   if post.save!
-  #     File.delete("tempfile." + ext )
-  #     render json: { id: post.id }
-  #   else
-  #     # TODO: 後で実装する
-  #   end
-  # end
 
   def edit
     @post = Post.find(params[:id])
@@ -97,14 +92,10 @@ class PostsController < ApplicationController
 
 
   def audio_params
-    params.permit(:voice, :ext)
+    params.require(:recording).permit(:voice, :ext)
   end
 
   def post_params
-    params.require(:post).permit(:title, :body, :status, :ext_type)
-  end
-
-  def recording_params
-    params.require(:post).permit(:voice_blob_id)
+    params.require(:post).permit(:title, :body, :status, :ext_type, :voice_blob_id)
   end
 end

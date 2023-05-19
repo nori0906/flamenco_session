@@ -123,23 +123,34 @@ async function createAudio () {
     };
   
     const formData = new FormData();
-    formData.append('voice', audioBlob);
-    formData.append('ext', extType);
+    formData.append('recording[voice]', audioBlob);
+    formData.append('recording[ext]', extType);
   
     axios({
       method: 'post',
-      url: '/posts' + queryParam,
+      url: '/recordings',
       data: formData,
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
       }
-    })
-    .then(function (response) {
-      console.log(window.location.href = '/posts/' + response.data.id + '/edit');
-    })
-    .catch(function (error) {
-      console.log("error");
+    }).then((response) => {
+      // サーバーから返されたBlob IDを取得
+      const blobId = response.data.id;
+  
+      // 投稿フォームを表示
+      const form = document.getElementById('post_form');
+      form.style.display = 'block';
+
+      // 録音画面を非表示にする
+      const recordingScreen = document.getElementById('recording_screen');
+      recordingScreen.style.display = 'none';
+  
+      // フォームの隠しフィールドにBlob IDを設定
+      const blobIdInput = document.getElementById('post_voice_blob_id');
+      blobIdInput.value = blobId;
+    }).catch(function (error) {
+      console.log(error);
     });
   });
 };

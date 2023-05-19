@@ -12,7 +12,7 @@
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li><%= link_to "投稿一覧", posts_path, class: "nav-link text-white active" %></li>
           <% if logged_in? %>
-            <li><%= link_to "録音する", new_post_path, class: "nav-link text-white" %></li>
+            <li><%= link_to "録音する", new_recording_path, class: "nav-link text-white" %></li>
             
             <li>
               <div class="dropdown">

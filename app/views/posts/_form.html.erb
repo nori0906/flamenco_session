@@ -1,0 +1,23 @@
+<%= form_with model: @post, local: true do |f| %>
+  <div class="row">
+    <div  class="mb-3">
+      <%= f.label :title, class: "form-label text-white" %>
+      <%= f.text_field :title, class: "form-control", placeholder: "タイトル" %>
+    </div>
+    <div  class="mb-3">
+      <%= f.label :body, class: "form-label text-white" %>
+      <%= f.text_area :body, class: "form-control", rows: "3" %>
+    </div>
+    <div  class="mb-3">
+      <%= f.label :status, class: "form-label text-white" %>
+      <%= f.select :status, Post.statuses.keys.map {|k| [k, k]}, {}, { class: 'form-control', style: 'margin-bottom: 15px;', data: {} }  %>
+    </div>
+    
+    <!-- 隠しフィールドを追加して、Blob IDを保存できるようにする -->
+    <%= f.hidden_field :voice_blob_id, id: 'post_voice_blob_id' %>
+
+    <div>
+      <%= f.submit nil, class: "btn btn-secondary" %>
+    </div>
+  </div>
+<% end %>
