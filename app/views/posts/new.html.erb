@@ -1,15 +1,10 @@
 
-<div class="bkg-img-index">
+<%# 録音画面 %>
+<div class="bkg-img-index" id="recording_screen">
   <div class="container">
     <h1 class="text-white py-5">RECORDING</h1>
 
-    <div>
-      <% if @ref_post %>
-        <p>セッション元</p>
-        <%= @ref_post.id %>
-        <p><%= audio_tag(url_for(@ref_post.voice), controls: true, id: "refRecord") %></p>
-      <% end %>
-    </div>
+    <%# コラボ元音源の再生処理の追加が必要 %>
 
     <div class="record">
       <div >
@@ -23,6 +18,19 @@
         <audio controls class="my-5" id="player"></audio>
       </div>
     </div>
+  </div>
+</div>
+
+<%# 投稿フォーム %>
+<div class="bkg-img-pro form-style" id="post_form">
+  <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">投稿画面</h1>
+  <div class="container">
+    <%= render partial: 'layouts/flash' %>
+    <p class="text-white">投稿フォーム</p>
+    <div>
+      <%= render 'posts/form', post: @post %>
+    </div>
+
   </div>
 </div>
 
