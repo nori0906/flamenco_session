@@ -47,7 +47,7 @@ class PostsController < ApplicationController
     )
     
     # Blob IDから録音データを取得
-    voice_blob = ActiveStorage::Blob.find(post_params[:voice_blob_id])
+    voice_blob = ActiveStorage::Blob.find_signed!(post_params[:voice_blob_id])
 
     # Postに録音データをアタッチ
     @post.voice.attach(voice_blob)
@@ -76,7 +76,7 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
-      redirect_to posts_path, flash: {success: "投稿しました"}
+      redirect_to posts_path, flash: {success: "編集しました"}
     else
       flash.now[:danger] = @post.errors.full_messages.to_sentence
       render :edit

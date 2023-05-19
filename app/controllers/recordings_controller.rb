@@ -18,7 +18,7 @@ class RecordingsController < ApplicationController
       # 保存済みかのチェック
       if blob.persisted?
         # クライアントへblob Idを渡す
-        render json: { id: blob.id }
+        render json: { id: blob.signed_id }
       else
         render json: { error: 'Failed to create blob' }, status: 500
       end
