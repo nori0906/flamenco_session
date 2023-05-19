@@ -57,6 +57,7 @@ class PostsController < ApplicationController
     mime_subtype = mime_type.split("/").last
     @post.ext_type = mime_subtype
 
+
     if @post.save
       # 成功したときの処理
       redirect_to posts_path, flash: {success: "投稿しました"}
@@ -90,10 +91,6 @@ class PostsController < ApplicationController
 
   private
 
-
-  def audio_params
-    params.require(:recording).permit(:voice, :ext)
-  end
 
   def post_params
     params.require(:post).permit(:title, :body, :status, :ext_type, :voice_blob_id)

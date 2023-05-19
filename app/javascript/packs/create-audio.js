@@ -9,24 +9,26 @@ async function createAudio () {
   const refRecord = document.querySelector('#refRecord')
 
 
-  ua = window.navigator.userAgent.toLowerCase() //ブラウザのユーザーエージェントを取得（小文字に変換）し変数uaに格納
-  chrome = (ua.indexOf('chrome') !== -1) && (ua.indexOf('edge') === -1) && (ua.indexOf('opr') === -1); // ブラウザがchromeかどうかを確認し、結果の真偽値を変数に格納
-
-  let constraints;  // 制約を設定するためのグローバル変数を定義
+  // ブラウザがchromeであるか確認
+  const ua = window.navigator.userAgent.toLowerCase() //ブラウザのユーザーエージェントを取得（小文字に変換）し変数uaに格納
+  const chrome = (ua.indexOf('chrome') !== -1) && (ua.indexOf('edge') === -1) && (ua.indexOf('opr') === -1); // ブラウザがchromeかどうかを確認し、結果の真偽値を変数に格納
+  // オーディオ制約を設定
+  let constraints;
   if(chrome){
     constraints = {
       "video": false,
       "audio": {
-        "mandatory": { // 参考: https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings#instance_properties_of_audio_tracks
+        // 参考: https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings#instance_properties_of_audio_tracks
+        "mandatory": {
+          // chrome固有の設定->最新のブラウザではMediaTrackConstraints APIの使用が一般的なため、記述を統一しても良いかもしれない
           "googEchoCancellation" : false, // エコーキャンセルが必須か優先かを指定するオブジェクト
           "googAutoGainControl" : false, // 自動ゲイン制御が優先か必須かどうか
           "googNoiseSuppression" : false, // ノイズ抑制が優先か必要か
           "googHighpassFilter" : false // 指定した周波数以上を通過させ、低域をカットできるフィルターを指定するか
-        },
-        "optional": [] // ??
+        }
       }
     };
-  // FireFox/Edge(旧)
+  // FireFox/Edge/safari
   }else{
     constraints = {
       "video": false,
@@ -40,14 +42,12 @@ async function createAudio () {
     };
   }
 
+  // マイクの使用許可をユーザーに確認し結果を格納
   const stream = await navigator.mediaDevices.getUserMedia(constraints)
 
-
-
-  // 変数mimeにMIMEタイプを格納 [2]変更
+  // 変数mimeにMIMEタイプを格納
   let mime;
-
-  // mp4がtrueならmimeにmp4を格納し、falseならwebmがtrueかを確認する。どちらもfalseだったらアラートを返す。
+  // サポート状況を確認し、変数に格納
   if (MediaRecorder.isTypeSupported('audio/mp4')) {
     mime = 'audio/mp4'
   } else if (MediaRecorder.isTypeSupported('audio/webm')) {
@@ -55,16 +55,19 @@ async function createAudio () {
   } else {
     alert( 'not supported')
   };
-
   // 確認
   console.log(mime);
 
+  // MIMEタイプを指定しオブジェクトの作成
   const mediaRecorder = new MediaRecorder(stream, {
     mimeType: mime
   })
   const audioChunks = [];
 
 
+
+
+  // イベントリスナー
   buttonStart.addEventListener('click', () => {
     if(refRecord){
       console.log(refRecord);
@@ -109,23 +112,22 @@ async function createAudio () {
 
   // 録音完了時のボタンをクリックした際に発火・サーバーに送信する処理を実行
   buttonNext.addEventListener('click', () => {
+    const audioBlob = new Blob(audioChunks, {type: mime});
 
-    const audioBlob = new Blob(audioChunks);
-    // クエリパラメーター取得
-    const queryParam = window.location.search
-  
-    // MIMEタイプによって、拡張子を変数に代入
-    let extType = ''
+    // MIMEタイプによって、拡張子を取得
+    let subType = ''
     if (mime == 'audio/mp4') {
-      extType = 'm4a'
+      subType = 'm4a'
     } else if (mime == 'audio/webm') {
-      extType = 'webm'
+      subType = 'webm'
     };
-  
+
     const formData = new FormData();
-    formData.append('recording[voice]', audioBlob);
-    formData.append('recording[ext]', extType);
-  
+    formData.append('recording[voice]', audioBlob, 'recording.${subType}');
+
+
+
+    // 非同期（Ajax）でサーバーに音声データを送信
     axios({
       method: 'post',
       url: '/recordings',
