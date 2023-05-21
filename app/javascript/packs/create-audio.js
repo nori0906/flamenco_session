@@ -1,13 +1,29 @@
 createAudio()
 
 async function createAudio () {
-  const buttonStart = document.querySelector('#buttonStart')
-  const buttonStop = document.querySelector('#buttonStop')
-  const buttonRestart = document.querySelector('#buttonRestart')
+  const recordButton = document.getElementById('record-button');
+  const stopButton = document.getElementById('stop-button');
+  const recordPlayback = document.getElementById('post-record-playback');
+  const recordStop = document.getElementById('post-record-stop');
   const buttonNext = document.querySelector('#buttonNext')
-  const player = document.querySelector('#player')
-  const refRecord = document.querySelector('#refRecord')
-
+  
+  // コンローラー追加
+  const playbackTime = document.getElementById('post-record-playback-time');
+  const slider = document.getElementById('post-record-slider');
+  let startTime;
+  let resumeTime = 0; // 一時停止時間を保存する変数
+  
+  
+  // WebAudioAPI
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  let mediaRecorder;
+  let recordedChunks = [];
+  let buffer;
+  let audioBuffer; // 既存音声バッファを格納
+  let source;
+  let audioSource; // 既存音声ソースを格納
+  let blob
+  
 
   // ブラウザがchromeであるか確認
   const ua = window.navigator.userAgent.toLowerCase() //ブラウザのユーザーエージェントを取得（小文字に変換）し変数uaに格納
@@ -42,9 +58,6 @@ async function createAudio () {
     };
   }
 
-  // マイクの使用許可をユーザーに確認し結果を格納
-  const stream = await navigator.mediaDevices.getUserMedia(constraints)
-
   // 変数mimeにMIMEタイプを格納
   let mime;
   // サポート状況を確認し、変数に格納
@@ -58,61 +71,246 @@ async function createAudio () {
   // 確認
   console.log(mime);
 
-  // MIMEタイプを指定しオブジェクトの作成
-  const mediaRecorder = new MediaRecorder(stream, {
-    mimeType: mime
-  })
-  const audioChunks = [];
+
+
+  // 既存音声ファイルを読み込み
+  async function fetchAudio(url) {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    // 音声ファイルのデータがデコードされ、WebaudioAPIで使用できるようになる
+    buffer = await audioContext.decodeAudioData(arrayBuffer);
+    
+    // 再生時間を更新するためのスライダーの最大値を設定
+    slider.max = buffer.duration;
+  }
 
 
 
-
-  // イベントリスナー
-  buttonStart.addEventListener('click', () => {
-    if(refRecord){
-      console.log(refRecord);
-      // 録音開始時と同時に元音声を再生させる
-      refRecord.play()
-    }
-      mediaRecorder.start()
-      buttonStart.setAttribute('disabled', '')
-      buttonStop.removeAttribute('disabled')
-  })
-
-  buttonStop.addEventListener('click', () => {
-    mediaRecorder.stop() // <5>
-    buttonStop.setAttribute('disabled', '')
-    buttonStart.style.display = 'none'
-    buttonStop.style.display = 'none'
-    buttonRestart.style.display = 'inline-block'
-    buttonNext.style.display = 'inline-block'
-  })
-
-  buttonRestart.addEventListener('click', () => {
-    if(refRecord){
-      console.log(refRecord);
-      // 録音開始時と同時に元音声を再生させる
-      refRecord.play()
-    }
-    mediaRecorder.start() // <4>
-    buttonStart.setAttribute('disabled', '')
-    buttonStop.removeAttribute('disabled')
-    buttonStart.style.display = 'inline-block'
-    buttonStop.style.display = 'inline-block'
-    buttonRestart.style.display = 'none'
+  // 録音処理
+  async function startRecording() {
+    // 音声データをリセット
+    buffer = null;
+    source = null;
+    blob = null;
+    // 録音時に格納したデータをリセット
+    recordedChunks = [];
+    
+    // 追加: スライダーの値と再生時間をリセット
+    slider.value = 0;
+    playbackTime.textContent = '0:00';
+    resumeTime = 0;
+    
+    recordButton.disabled = true;
+    stopButton.disabled = false;
+    recordPlayback.disabled = true;
     buttonNext.style.display = 'none'
-  })
+    
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    mediaRecorder = new MediaRecorder(stream, {mimeType: mime}); // 「mediaRecorder」とは？: 録音機能とそのデータを取得ができる
+    mediaRecorder.start();
+    startAudio();
+    
+    mediaRecorder.addEventListener('dataavailable', (event) => {
+      recordedChunks.push(event.data);
+    });
+    
+    mediaRecorder.addEventListener('stop', async () => {
+      blob = new Blob(recordedChunks, {type: mime});
+      
+      const arrayBuffer = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(blob);
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+      });
+      
+      audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+      
+      buffer = audioBuffer;
+      recordPlayback.disabled = false;
+
+    });
+  }
+  
+  async function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      stopAudio();
+      mediaRecorder.stop();
+      stopButton.disabled = true;
+      recordButton.disabled = false;
+      buttonNext.style.display = 'inline-block'
+    }
+    
+    // bufferがnullでないことを確認
+    if (buffer) {
+      // スライダーの最大値を更新
+      slider.max = buffer.duration;
+    }
+  }
+  
+  async function playRecording() {
+    if (buffer) {
+      startTime = audioContext.currentTime - resumeTime; // resumeTimeを考慮する
+      
+      // 再生が終了していたら、再生位置をリセット
+      if (audioContext.currentTime - startTime >= buffer.duration) {
+        resumeTime = 0;
+      }
+      
+      source = audioContext.createBufferSource();
+      source.buffer = buffer;
+      source.connect(audioContext.destination);
+      source.start(0, resumeTime);
+      recordPlayback.disabled = true;
+      recordStop.disabled = false;
+      
+      // 再生を開始する前にupdateProgress関数を呼び出す
+      updateProgress();
+    }
+  }
+  
+  async function stopPlayRecording() {
+    if (source) {
+      // 一時停止時間を保存
+      resumeTime = audioContext.currentTime - startTime;
+      
+      // ソースを停止
+      source.stop();
+      source.onended = null; // onendedイベントリスナーを削除
+      source = null;
+      
+      // ボタンの状態を更新
+      recordPlayback.disabled = false;
+      recordStop.disabled = true;
+    }
+  }
+  
+
+  // 録音開始時に音声ファイルを再生
+  function startAudio() {
+    if (audioBuffer) {
+      audioSource = audioContext.createBufferSource();
+      audioSource.buffer = audioBuffer;
+      audioSource.connect(audioContext.destination);
+      audioSource.start();
+    }
+  };
+  
+  function stopAudio() {
+    if (audioSource) {
+      // ソースを停止
+      audioSource.stop();
+    }
+  };
+  
+
+  // 録音コントローラー
+  // 再生時間をリセットし、再生ボタンをクリックしたときに音声が初めから再生
+  function resetPlayback() {
+    slider.value = 0;
+    playbackTime.textContent = '0:00';
+    startTime = audioContext.currentTime;
+  }
+
+  function updateProgress() {
+    if (source && buffer) {
+      const elapsedTime = audioContext.currentTime - startTime;
+      const progressRatio = elapsedTime / buffer.duration;
+      slider.max = 100
+      slider.value = progressRatio * 100;
+
+      const minutes = Math.floor(elapsedTime / 60);
+      const seconds = Math.floor(elapsedTime % 60);
+      playbackTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+      if (elapsedTime >= buffer.duration) {
+        recordPlayback.disabled = false;
+        recordStop.disabled = true;
+
+        // 再生が終了した場合、再生時間をリセット
+        resetPlayback();
+        resumeTime = 0; // 再生が最後まで終了した場合にresumeTimeをリセット
+        source = null; // 再生が最後まで終了した場合にsourceをリセット
+      } else {
+        requestAnimationFrame(updateProgress);
+      }
+    }
+  }
+
+  // slider.addEventListener('input', async (event) => {
+  //   if (buffer) {
+  //     const sliderValue = event.target.value;
+  //     const clickPositionRatio = sliderValue / 100;
+  //     const newTime = clickPositionRatio * buffer.duration;
+  
+  //     // 再生時間表示の更新
+  //     const minutes = Math.floor(newTime / 60);
+  //     const seconds = Math.floor(newTime % 60);
+  //     playbackTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  
+  //     // オーディオが再生されていない場合は、resumeTimeを更新して返す
+  //     if (!source || source.playbackState !== AudioBufferSourceNode.PLAYING_STATE) {
+  //       resumeTime = newTime;
+  //       return;
+  //     }
+  
+  //     // 既存のオーディオが再生されている場合は、再生を停止する
+  //     if (source) {
+  //       source.stop(); // 既存のsourceを停止する
+  //       source.onended = null; // onendedイベントリスナーを削除
+  //     }
+  
+  //     startTime = audioContext.currentTime - newTime;
+  //     resumeTime = newTime;
+  //     source = audioContext.createBufferSource();
+  //     source.buffer = buffer;
+  //     source.connect(audioContext.destination);
+  //     source.start(0, newTime);
+  
+  //     // ボタンの状態を更新
+  //     source.onended = () => {
+  //       recordPlayback.disabled = false;
+  //       recordStop.disabled = true;
+  //     };
+  
+  //     updateProgress();
+  //   }
+  // });
 
 
-  mediaRecorder.addEventListener('dataavailable', event => {
-    // 「event.data」はすでにblob形式をデータを持っている
-    player.src = URL.createObjectURL(event.data) //ブラウザのプレイヤーにセットするため
-    audioChunks.push(event.data);
-  });
+  // エラーハンドリングをまとめる
+  function withErrorHandling(fn) {
+    return async function (...args) {
+      try {
+        await fn(...args);
+      } catch (error) {
+        console.error(`Error in ${fn.name}:`, error);
+      }
+    };
+  }
+
+
+
+  //イベントリスナー
+  // withErrorHandlingで各関数をラップしてエラーハンドリングおこなう
+  function addEventListeners() {
+    recordButton.addEventListener('click', () => withErrorHandling(startRecording)());
+    stopButton.addEventListener('click', () => withErrorHandling(stopRecording)());
+    recordPlayback.addEventListener('click', () => withErrorHandling(playRecording)());
+    recordStop.addEventListener('click', () => withErrorHandling(stopPlayRecording)());
+  }
+  addEventListeners();
+
+
+
+
+
 
   // 録音完了時のボタンをクリックした際に発火・サーバーに送信する処理を実行
   buttonNext.addEventListener('click', () => {
-    const audioBlob = new Blob(audioChunks, {type: mime});
+    // const audioBlob = new Blob(audioChunks, {type: mime});
+    
 
     // MIMEタイプによって、拡張子を取得
     let subType = ''
@@ -123,7 +321,7 @@ async function createAudio () {
     };
 
     const formData = new FormData();
-    formData.append('recording[voice]', audioBlob, `recording.${subType}`);
+    formData.append('recording[voice]', blob, `recording.${subType}`);
 
 
 

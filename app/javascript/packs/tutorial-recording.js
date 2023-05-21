@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const recordPlayback = document.getElementById('record-playback');
   const recordStop = document.getElementById('record-stop');
   const levelSelectText = document.getElementById('level-select').textContent;
-  console.log(levelSelectText);
   
   // コンローラー追加
   const playbackTime = document.getElementById('record-playback-time');
@@ -249,19 +248,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-
-
-  // 既存音声ファイルを読み込み
-  async function fetchAudio(url) {
-    const response = await fetch(url);
-    const arrayBuffer = await response.arrayBuffer();
-    // 音声ファイルのデータがデコードされ、WebaudioAPIで使用できるようになる
-    audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-
-    recordPlayback.disabled = true;
-  }
-  // ページの読み込み時に音声ファイルをフェッチ
-  fetchAudio('/test.mp3');
 
 
 
