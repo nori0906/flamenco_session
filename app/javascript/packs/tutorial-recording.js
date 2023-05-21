@@ -188,6 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (source && buffer) {
       const elapsedTime = audioContext.currentTime - startTime;
       const progressRatio = elapsedTime / buffer.duration;
+      slider.max = 100
       slider.value = progressRatio * 100;
 
       const minutes = Math.floor(elapsedTime / 60);
@@ -261,9 +262,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   // ページの読み込み時に音声ファイルをフェッチ
   fetchAudio('/test.mp3');
-
-
-
 
 
 

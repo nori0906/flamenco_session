@@ -142,21 +142,180 @@ async function createAudio () {
       const blobUrl = response.data.blob_url;
 
 
+      // フォームの表示設定
       // 投稿フォームを表示
       const form = document.getElementById('post_form');
       form.style.display = 'block';
-
-      // 録音画面を非表示にする
+      // 録音画面を非表示
       const recordingScreen = document.getElementById('recording_screen');
       recordingScreen.style.display = 'none';
 
-      const record = document.getElementById('record');
-      // Blobのsigned_idからURLを取得
-      record.src = blobUrl;
-  
+      // フォーム内の設定
       // フォームの隠しフィールドにBlob IDを設定
       const blobIdInput = document.getElementById('post_voice_blob_id');
       blobIdInput.value = blobId;
+
+
+
+      // 音声再生処理
+      // 再生ボタンのDOM
+      const audioPLayback = document.getElementById('form-audio-playback');
+      const audioStop = document.getElementById('form-audio-stop');
+      
+      // コンローラー追加
+      const playbackTime = document.getElementById('form-audio-playback-time');
+      const slider = document.getElementById('form-audio-slider');
+      let source;
+      let startTime;
+      let resumeTime = 0; // 一時停止時間を保存する変数
+      
+      // WebAudioAPI
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      let buffer;
+      
+      // 既存音声ファイルを読み込み
+      async function fetchAudio(url) {
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+        // 音声ファイルのデータがデコードされ、WebaudioAPIで使用できるようになる
+        buffer = await audioContext.decodeAudioData(arrayBuffer);
+        
+        // 再生時間を更新するためのスライダーの最大値を設定
+        // slider.max = buffer.duration;
+      }
+      fetchAudio(blobUrl);
+
+      async function playAudio() {
+        if (buffer) {
+          startTime = audioContext.currentTime - resumeTime; // resumeTimeを考慮する
+
+          // 再生が終了していたら、再生位置をリセット
+          if (audioContext.currentTime - startTime >= buffer.duration) {
+            resumeTime = 0;
+          }
+
+          source = audioContext.createBufferSource();
+          source.buffer = buffer;
+          source.connect(audioContext.destination);
+          source.start(0, resumeTime);
+          audioPLayback.disabled = true;
+          audioStop.disabled = false;
+
+          // 再生を開始する前にupdateProgress関数を呼び出す
+          updateProgress();
+        }
+      }
+
+      async function stopAudio() {
+        if (source) {
+          // 一時停止時間を保存
+          resumeTime = audioContext.currentTime - startTime;
+
+          // ソースを停止
+          source.stop();
+          source.onended = null; // onendedイベントリスナーを削除
+          source = null;
+
+          // ボタンの状態を更新
+          audioPLayback.disabled = false;
+          audioStop.disabled = true;
+        }
+      }
+
+
+      // 録音コントローラー
+      function resetPlayback() {
+        slider.value = 0;
+        playbackTime.textContent = '0:00';
+        startTime = audioContext.currentTime;
+      }
+
+      function updateProgress() {
+        if (source && buffer) {
+          const elapsedTime = audioContext.currentTime - startTime;
+          const progressRatio = elapsedTime / buffer.duration;
+          slider.max = 100
+          slider.value = progressRatio * 100;
+
+          
+
+          const minutes = Math.floor(elapsedTime / 60);
+          const seconds = Math.floor(elapsedTime % 60);
+          playbackTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+          if (elapsedTime >= buffer.duration) {
+            audioPLayback.disabled = false;
+            audioStop.disabled = true;
+
+            // 再生が終了した場合、再生時間をリセット
+            resetPlayback();
+            resumeTime = 0; // 追加: 再生が最後まで終了した場合にresumeTimeをリセット
+            source = null; // 再生が最後まで終了した場合にsourceをリセット
+          } else {
+            requestAnimationFrame(updateProgress);
+          }
+        }
+      }
+
+      slider.addEventListener('input', async (event) => {
+        if (buffer) {
+          const sliderValue = event.target.value;
+          const clickPositionRatio = sliderValue / 100;
+          const newTime = clickPositionRatio * buffer.duration;
+
+          // 再生時間表示の更新
+          const minutes = Math.floor(newTime / 60);
+          const seconds = Math.floor(newTime % 60);
+          playbackTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      
+          // オーディオが再生されていない場合は、resumeTimeを更新して返す
+          if (!source || source.playbackState !== AudioBufferSourceNode.PLAYING_STATE) {
+            resumeTime = newTime;
+            return;
+          }
+      
+          // 既存のオーディオが再生されている場合は、再生を停止する
+          if (source) {
+            source.stop(); // 既存のsourceを停止する
+            source.onended = null; // onendedイベントリスナーを削除
+          }
+      
+          startTime = audioContext.currentTime - newTime;
+          resumeTime = newTime;
+          source = audioContext.createBufferSource();
+          source.buffer = buffer;
+          source.connect(audioContext.destination);
+          source.start(0, newTime);
+      
+          // 再生が停止したら、ボタンの状態を更新
+          source.onended = () => {
+            audioPLayback.disabled = false;
+            audioStop.disabled = true;
+          };
+      
+          updateProgress();
+        }
+      });
+
+      // エラーハンドリングをまとめる
+      function withErrorHandling(fn) {
+        return async function (...args) {
+          try {
+            await fn(...args);
+          } catch (error) {
+            console.error(`Error in ${fn.name}:`, error);
+          }
+        };
+      }
+
+      //イベントリスナー
+      // withErrorHandlingで各関数をラップしてエラーハンドリングおこなう
+      function addEventListeners() {
+        audioPLayback.addEventListener('click', () => withErrorHandling(playAudio)());
+        audioStop.addEventListener('click', () => withErrorHandling(stopAudio)());
+      }
+      addEventListeners();
+
 
     }).catch(function (error) {
       console.log(error);

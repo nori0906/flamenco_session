@@ -28,7 +28,11 @@
     <%= render partial: 'layouts/flash' %>
     <p class="text-white">投稿フォーム</p>
 
-    <audio id="record" controls></audio>
+    <div>
+      <%= render "layouts/guest_tutorial/audio_slider", slider_type: "form-audio", size: "100" %>
+    </div>
+
+
     <div>
       <%= render 'posts/form', post: @post %>
     </div>
