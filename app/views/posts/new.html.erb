@@ -1,17 +1,28 @@
 
-<div class="bkg-img-index">
+<%# 録音画面 %>
+<div class="bkg-img-index" id="recording_screen">
   <div class="container">
     <h1 class="text-white py-5">RECORDING</h1>
 
-    <div>
-      <% if @ref_post %>
-        <p>セッション元</p>
-        <%= @ref_post.id %>
-        <p><%= audio_tag(url_for(@ref_post.voice), controls: true, id: "refRecord") %></p>
-      <% end %>
+    <%# コラボ元音源の再生処理の追加が必要 %>
+
+    <div class="pt-4 pb-3 mb-5">
+      <h3 class="text-center mb-4">↓↓ レコーディング開始!! ↓↓</h3>
+      <div class="mb-3">
+        <div class="mb-5 d-flex justify-content-center">
+          <%= render "layouts/guest_tutorial/recording_btn" %>
+        </div>
+        <div class="d-flex justify-content-center">
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "post-record", size: "50" %>
+        <button type="button" class="btn stop-btn btn-lg text-white ms-3 none" id="buttonNext" >Next</button>
+        </div>
+      </div>
     </div>
 
-    <div class="record">
+
+
+
+    <%# <div class="record">
       <div >
         <p class="text-white">単体録音</p>
         <button type="button" class="btn btn-custom btn-lg text-white" id="buttonStart">Start</button>
@@ -22,7 +33,26 @@
       <div>
         <audio controls class="my-5" id="player"></audio>
       </div>
+    </div> %>
+  </div>
+</div>
+
+<%# 投稿フォーム %>
+<div class="bkg-img-pro form-style" id="post_form">
+  <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">投稿画面</h1>
+  <div class="container">
+    <%= render partial: 'layouts/flash' %>
+    <p class="text-white">投稿フォーム</p>
+
+    <div>
+      <%= render "layouts/guest_tutorial/audio_slider", slider_type: "form-record", size: "100" %>
     </div>
+
+
+    <div>
+      <%= render 'posts/form', post: @post %>
+    </div>
+
   </div>
 </div>
 

@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     buffer = await audioContext.decodeAudioData(arrayBuffer);
     
     // 再生時間を更新するためのスライダーの最大値を設定
-    slider.max = buffer.duration;
+    // slider.max = buffer.duration;
   }
   // ページの読み込み時に音声ファイルをフェッチ・難易度別に音声ファイルを分岐
   // お手本音声を後で格納（23/5/8）
@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (source && buffer) {
       const elapsedTime = audioContext.currentTime - startTime;
       const progressRatio = elapsedTime / buffer.duration;
+      slider.max = 100
       slider.value = progressRatio * 100;
 
       const minutes = Math.floor(elapsedTime / 60);

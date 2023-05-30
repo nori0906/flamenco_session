@@ -29,34 +29,45 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
     # 「ref_id」 クエリパラメータの値があるかを確認し、idがあればその投稿データを取得
-    if params[:ref_id]
-      @ref_post = Post.find(params[:ref_id])
-    end
-    # クエリパラメータで取得した投稿データのさらに紐づいた投稿データを確認し取得
-    if @ref_post.present? && @ref_post.collab_src #左から実行。present?で値の有無を確認し、エラーを防ぐ
-      @root_post = Post.find(@ref_post.collab_src)
-    end
+    # if params[:ref_id]
+    #   @ref_post = Post.find(params[:ref_id])
+    # end
+    # # クエリパラメータで取得した投稿データのさらに紐づいた投稿データを確認し取得
+    # if @ref_post.present? && @ref_post.collab_src #左から実行。present?で値の有無を確認し、エラーを防ぐ
+    #   @root_post = Post.find(@ref_post.collab_src)
+    # end
   end
+
 
   def create
-    voice_data = voice_params[:voice]
-    ext = ext_params[:ext] # ファイルの拡張子を取得
+    @post = Post.new(
+      title: post_params[:title],
+      body: post_params[:body],
+      status: post_params[:status]
+    )
+    
+    # Blob IDから録音データを取得
+    voice_blob = ActiveStorage::Blob.find_signed!(post_params[:voice_blob_id])
 
-    File.open("tempfile." + ext, "wb") do |f|
-      f.write(Base64.decode64(voice_data))
-    end
+    # Postに録音データをアタッチ
+    @post.voice.attach(voice_blob)
+    
+    #MMIMEタイプ（サブタイプ名）をPostに格納
+    mime_type = @post.voice.content_type
+    mime_subtype = mime_type.split("/").last
+    @post.ext_type = mime_subtype
 
-    post = Post.new(title: "", ext_type: ext)
-    # クエリパラメータのref_idに値があれば、collab_srcカラムにidを格納する
-    post.collab_src = params[:ref_id] if params[:ref_id].present?
-    post.voice.attach(io: File.open("tempfile." + ext ), filename: "newfile." + ext )
-    if post.save!
-      File.delete("tempfile." + ext )
-      render json: { id: post.id }
+
+    if @post.save
+      # 成功したときの処理
+      redirect_to posts_path, flash: {success: "投稿しました"}
     else
-      # TODO: 後で実装する
+      # 失敗したときの処理
+      flash.now[:danger] = @post.errors.full_messages.to_sentence
+      render :new
     end
   end
+
 
   def edit
     @post = Post.find(params[:id])
@@ -65,7 +76,7 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
-      redirect_to posts_path, flash: {success: "投稿しました"}
+      redirect_to posts_path, flash: {success: "編集しました"}
     else
       flash.now[:danger] = @post.errors.full_messages.to_sentence
       render :edit
@@ -80,15 +91,9 @@ class PostsController < ApplicationController
 
   private
 
-  def voice_params
-    params.permit(:voice)
-  end
-
-  def ext_params
-    params.permit(:ext)
-  end
 
   def post_params
-    params.require(:post).permit(:title, :body, :status, :ext_type)
+    # 「:voice_blob_id」は仮属性として一時的に使用している
+    params.require(:post).permit(:title, :body, :status, :ext_type, :voice_blob_id)
   end
 end

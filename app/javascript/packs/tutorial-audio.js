@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // 再生ボタンのDOM
   const audioPLayback = document.getElementById('audio-playback');
   const audioStop = document.getElementById('audio-stop');
-  const levelSelectText = document.getElementById('level-select').textContent;
-  console.log(levelSelectText);
   
   // コンローラー追加
   const playbackTime = document.getElementById('audio-playback-time');
@@ -10,14 +9,13 @@ document.addEventListener('DOMContentLoaded', function () {
   let source;
   let startTime;
   let resumeTime = 0; // 一時停止時間を保存する変数
-
-
+  
   // WebAudioAPI
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   let buffer;
-
-
-
+  
+  
+  
   // 既存音声ファイルを読み込み
   async function fetchAudio(url) {
     const response = await fetch(url);
@@ -26,10 +24,14 @@ document.addEventListener('DOMContentLoaded', function () {
     buffer = await audioContext.decodeAudioData(arrayBuffer);
     
     // 再生時間を更新するためのスライダーの最大値を設定
-    slider.max = buffer.duration;
+    // slider.max = buffer.duration;
   }
+  
+  
+  // チュートリアル音源を取得
   // ページの読み込み時に音声ファイルをフェッチ・難易度別に音声ファイルを分岐
   // お手本音声を後で格納（23/5/8）
+  const levelSelectText = document.getElementById('level-select').textContent;
   function levelSelecter() {
     if (levelSelectText.includes('初級')) {
       fetchAudio('/test.mp3');
@@ -82,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-
   // 録音コントローラー
   function resetPlayback() {
     slider.value = 0;
@@ -94,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (source && buffer) {
       const elapsedTime = audioContext.currentTime - startTime;
       const progressRatio = elapsedTime / buffer.duration;
+      slider.max = 100
       slider.value = progressRatio * 100;
 
       const minutes = Math.floor(elapsedTime / 60);

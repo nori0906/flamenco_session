@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const recordPlayback = document.getElementById('record-playback');
   const recordStop = document.getElementById('record-stop');
   const levelSelectText = document.getElementById('level-select').textContent;
-  console.log(levelSelectText);
   
   // コンローラー追加
   const playbackTime = document.getElementById('record-playback-time');
@@ -95,7 +94,9 @@ document.addEventListener('DOMContentLoaded', function () {
       });
       
       const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+      // 録音時に格納したデータをリセット
       recordedChunks = [];
+      
       buffer = audioBuffer;
       recordPlayback.disabled = false;
     });
@@ -186,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (source && buffer) {
       const elapsedTime = audioContext.currentTime - startTime;
       const progressRatio = elapsedTime / buffer.duration;
+      slider.max = 100
       slider.value = progressRatio * 100;
 
       const minutes = Math.floor(elapsedTime / 60);
@@ -245,22 +247,6 @@ document.addEventListener('DOMContentLoaded', function () {
       updateProgress();
     }
   });
-
-
-
-  // 既存音声ファイルを読み込み
-  async function fetchAudio(url) {
-    const response = await fetch(url);
-    const arrayBuffer = await response.arrayBuffer();
-    // 音声ファイルのデータがデコードされ、WebaudioAPIで使用できるようになる
-    audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-
-    recordPlayback.disabled = true;
-  }
-  // ページの読み込み時に音声ファイルをフェッチ
-  fetchAudio('/test.mp3');
-
-
 
 
 
