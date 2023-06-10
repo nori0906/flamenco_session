@@ -51,6 +51,11 @@
   display: none;
 }
 
+// pタグのマージンをリセット
+p.none-margin-btm {
+  margin-bottom: 0;
+}
+
 
 .bkg-img {
   min-height: calc(100vh - 100px);
