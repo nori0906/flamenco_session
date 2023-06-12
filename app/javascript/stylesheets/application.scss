@@ -1,5 +1,15 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
+// fontawesome導入設定
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+
+// $fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+// @import '@fortawesome/fontawesome-free/scss/solid';
+// @import '@fortawesome/fontawesome-free/scss/regular';
+// @import '@fortawesome/fontawesome-free/scss/brands';
+// @import '@fortawesome/fontawesome-free/scss/v4-shims';
+
+
 .navbar {
   height: 50px;
 }
@@ -52,7 +62,7 @@
 }
 
 // pタグのマージンをリセット
-p.none-margin-btm {
+.none-margin-btm {
   margin-bottom: 0;
 }
 
