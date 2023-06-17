@@ -31,10 +31,27 @@
   transform: scale(0.99, 0.99) translateY(2px);
 }
 
+// アコーディオン表示後の見出しの背景色を調整
+.accordion-button:not(.collapsed) {
+  background-color: #990923;
+}
+
+// アコーディオンのアイコンサイズを調整
+.accordion {
+  --bs-accordion-btn-icon-width: 2.25rem;
+}
+
+
 
 .bg-color {
   background-color: #990923;
 }
+
+.bg-color-top {
+  background-color: #f4f4f4;
+}
+
+
 .bg-color-tutorial-card {
   background-color: rgb(131 0 24 / 91%);
   box-shadow: 15px 11px 10px rgb(0 0 0);
