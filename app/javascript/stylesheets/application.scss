@@ -31,24 +31,12 @@
   transform: scale(0.99, 0.99) translateY(2px);
 }
 
-// アコーディオン表示後の見出しの背景色を調整
-.accordion-button:not(.collapsed) {
-  background-color: #990923;
-}
 
-// アコーディオンのアイコンサイズを調整
-.accordion {
-  --bs-accordion-btn-icon-width: 2.25rem;
-}
 
 
 
 .bg-color {
   background-color: #990923;
-}
-
-.bg-color-top {
-  background-color: #f4f4f4;
 }
 
 
@@ -74,9 +62,6 @@
   min-height: calc(100vh - 100px);
 }
 
-.none {
-  display: none;
-}
 
 // pタグのマージンをリセット
 .none-margin-btm {
@@ -119,4 +104,27 @@
 .form-style {
   display: none;
 }
-  // 背景画像url:  ( ../../assets/images/unsplash_recording.png)
+
+// トップページアコーディオン
+// アコーディオン表示後の見出しの背景色を調整
+.accordion-button:not(.collapsed) {
+  background-color: #990923;
+}
+
+// アコーディオンのアイコンサイズを調整
+.accordion {
+  --bs-accordion-btn-icon-width: 2.25rem;
+}
+
+.none {
+  display: none;
+}
+
+.bg-color-top {
+  background-color: #f4f4f4;
+}
+
+
+
+
+
