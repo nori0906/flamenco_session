@@ -36,7 +36,8 @@
 
 
 .bg-color {
-  background-color: #990923;
+  background-color: #960822;
+  // background-color: #990923;
 }
 
 
@@ -57,16 +58,18 @@
   background-color: rgba(49, 53, 53, 0.93);
 }
 
+.bg-dark-custom {
+  background-color: #434549;
+}
+.bg-dark-sub-custom {
+  background-color: #393b3f;
+}
+
 
 .bg-height {
   min-height: calc(100vh - 100px);
 }
 
-
-// pタグのマージンをリセット
-.none-margin-btm {
-  margin-bottom: 0;
-}
 
 
 .bkg-img {
@@ -113,7 +116,7 @@
 
 // アコーディオンのアイコンサイズを調整
 .accordion {
-  --bs-accordion-btn-icon-width: 2.25rem;
+  --bs-accordion-btn-icon-width: 2.5rem;
 }
 
 .none {
@@ -126,5 +129,21 @@
 
 
 
+// トップページアイコン画像の組み合わせ
+.icon-container {
+  position: relative;
+}
+
+.icon-underlay {
+  position: relative;
+}
+
+.height-adjust {
+  height: calc(100vh);
+}
+
+a.hover-test {
+  color: blue;
+}
 
 

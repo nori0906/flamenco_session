@@ -21,24 +21,51 @@
       <h1 class='px-5 py-5 fw-bold'>フラっとセッションとは？</h1>
       <p>本アプリは、フラメンコ音楽をベースとした録音・音声コラボ・共有ができる録音投稿アプリです。<br>初心者や練習生でもフラメンコの「合わせ」を簡単に仮想体験できます。</p>
       
-      <div class="row row-cols-2 g-5 mt-5">
+      <%# アイコン追加 %>
+      <div class="d-flex justify-content-center mt-5">
+        <div class = "icon-container pe-5">
+          <%= image_tag "icon/search-icon.png", size: "50x50" %>
+          <div class = "icon-underlay">
+            <%= image_tag "icon/base-icon.png", size: "70x10" %>
+          </div>
+          <p class="fs-5">①投稿チェック</p>
+        </div>
+
+        <div class = "icon-container pe-5">
+          <%= image_tag "icon/recording-icon.png", size: "50x50" %>
+          <div class = "icon-underlay">
+            <%= image_tag "icon/base-icon.png", size: "70x10" %>
+          </div>
+          <p class="fs-5">②録音・コラボ</p>
+        </div>
+
+        <div class = "icon-container">
+          <%= image_tag "icon/post-icon.png", size: "50x50" %>
+          <div class = "icon-underlay">
+            <%= image_tag "icon/base-icon.png", size: "70x10" %>
+          </div>
+          <p class="fs-5">③新規投稿</p>
+        </div>
+      </div>
+        
+
+      <div class="row row-cols-2 g-5 mt-2 mx-5">
         <div class="col">
           <h2>フラメンコが初めての方</h2>
-          <div class="card bg-transparent border border-white border-4 p-3">
+          <div class="card bg-transparent border border-white border-4 p-3 mx-4">
             <div class="card-text text-start">
-              <ul class="list-unstyled none-margin-btm">
+              <ul class="list-unstyled mb-0">
                 <li class="mb-2"><i class="fa-regular fa-square-check fa-lg"></i> チュートリアルを通してフラメンコの一部を体験！</li>
                 <li class="mb-2"><i class="fa-regular fa-square-check fa-lg"></i> さまざまな投稿からフラメンコ音楽に触れられる！</li>
-                <li></li>
               </ul>
             </div>
           </div>
         </div>
         <div class="col">
           <h2>フラメンコ経験がある方</h2>
-          <div class="card bg-transparent border border-white border-4 p-3">
+          <div class="card bg-transparent border border-white border-4 p-3 mx-4">
             <div class="card-text text-start">
-              <ul class="list-unstyled none-margin-btm">
+              <ul class="list-unstyled mb-0">
                 <li class="mb-2"><i class="fa-regular fa-square-check fa-lg"></i> 練習中の曲を1パートから気軽にアウトプット！</li>
                 <li class="mb-2"><i class="fa-regular fa-square-check fa-lg"></i> 他ユーザーとの音声コラボ（合わせ）を簡単に実現！</li>
                 <li class="mb-2"><i class="fa-regular fa-square-check fa-lg"></i> 歌・踊り・ギターの垣根を超えた交流ができる！</li>
@@ -48,39 +75,91 @@
           </div>
         </div>
 
-        <div class="col">
-          <h2>フラメンコって？</h2>
-          <a href="#introduction">紹介</a>
+        <div class="col d-flex flex-column align-items-center">
+          <div>
+            <h2>フラメンコって？</h2>
+          </div>
+          <div class="pt-5">
+            <p class="mb-1">フラメンコを知る</p>
+            <a class="hover-test" href="#introduction">
+              <div class = "icon-container">
+                <%= image_tag "icon/guitar-icon.png", size: "50x50" %>
+                <div class = "icon-underlay">
+                  <%= image_tag "icon/base-icon.png", size: "70x10" %>
+                </div>
+                <i class="fa-solid fa-angles-down fa-beat" style="color: #ffffff;"></i>
+              </div>
+            </a>
+          </div>
         </div>
 
         <div class="col">
           <h2>3つの使い方を紹介</h2>
-          <div class="container">
-            <div class="row row-cols-1">
-              <div class="col">
-                <a href="#explain-recording">録音する</a>
+          <div class="row row-cols-1 pt-3">
+            <div class="col d-flex flex-column align-items-center">
+              <div>
+                <p class="mb-1">録音する</p>
               </div>
-              <div class="col">
-                <div class="row row-cols-2">
-                  <div class="col">
-                    <a href="#explain-collab">コラボする</a>
+              <div>
+                <a href="#explain-recording">
+                  <div class = "icon-container">
+                    <%= image_tag "icon/recording-icon.png", size: "50x50" %>
+                    <div class = "icon-underlay">
+                      <%= image_tag "icon/base-icon.png", size: "70x10" %>
+                    </div>
+                    <i class="fa-solid fa-angles-down fa-beat" style="color: #ffffff;"></i>
                   </div>
-                  <div class="col">
-                    <a href="#explain-tutorial">体験する</a>
-                  </div>
-                </div>
+                </a>
               </div>
             </div>
 
+            <div class="col">
+              <div class="row row-cols-2">
+                <div class="col d-flex flex-column align-items-center">
+                  <div>
+                    <p class="mb-1">コラボする</p>
+                  </div>
+                  <div>
+                    <a href="#explain-collab">
+                      <div class="icon-container ">
+                        <div class = "d-flex justify-content-center">
+                          <%= image_tag "icon/recording-icon.png", size: "35x45" %>
+                          <%= image_tag "icon/x-icon.png", size: "20x30", class: "align-self-center" %>
+                          <%= image_tag "icon/recording-icon.png", size: "35x45" %>
+                        </div>
+                        <div class = "icon-underlay">
+                          <%= image_tag "icon/base-icon.png", size: "70x10" %>
+                        </div>
+                        <i class="fa-solid fa-angles-down fa-beat" style="color: #ffffff;"></i>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="col d-flex flex-column align-items-center">
+                  <div>
+                    <p class="mb-1">体験する</p>
+                  </div>
+                  <div>
+                    <a href="#explain-tutorial">
+                      <div class = "icon-container">
+                        <%= image_tag "icon/clap-icon.png", size: "50x50" %>
+                        <div class = "icon-underlay">
+                          <%= image_tag "icon/base-icon.png", size: "70x10" %>
+                        </div>
+                        <i class="fa-solid fa-angles-down fa-beat" style="color: #ffffff;"></i>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
-      <div class="d-flex justify-content-center gap-5 mt-5">
-        
-        
-        
-      </div>
+      
     </div>
   </div>
 </section>
@@ -92,7 +171,7 @@
         <h1 class="fw-bold">フラメンコってこんな音楽</h1>
       </div>
 
-      <div class="row row-cols-2 g-5 mb-4">
+      <div class="row row-cols-2 g-5 mb-4 mx-5">
         <div class="accordion" id="accordionExample">
           <div class="accordion-item border border-white border-4">
             <div class="accordion-header" id="panelsStayOpen-headingOne">
