@@ -1,10 +1,47 @@
+<!-- Modal -->
+<div class="modal fade" id="gusetModal" tabindex="-1" aria-labelledby="gusetModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header border-0 rounded bg-dark-custom">
+        
+        <div class="bodal-body text-white text-center d-flex justify-content-evenly w-100 my-4">
+          <div>
+            <h5 class="fw-bold mb-4" id="gusetModalLabel">チュートリアルを始める</h5>
+            <%= link_to "チュートリアル", guest_tutorial_introductions_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold" , type: "button" %>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-4" id="gusetModalLabel">みんなの投稿を見る</h5>
+            <%= link_to "投稿を見る", guest_index_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold" , type: "button" %>
+          </div>
+        </div>
+
+        <div class="align-self-start">
+          <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      </div>
+      <%# <div class="modal-body">
+        ...
+      </div> %>
+      <%# <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> %>
+    </div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+<%# <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button> %>
+
 <section>
   <div class="top-wrapper">
     <div class="top-inner-text pt-5">
       <div class="py-5 my-5">
         <h1 class="top-title fw-bold mb-4" >フラッと×セッション</h1>
         <p class="fs-2">〜フラメンコ音楽で繋がる・体験する・発見する〜</p>
-        <%= link_to "はじめる", posts_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill me-5 px-3 py-3 fw-bold" , type: "button" %>
+        <%= link_to "はじめる", posts_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill me-5 px-3 py-3 fw-bold" , type: "button", data: { bs_toggle: "modal", bs_target: "#gusetModal" } %>
         <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill ms-5 px-3 py-3 fw-bold", type: "button" %>
       </div>
       <div>
