@@ -19,34 +19,25 @@
           <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
       </div>
-      <%# <div class="modal-body">
-        ...
-      </div> %>
-      <%# <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div> %>
     </div>
   </div>
 </div>
 
-<!-- Button trigger modal -->
-<%# <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button> %>
-
 <section>
   <div class="top-wrapper">
-    <div class="top-inner-text pt-5">
-      <div class="py-5 my-5">
-        <h1 class="top-title fw-bold mb-4" >フラッと×セッション</h1>
-        <p class="fs-2">〜フラメンコ音楽で繋がる・体験する・発見する〜</p>
-        <%= link_to "はじめる", posts_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill me-5 px-3 py-3 fw-bold" , type: "button", data: { bs_toggle: "modal", bs_target: "#gusetModal" } %>
-        <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill ms-5 px-3 py-3 fw-bold", type: "button" %>
-      </div>
-      <div>
-        <a href="#app_overview" class="top-anchor-link"><i class="fa-solid fa-hand-point-down fa-beat castom-size"></i></a>
-        
+    <div class="text-white d-flex justify-content-center w-100 h-100 bkg-overlay">
+      <div class="align-self-center text-center">
+        <div class="py-5">
+          <h1 class="top-title-size fw-bold mb-4" >フラッと×セッション</h1>
+          <p class="fs-2">〜フラメンコ音楽で繋がる・体験する・発見する〜</p>
+        </div>
+        <div class="my-5 py-5">
+          <%= link_to "はじめる", posts_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill me-5 px-3 py-3 fw-bold" , type: "button", data: { bs_toggle: "modal", bs_target: "#gusetModal" } %>
+          <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill ms-5 px-3 py-3 fw-bold", type: "button" %>
+        </div>
+        <div class="pt-5">
+          <a href="#app_overview" class="top-anchor-link"><i class="fa-solid fa-hand-point-down fa-beat castom-size"></i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -86,7 +77,7 @@
       </div>
         
 
-      <div class="row row-cols-2 g-5 mt-2 mx-5">
+      <div class="row row-cols-1 row-cols-lg-2 g-5 mt-2 mx-5">
         <div class="col">
           <h2>フラメンコが初めての方</h2>
           <div class="card bg-transparent border border-white border-4 p-3 mx-4">
@@ -116,7 +107,7 @@
           <div>
             <h2>フラメンコって？</h2>
           </div>
-          <div class="pt-5">
+          <div class="pt-3">
             <p class="mb-1">フラメンコを知る</p>
             <a class="hover-test" href="#introduction">
               <div class = "icon-container">
@@ -208,7 +199,7 @@
         <h1 class="fw-bold">フラメンコってこんな音楽</h1>
       </div>
 
-      <div class="row row-cols-2 g-5 mb-4 mx-5">
+      <div class="row row-cols-1 row-cols-lg-2 g-5 mb-4 mx-5">
         <div class="accordion" id="accordionExample">
           <div class="accordion-item border border-white border-4">
             <div class="accordion-header" id="panelsStayOpen-headingOne">
@@ -292,7 +283,9 @@
           <p>日本・スペインと大活躍している超絶フラメンコギターデュオを紹介します。<br>
           長年スペインで研鑽を積んできた2人が繰り広げる演奏は圧巻です。</p>
           <p>ギターを通して、本場のリズムや音色を感じてみましょう！！</p>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/mNgTlL5Uik8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <div class= "ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/mNgTlL5Uik8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
           <div class="text-end">
             <p>アーティスト名：<%= link_to "徳永兄弟", "https://www.tokunagaduo.com/", class: "text-white" %></p>
           </div>
@@ -308,13 +301,13 @@
 
 
 <section>
-  <div class="bg-dark bg-gradient text-center text-white pt-3 pb-5">
+  <div class="bg-dark bg-gradient text-center text-white pt-5 pb-5">
     <div class="container">
       <div class="py-4">
         <h3 class="fw-bold">さぁはじめよう!!!</h3>
       </div>
-      <%= link_to "はじめる", new_post_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill px-3 py-3 fw-bold" , type: "button" %>
-      <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill px-3 py-3 fw-bold" , type: "button" %>
+      <%= link_to "はじめる", new_post_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill me-5 px-3 py-3 fw-bold" , type: "button" %>
+      <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill ms-5 px-3 py-3 fw-bold" , type: "button" %>
     </div>
   </div>
 </section>
