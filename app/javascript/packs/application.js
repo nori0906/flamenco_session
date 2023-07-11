@@ -10,6 +10,8 @@ import "jquery"  // プレビュー機能実装のため追加 23/4/5
 
 import "bootstrap";
 import "../stylesheets/application.scss";
+// fontawesome追加
+import '@fortawesome/fontawesome-free/js/all';
 
 Rails.start()
 ActiveStorage.start()

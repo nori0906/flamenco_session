@@ -1,82 +1,313 @@
-<div class='top-wrapper'>
-  <div class='top-inner-text'>
-    <h1 class="top-title fw-bold mb-4" >フラッと×セッション</h1>
-    <p class="fs-2">スペインの伝統文化である<br>
-    フラメンコ音楽を気軽に体感することができるサービス</p>
-    <%= link_to "はじめる", posts_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill me-5 px-3 py-3 fw-bold" , type: "button" %>
-    <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill ms-5 px-3 py-3 fw-bold", type: "button" %>
+<!-- Modal -->
+<div class="modal fade" id="gusetModal" tabindex="-1" aria-labelledby="gusetModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header border-0 rounded bg-dark-custom">
+        
+        <div class="bodal-body text-white text-center d-flex justify-content-evenly w-100 my-4">
+          <div>
+            <h5 class="fw-bold mb-4" id="gusetModalLabel">チュートリアルを始める</h5>
+            <%= link_to "チュートリアル", guest_tutorial_introductions_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold" , type: "button" %>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-4" id="gusetModalLabel">みんなの投稿を見る</h5>
+            <%= link_to "投稿を見る", guest_index_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold" , type: "button" %>
+          </div>
+        </div>
+
+        <div class="align-self-start">
+          <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
 <section>
-  <div class='fla-overview pb-5 '>
-    <h1 class='text-dark px-5 py-5 fw-bold text-center'>フラっとセッションでできること</h1>
-    <div class="d-flex justify-content-center gap-5">
-      <div>
-        <p>フラメンコが初めての方</p>
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-text">ffffffffff</p>
-          </div>
+  <div class="top-wrapper">
+    <div class="text-white d-flex justify-content-center w-100 h-100 bkg-overlay">
+      <div class="align-self-center text-center">
+        <div class="py-5">
+          <h1 class="top-title-size fw-bold mb-4" >フラッと×セッション</h1>
+          <p class="fs-2">〜フラメンコ音楽で繋がる・体験する・発見する〜</p>
+        </div>
+        <div class="my-5 py-5">
+          <%= link_to "はじめる", posts_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill me-5 px-3 py-3 fw-bold" , type: "button", data: { bs_toggle: "modal", bs_target: "#gusetModal" } %>
+          <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill ms-5 px-3 py-3 fw-bold", type: "button" %>
+        </div>
+        <div class="pt-5">
+          <a href="#app_overview" class="top-anchor-link"><i class="fa-solid fa-hand-point-down fa-beat castom-size"></i></a>
         </div>
       </div>
-
-      <div >
-        <p>フラメンコ経験がある方</p>
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-text">ffffffffffff</p>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
-<section>
-  <div class='fla-introduction bg-color text-white pb-5 text-center'>
-    <h1 class=" px-5 py-5 fw-bold">フラメンコってこんな音楽</h1>
-    <h3 class="d-flex justify-content-center text-center">歌、踊り、ギターが三位一体となって<br>
-    即興的に作り上げる音楽です</h3>
-    <p class="text-center">フラメンコ特有の音色やリズムから作り上げられる<br>
-    圧倒的な世界観は、スペインの無形文化遺産に登録されています。</p>
-    <h3>フラメンコは踊りだけじゃない!</h3>
-    <p>日本では踊りをイメージされがちですが<br>
-    実はフラメンコの起源は歌にあります。</p>
+
+<section id="app_overview">
+  <div class="bg-dark bg-gradient text-white text-center pb-5">
+    <div class='container'>
+      <h1 class='px-5 py-5 fw-bold'>フラっとセッションとは？</h1>
+      <p>本アプリは、フラメンコ音楽をベースとした録音・音声コラボ・共有ができる録音投稿アプリです。<br>初心者や練習生でもフラメンコの「合わせ」を簡単に仮想体験できます。</p>
+      
+      <%# アイコン追加 %>
+      <div class="d-flex justify-content-center mt-5">
+        <div class = "icon-container pe-5">
+          <%= image_tag "icon/search-icon.png", size: "50x50" %>
+          <div class = "icon-underlay">
+            <%= image_tag "icon/base-icon.png", size: "70x10" %>
+          </div>
+          <p class="fs-5">①投稿チェック</p>
+        </div>
+
+        <div class = "icon-container pe-5">
+          <%= image_tag "icon/recording-icon.png", size: "50x50" %>
+          <div class = "icon-underlay">
+            <%= image_tag "icon/base-icon.png", size: "70x10" %>
+          </div>
+          <p class="fs-5">②録音・コラボ</p>
+        </div>
+
+        <div class = "icon-container">
+          <%= image_tag "icon/post-icon.png", size: "50x50" %>
+          <div class = "icon-underlay">
+            <%= image_tag "icon/base-icon.png", size: "70x10" %>
+          </div>
+          <p class="fs-5">③新規投稿</p>
+        </div>
+      </div>
+        
+
+      <div class="row row-cols-1 row-cols-lg-2 g-5 mt-2 mx-5">
+        <div class="col">
+          <h2>フラメンコが初めての方</h2>
+          <div class="card bg-transparent border border-white border-4 p-3 mx-4">
+            <div class="card-text text-start">
+              <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fa-regular fa-square-check fa-lg"></i> チュートリアルを通してフラメンコの一部を体験！</li>
+                <li class="mb-2"><i class="fa-regular fa-square-check fa-lg"></i> さまざまな投稿からフラメンコ音楽に触れられる！</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <h2>フラメンコ経験がある方</h2>
+          <div class="card bg-transparent border border-white border-4 p-3 mx-4">
+            <div class="card-text text-start">
+              <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fa-regular fa-square-check fa-lg"></i> 練習中の曲を1パートから気軽にアウトプット！</li>
+                <li class="mb-2"><i class="fa-regular fa-square-check fa-lg"></i> 他ユーザーとの音声コラボ（合わせ）を簡単に実現！</li>
+                <li class="mb-2"><i class="fa-regular fa-square-check fa-lg"></i> 歌・踊り・ギターの垣根を超えた交流ができる！</li>
+                <li></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col d-flex flex-column align-items-center">
+          <div>
+            <h2>フラメンコって？</h2>
+          </div>
+          <div class="pt-3">
+            <p class="mb-1">フラメンコを知る</p>
+            <a class="hover-test" href="#introduction">
+              <div class = "icon-container">
+                <%= image_tag "icon/guitar-icon.png", size: "50x50" %>
+                <div class = "icon-underlay">
+                  <%= image_tag "icon/base-icon.png", size: "70x10" %>
+                </div>
+                <i class="fa-solid fa-angles-down fa-beat" style="color: #ffffff;"></i>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="col">
+          <h2>3つの使い方を紹介</h2>
+          <div class="row row-cols-1 pt-3">
+            <div class="col d-flex flex-column align-items-center">
+              <div>
+                <p class="mb-1">録音する</p>
+              </div>
+              <div>
+                <a href="#explain-recording">
+                  <div class = "icon-container">
+                    <%= image_tag "icon/recording-icon.png", size: "50x50" %>
+                    <div class = "icon-underlay">
+                      <%= image_tag "icon/base-icon.png", size: "70x10" %>
+                    </div>
+                    <i class="fa-solid fa-angles-down fa-beat" style="color: #ffffff;"></i>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="row row-cols-2">
+                <div class="col d-flex flex-column align-items-center">
+                  <div>
+                    <p class="mb-1">コラボする</p>
+                  </div>
+                  <div>
+                    <a href="#explain-collab">
+                      <div class="icon-container ">
+                        <div class = "d-flex justify-content-center">
+                          <%= image_tag "icon/recording-icon.png", size: "35x45" %>
+                          <%= image_tag "icon/x-icon.png", size: "20x30", class: "align-self-center" %>
+                          <%= image_tag "icon/recording-icon.png", size: "35x45" %>
+                        </div>
+                        <div class = "icon-underlay">
+                          <%= image_tag "icon/base-icon.png", size: "70x10" %>
+                        </div>
+                        <i class="fa-solid fa-angles-down fa-beat" style="color: #ffffff;"></i>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="col d-flex flex-column align-items-center">
+                  <div>
+                    <p class="mb-1">体験する</p>
+                  </div>
+                  <div>
+                    <a href="#explain-tutorial">
+                      <div class = "icon-container">
+                        <%= image_tag "icon/clap-icon.png", size: "50x50" %>
+                        <div class = "icon-underlay">
+                          <%= image_tag "icon/base-icon.png", size: "70x10" %>
+                        </div>
+                        <i class="fa-solid fa-angles-down fa-beat" style="color: #ffffff;"></i>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
   </div>
 </section>
-<section>
-  <div class='fla-expt bg-dark bg-gradient text-white pb-5'>
-    <h1 class='text-white d-flex justify-content-center px-5 py-5 fw-bold'>誰でも簡単に参加!!</h1>
-    <p class="text-center mb-5">フラメンコは参加型の音楽です<br>
-    演者だけでなく観る人も一体となってフラメンコを作り上げていきます</p>
+
+<section id="introduction">
+  <div class="bg-color text-white">
     <div class="container">
-      <h3>はじめてでも大丈夫! 簡単に参加できる2つの方法</h3>
-      <ul class="list-unstyled">
-        <li class="">
-          <p>ハレオ（Jaleo）</p>
-          <div class="card">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">ffffffffffff</p>
-            </div>
-          </div>
-        </li>
-        <li class="">
-          <p>パルマ（Palma）</p>
-          <div class="card">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">fffffffff</p>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div class="text-center">
-        <h3>実際にチャレンジ!!!</h3>
-        <%= link_to "はじめる", new_post_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill px-3 py-3 fw-bold" , type: "button" %>
+      <div class="text-center py-5">
+        <h1 class="fw-bold">フラメンコってこんな音楽</h1>
       </div>
+
+      <div class="row row-cols-1 row-cols-lg-2 g-5 mb-4 mx-5">
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item border border-white border-4">
+            <div class="accordion-header" id="panelsStayOpen-headingOne">
+              <button class="accordion-button collapsed btn-outline-secondary bg-color text-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                <h3>どこの国の音楽？</h3>
+              </button>
+            </div>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+              <div class="accordion-body bg-dark bg-gradient text-white border-top border-white border-4">
+                <p><strong>スペインの音楽および舞踊です。</strong></p>
+                <p>歌、踊り、ギターが三位一体となって演奏されます。<br>
+                またフラメンコの起源は歌にあり、スペインでは無形文化遺産にも登録されています。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item border border-white border-4">
+            <div class="accordion-header" id="panelsStayOpen-headingTwo">
+              <button class="accordion-button collapsed btn-outline-secondary bg-color text-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                <h3>日本では有名なの？</h3>
+              </button>
+            </div>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+              <div class="accordion-body bg-dark bg-gradient text-white border-top border-white border-4">
+                <p><strong>実は日本はスペインについで、世界で2番目にフラメンコ人口が多い国です。</strong></p>
+                <p>日本のフラメンコ人口は約5万人ほどいると言われています。<br>
+              その比率は踊り手が80％以上、歌は15％程度、ギター5％未満と、踊り手に対して歌い手やギターリスト人口は少ない背景があります。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" id="accordionExample">
+          <%# <div class="accordion-item"> %>
+          <div class="accordion-item border border-white border-4">
+            <div class="accordion-header" id="panelsStayOpen-headingThree">
+              <button class="accordion-button collapsed btn-outline-secondary bg-color text-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                <h3>誰でも簡単に参加できる？</h3>
+              </button>
+            </div>
+            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+              <div class="accordion-body bg-dark bg-gradient text-white border-top border-white border-4">
+                <p><strong>フラメンコにはハレオ（掛け声）やパルマ（手拍子）といった誰でも比較的参加・体験できます。</strong></p>
+                <p><strong>ハレオ</strong><br>
+                アーティストを励まし、舞台を盛り上げるための掛け声のことです。<br>
+                代表的なハレオ：「olee! / オレー」(※スペイン語で「いいね！」の意味)</p>
+                <p><strong>パルマ</strong><br>
+                手拍子のことです。リズムを支える重要な役割を果たしています。</p>
+                <p>※本アプリでは<%= link_to "チュートリアル", guest_tutorial_introductions_path, class: "text-white" %>を通して実際にパルマを体験することができます。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item border border-white border-4">
+            <div class="accordion-header" id="panelsStayOpen-headingFour">
+              <button class="accordion-button collapsed btn-outline-secondary bg-color text-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
+                <h3>まだまだ認知が低いフラメンコギターとは？</h3>
+              </button>
+            </div>
+            <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+              <div class="accordion-body bg-dark bg-gradient text-white border-top border-white border-4">
+                <p><strong>日本において認知が低いフラメンコギターですが、スペインでは絶大な人気を誇っています。</strong></p>
+                <p>現代のフラメンコおいて世界観を彩るにはフラメンコギターは欠かせません。<br>
+                他ジャンルにはない独特な奏法・リズム・音色を演出することから、近年ではギターのみの演奏（ソロギター）も注目されています。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      <div class="d-flex flex-column align-items-center pb-4">
+        <div class="mt-5 mb-3">
+          <h2 class="fw-bold">日本で大注目のフラメンコギターリストを紹介</h2>
+        </div>
+        <div class="text-center">
+          <p>日本・スペインと大活躍している超絶フラメンコギターデュオを紹介します。<br>
+          長年スペインで研鑽を積んできた2人が繰り広げる演奏は圧巻です。</p>
+          <p>ギターを通して、本場のリズムや音色を感じてみましょう！！</p>
+          <div class= "ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/mNgTlL5Uik8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="text-end">
+            <p>アーティスト名：<%= link_to "徳永兄弟", "https://www.tokunagaduo.com/", class: "text-white" %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <%= render "shared/how_to_use_app" %>
+</section>
+
+
+<section>
+  <div class="bg-dark bg-gradient text-center text-white pt-5 pb-5">
+    <div class="container">
+      <div class="py-4">
+        <h3 class="fw-bold">さぁはじめよう!!!</h3>
+      </div>
+      <%= link_to "はじめる", new_post_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill me-5 px-3 py-3 fw-bold" , type: "button" %>
+      <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill ms-5 px-3 py-3 fw-bold" , type: "button" %>
     </div>
   </div>
 </section>
