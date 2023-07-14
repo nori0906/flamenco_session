@@ -18,24 +18,26 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     # 元音源のデータ取得
     if @post.collab_src
-      @ref_post = Post.find_by(id: @post.collab_src)
+      @parent_post = Post.find_by(id: @post.collab_src)
     end
     # 大元音源のデータ取得
-    if @ref_post.present? && @ref_post.collab_src
-      @root_post = Post.find(@ref_post.collab_src)
+    if @parent_post.present? && @parent_post.collab_src
+      @root_post = Post.find(@parent_post.collab_src)
     end
   end
 
   def new
+    binding.pry
     @post = Post.new
     # 「ref_id」 クエリパラメータの値があるかを確認し、idがあればその投稿データを取得
-    # if params[:ref_id]
-    #   @ref_post = Post.find(params[:ref_id])
-    # end
-    # # クエリパラメータで取得した投稿データのさらに紐づいた投稿データを確認し取得
-    # if @ref_post.present? && @ref_post.collab_src #左から実行。present?で値の有無を確認し、エラーを防ぐ
-    #   @root_post = Post.find(@ref_post.collab_src)
-    # end
+    if params[:ref_id]
+      @parent_post = Post.find(params[:ref_id])
+    end
+    # クエリパラメータで取得した投稿データのさらに紐づいた投稿データを確認し取得
+    if @parent_post.present? && @parent_post.collab_src #左から実行。present?で値の有無を確認し、エラーを防ぐ
+      @root_post = Post.find(@parent_post.collab_src)
+    end
+
   end
 
 
