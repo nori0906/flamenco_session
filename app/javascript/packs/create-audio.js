@@ -150,68 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  /// サーバー ///
-  // サーバー送信処理
-  async function sendToSever() {
-    const formData = new FormData();
-    formData.append('recording[voice]', audioBlob, `recording.${subType}`);
-    resetAudioData();
-
-    // 非同期（Ajax）でサーバーに音声データを送信
-    const response = await axios({
-      method: 'post',
-      url: '/recordings',
-      data: formData,
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      }
-    })
-    return response;
-  }
-
-  // async function handleSever() {
-  //   const response = await sendToSever()
-  //   return response
-  // }
-
-
-
-  /// レスポンス ///
-  // フォームの表示
-  function displayElement(id, display) {
-    const element = document.getElementById(id);
-    element.style.display = display;
-  }
-
-  // レスポンス管理
-  async function handleResponse(response) {
-    console.log('handleResponse実行');
-    console.log(response);
-    // サーバーから返されたBlob IDとURLを取得
-    const blobId = response.data.id;
-    const blobUrl = response.data.blob_url;
-    // 隠しフォームDOMを取得
-    const blobIdInput = document.getElementById('post_voice_blob_id');
-
-
-    // 画面表示切り替え
-    displayElement('post_form', 'block');
-    displayElement('recording_screen', 'none');
-
-    // フォームの隠しフィールドにBlob IDを設定
-    blobIdInput.value = blobId;
-
-    // レスポンスの音声データをバッファに更新
-    audioBuffer = await fetchAudio(blobUrl)
-    console.log(audioBuffer);
-
-    // 再生処理実行
-    playBackControls('form')
-  }
-
-
-
   /// 再生 ///
   // 再生・停止処理
   async function playBackControls(displayType) {
@@ -273,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
-    /// 音声コントローラー
+    // 音声コントローラー
     function resetPlayback() {
       slider.value = 0;
       playbackTime.textContent = '0:00';
@@ -431,16 +369,79 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+  /// サーバー ///
+  // サーバー送信処理
+  async function sendToSever() {
+    const formData = new FormData();
+    formData.append('recording[voice]', audioBlob, `recording.${subType}`);
+    resetAudioData();
 
-  //// 関数の実行 ////
+    // 非同期（Ajax）でサーバーに音声データを送信
+    const response = await axios({
+      method: 'post',
+      url: '/recordings',
+      data: formData,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+    })
+    return response;
+  }
 
-  // 引数に録音画面時の再生用ののDOMを渡す（関数内で再生イベント発火）
+  // async function handleSever() {
+  //   const response = await sendToSever()
+  //   return response
+  // }
+
+
+
+  /// レスポンス ///
+  // フォームの表示
+  function displayElement(id, display) {
+    const element = document.getElementById(id);
+    element.style.display = display;
+  }
+
+  // レスポンス管理
+  async function handleResponse(response) {
+    console.log('handleResponse実行');
+    console.log(response);
+    // サーバーから返されたBlob IDとURLを取得
+    const blobId = response.data.id;
+    const blobUrl = response.data.blob_url;
+    // 隠しフォームDOMを取得
+    const blobIdInput = document.getElementById('post_voice_blob_id');
+
+
+    // 画面表示切り替え
+    displayElement('post_form', 'block');
+    displayElement('recording_screen', 'none');
+
+    // フォームの隠しフィールドにBlob IDを設定
+    blobIdInput.value = blobId;
+
+    // レスポンスの音声データをバッファに更新
+    audioBuffer = await fetchAudio(blobUrl)
+    console.log(audioBuffer);
+
+    // 再生処理実行
+    playBackControls('form')
+  }
+
+
+
+
+  //// イベント・関数の実行 ////
+  /// 事前に実行 ///
+  // 引数に録音画面時の再生用DOMを渡す（関数内で再生イベント発火）
   playBackControls('post')
 
   // オーディオ設定
   settingRecordData()
 
-  //// イベント ////
+
+  /// イベント ///
   // 録音
   // 録音完了したら、結果（blobデータ）を受け取ってバッファを作成する
   recordButton.addEventListener('click', () => {
@@ -450,7 +451,9 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("An error occurred during recording or decoding: ", e);
       })
     });
-  stopButton.addEventListener('click', stopRecording)
+
+  // 録音停止
+  stopButton.addEventListener('click', stopRecording);
   
   // try {
   //   await recording()
