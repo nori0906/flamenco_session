@@ -29,15 +29,14 @@ class PostsController < ApplicationController
   def new
     binding.pry
     @post = Post.new
-    # 「ref_id」 クエリパラメータの値があるかを確認し、idがあればその投稿データを取得
-    if params[:ref_id]
-      @parent_post = Post.find(params[:ref_id])
+    # 「parent_post_id」 クエリパラメータの値があるかを確認し、idがあればその投稿データを取得
+    if params[:parent_post_id]
+      @parent_post = Post.find(params[:parent_post_id])
     end
     # クエリパラメータで取得した投稿データのさらに紐づいた投稿データを確認し取得
     if @parent_post.present? && @parent_post.collab_src #左から実行。present?で値の有無を確認し、エラーを防ぐ
       @root_post = Post.find(@parent_post.collab_src)
     end
-
   end
 
 
@@ -88,7 +87,7 @@ class PostsController < ApplicationController
   def destroy
     post = Post.find(params[:id])
     post.destroy
-    redirect_to posts_path, flash: {danger: "削除しました。"}
+    redirect_to posts_path, flash: {danger: "削除しました"}
   end
 
   private
