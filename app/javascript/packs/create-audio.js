@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let subType;
   let mediaRecorder;
   let recordedChunks = [];
+  // 現状audioBufferの中身が更新されることでそれぞれ再生内容が変化している。23/07/15
   let audioBuffer;
   let audioBlob;
   let audioSource;
@@ -37,8 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
   /// 録音 ///
   // オーディオ制約・MIMEタイプを判定
   function settingRecordData() {
+    console.log('setting実行');
     // ボタン設定
-    recordPlayback.disabled = true;
+    // recordPlaybackが別関数ないで定義してあるためDOM取得できず。のち修正 23/07/15
+    // recordPlayback.disabled = true;
     buttonNext.style.display = 'none';
 
     // ブラウザを特定
@@ -149,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-
   /// 再生 ///
   // 再生・停止処理
   async function playBackControls(displayType) {
@@ -205,9 +207,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // ボタンの状態を更新
         playingFlag = false;
         setButtonStatus();
-
-        // recordStop.removeEventListener('click', handlePlayBack);
-        
       }
     }
 
@@ -285,10 +284,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     // 実行管理
-    function handlePlayBack (event) {
+    function handlePlayBack(event) {
       console.log('handle実行');
-      playStatus = ['post-record-playback', 'form-record-playback' ]
-      pauseStatus = ['post-record-stop', 'form-record-stop']
+      playStatus = ['post-record-playback', 'form-record-playback', 'collab-record-playback']
+      pauseStatus = ['post-record-stop', 'form-record-stop', 'collab-record-stop']
       
       
       if (playStatus.includes(event.currentTarget.id)) {
@@ -304,6 +303,9 @@ document.addEventListener('DOMContentLoaded', function () {
     slider.addEventListener('input', async (event) => sliderHandring(event));
   }
 
+
+
+  /// 変換 ///
   // 新規音声データをバッファーへ変換
   async function createAudioBuffer(audioBlob) {
     console.log('createAudioBuffer実行');
@@ -324,9 +326,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // 既存音声ファイルを読み込みバッファへ変換
-  async function fetchAudio(blobUrl) {
+  async function fetchAudio(audioUrl) {
     console.log('fetchAudio実行');
-    const response = await fetch(blobUrl);
+    const response = await fetch(audioUrl);
     const arrayBuffer = await response.arrayBuffer();
     
     // オーディオバッファにデコード
@@ -337,7 +339,6 @@ document.addEventListener('DOMContentLoaded', function () {
     //   console.log(e);
     // }
   }
-
 
 
   /// ボタン表示 ///
@@ -368,7 +369,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-
   /// サーバー ///
   // サーバー送信処理
   async function sendToSever() {
@@ -388,12 +388,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     return response;
   }
-
-  // async function handleSever() {
-  //   const response = await sendToSever()
-  //   return response
-  // }
-
 
 
   /// レスポンス ///
@@ -439,6 +433,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // オーディオ設定
   settingRecordData()
+
+  // コラボ音源の再生分岐
+  if (document.getElementById('defaultAudioContainer') ) {
+    let defaultAudio = new Audio('/test.mp3');
+    defaultAudio.addEventListener('loadeddata', () => {
+      console.log('defaltAudio data loaded.');
+    });
+  } else if (document.getElementById('collabAudioContainer')) {
+    const audioContainer = document.getElementById('collabAudioContainer')
+    const audioUrl = audioContainer.dataset.audioUrl
+    console.log(audioUrl);
+    let collabAudio = new Audio(audioUrl);
+    collabAudio.addEventListener('loadeddata', () => {
+      console.log('collabAudio data loaded.');
+    });
+  }
 
 
   /// イベント ///

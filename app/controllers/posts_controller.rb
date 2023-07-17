@@ -16,27 +16,35 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    
     # 元音源のデータ取得
     if @post.collab_src
-      @parent_post = Post.find_by(id: @post.collab_src)
+      @collab_post = Post.find_by(id: @post.collab_src)
     end
     # 大元音源のデータ取得
-    if @parent_post.present? && @parent_post.collab_src
-      @root_post = Post.find(@parent_post.collab_src)
+    if @collab_post.present? && @collab_post.collab_src
+      @root_collab_post = Post.find(@collab_post.collab_src)
     end
   end
 
   def new
-    binding.pry
     @post = Post.new
-    # 「parent_post_id」 クエリパラメータの値があるかを確認し、idがあればその投稿データを取得
-    if params[:parent_post_id]
-      @parent_post = Post.find(params[:parent_post_id])
+    
+    if params[:audio_flg]
+      @audio_flg = params[:audio_flg]
     end
+
+    # 「collab_post_id」 クエリパラメータの値があるかを確認し、idがあればその投稿データを取得
+    if params[:collab_post_id]
+      @collab_post = Post.find(params[:collab_post_id])
+    end
+    
     # クエリパラメータで取得した投稿データのさらに紐づいた投稿データを確認し取得
-    if @parent_post.present? && @parent_post.collab_src #左から実行。present?で値の有無を確認し、エラーを防ぐ
-      @root_post = Post.find(@parent_post.collab_src)
+    if @collab_post.present? && @collab_post.collab_src #左から実行。present?で値の有無を確認し、エラーを防ぐ
+      @root_collab_post = Post.find(@collab_post.collab_src)
     end
+
+
   end
 
 
