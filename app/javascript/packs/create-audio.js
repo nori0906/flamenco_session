@@ -31,14 +31,65 @@ document.addEventListener('DOMContentLoaded', function () {
   let audioBlob;
   let audioSource;
 
+  // コラボ元音源を格納するための変数を定義（録音時）
+  let defaultAudio;
+  let collabAudio;
+
 
 
 
   //// 関数定義 ////
   /// 録音 ///
+  // コラボ元の音源がある場合音声データを取得
+  function collabSourceSetting() {
+    console.log('コラボ音源の設定を実行');
+    // コラボ音源の再生分岐
+    if (document.getElementById('defaultAudioContainer') ) {
+      defaultAudio = new Audio('/test.mp3');
+      defaultAudio.addEventListener('loadeddata', () => {
+        console.log('defaltAudio data loaded.');
+        console.log(defaultAudio);
+      });
+    } else if (document.getElementById('collabAudioContainer')) {
+      const audioContainer = document.getElementById('collabAudioContainer')
+      const audioUrl = audioContainer.dataset.audioUrl
+      console.log(audioUrl);
+      collabAudio = new Audio(audioUrl);
+      collabAudio.addEventListener('loadeddata', () => {
+        console.log('collabAudio data loaded.');
+        console.log(collabAudio);
+      });
+    }
+  }
+
+  // コラボ元音源を再生
+  function audioSourcePlay() {
+    if (defaultAudio) {
+      defaultAudio.play()
+      console.log('再生開始');
+    } else if (collabAudio) {
+      collabAudio.play()
+      console.log('再生開始');
+    }
+  }
+
+  // コラボ元音源を停止
+  function audioSourcePause() {
+    if (defaultAudio) {
+      defaultAudio.pause()
+      defaultAudio.currentTime = 0;
+      console.log('再生停止');
+    } else if (collabAudio) {
+      collabAudio.pause()
+      collabAudio.currentTime = 0;
+      console.log('再生停止');
+    }
+  }
+
+
   // オーディオ制約・MIMEタイプを判定
   function settingRecordData() {
-    console.log('setting実行');
+    console.log('オーディオ制約設定を実行');
     // ボタン設定
     // recordPlaybackが別関数ないで定義してあるためDOM取得できず。のち修正 23/07/15
     // recordPlayback.disabled = true;
@@ -112,9 +163,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // 録音開始
   async function recording() {
     // 録音時に格納したデータをリセット
-    if(audioBlob != null) {
-      resetAudioData();
-    }
+    audioBlob != null ? resetAudioData() : null;
+    // if(audioBlob != null) {
+    //   resetAudioData();
+    // }
 
     // ボタン表示設定
     recordingFlag = true;
@@ -124,6 +176,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     mediaRecorder = new MediaRecorder(stream, {mimeType: mime}); // 「mediaRecorder」: 録音機能とそのデータを取得
     mediaRecorder.start();
+
+    // コラボ元音源がある場合再生する
+    defaultAudio || collabAudio ? audioSourcePlay() : null;
     
     mediaRecorder.addEventListener('dataavailable', (event) => {
       recordedChunks.push(event.data);
@@ -146,10 +201,14 @@ document.addEventListener('DOMContentLoaded', function () {
       // stopAudio();
       mediaRecorder.stop();
 
+      // コラボ元音源がある場合停止する
+      defaultAudio || collabAudio ? audioSourcePause() : null;
+
       recordingFlag = false;
       setButtonStatus();
     }
   }
+
 
 
   /// 再生 ///
@@ -341,6 +400,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
+
   /// ボタン表示 ///
   function setButtonStatus() {
     const buttonStatus = {
@@ -369,6 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
+
   /// サーバー ///
   // サーバー送信処理
   async function sendToSever() {
@@ -388,6 +449,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     return response;
   }
+
 
 
   /// レスポンス ///
@@ -431,24 +493,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // 引数に録音画面時の再生用DOMを渡す（関数内で再生イベント発火）
   playBackControls('post')
 
+  // 録音時のコラボ音源を設定
+  collabSourceSetting()
+
   // オーディオ設定
   settingRecordData()
-
-  // コラボ音源の再生分岐
-  if (document.getElementById('defaultAudioContainer') ) {
-    let defaultAudio = new Audio('/test.mp3');
-    defaultAudio.addEventListener('loadeddata', () => {
-      console.log('defaltAudio data loaded.');
-    });
-  } else if (document.getElementById('collabAudioContainer')) {
-    const audioContainer = document.getElementById('collabAudioContainer')
-    const audioUrl = audioContainer.dataset.audioUrl
-    console.log(audioUrl);
-    let collabAudio = new Audio(audioUrl);
-    collabAudio.addEventListener('loadeddata', () => {
-      console.log('collabAudio data loaded.');
-    });
-  }
 
 
   /// イベント ///
@@ -482,6 +531,3 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
-
-
-
