@@ -1,20 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const audioPLayback = document.getElementById('model-audio-playback');
-  const audioStop = document.getElementById('model-audio-stop');
-  const levelSelectText = document.getElementById('level-select').textContent;
-  console.log(levelSelectText);
-
-  // コンローラー追加
-  const playbackTime = document.getElementById('model-audio-playback-time');
-  const slider = document.getElementById('model-audio-slider');
+  // 再生スライダーDOM
+  const audioPLayback = document.getElementById('audio-playback');
+  const audioStop = document.getElementById('audio-stop');
+  const playbackTime = document.getElementById('audio-playback-time');
+  const slider = document.getElementById('audio-slider');
+  console.log(slider);
   let source;
   let startTime;
   let resumeTime = 0; // 一時停止時間を保存する変数
-
-
+  
   // WebAudioAPI
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   let buffer;
+
 
 
 
@@ -24,24 +22,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const arrayBuffer = await response.arrayBuffer();
     // 音声ファイルのデータがデコードされ、WebaudioAPIで使用できるようになる
     buffer = await audioContext.decodeAudioData(arrayBuffer);
+    console.log('読み込み完了');
+    return buffer;
+    
+    // 再生時間を更新するためのスライダーの最大値を設定
+    // slider.max = buffer.duration;
   }
 
-  // ページの読み込み時に音声ファイルをフェッチ・難易度別に音声ファイルを分岐
-  // お手本音声を後で格納（23/5/8）
-  function levelSelecter() {
-    if (levelSelectText.includes('初級')) {
-      fetchAudio('/test.mp3');
-    } else if (levelSelectText.includes('中級')) {
-      fetchAudio('/test.mp3');
-    } else if (levelSelectText.includes('上級')) {
-      fetchAudio('/test.mp3');
+  // 読み込む音源を選択
+  async function selectFetch() {
+    if (document.getElementById('defaultAudioContainer')) {
+      const fetched = await fetchAudio('/test.mp3');
+      console.log(fetched);
+    } else if (document.getElementById('collabAudioContainer')){
+      const audioContainer = document.getElementById('collabAudioContainer')
+      const audioUrl = audioContainer.dataset.audioUrl
+      console.log(audioUrl);
+      const fetched = await fetchAudio(audioUrl);
+      console.log(fetched);
     }
   }
-  levelSelecter()
 
 
-
-
+  // 再生・停止
   async function playAudio() {
     if (buffer) {
       startTime = audioContext.currentTime - resumeTime; // resumeTimeを考慮する
@@ -78,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
       audioStop.disabled = true;
     }
   }
-
 
 
   // 録音コントローラー
@@ -152,12 +154,6 @@ document.addEventListener('DOMContentLoaded', function () {
       updateProgress();
     }
   });
-  
-
-
-
-
-  
 
 
   // エラーハンドリングをまとめる
@@ -172,12 +168,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-
   //イベントリスナー
   // withErrorHandlingで各関数をラップしてエラーハンドリングおこなう
   function addEventListeners() {
     audioPLayback.addEventListener('click', () => withErrorHandling(playAudio)());
     audioStop.addEventListener('click', () => withErrorHandling(stopAudio)());
   }
+
+
+  ///// 関数・イベントの実行 /////
+  selectFetch();
   addEventListeners();
 });

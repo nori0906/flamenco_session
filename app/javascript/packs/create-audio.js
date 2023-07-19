@@ -26,20 +26,78 @@ document.addEventListener('DOMContentLoaded', function () {
   let subType;
   let mediaRecorder;
   let recordedChunks = [];
+  // 現状audioBufferの中身が更新されることでそれぞれ再生内容が変化している。23/07/15
   let audioBuffer;
   let audioBlob;
   let audioSource;
+
+  // コラボ元音源を格納するための変数を定義（録音時）
+  let defaultAudio;
+  let collabAudio;
 
 
 
 
   //// 関数定義 ////
   /// 録音 ///
+  // コラボ元の音源がある場合音声データを取得
+  function collabSourceSetting() {
+    console.log('コラボ音源の設定を実行');
+    // コラボ音源の再生分岐
+    if (document.getElementById('defaultAudioContainer') ) {
+      defaultAudio = new Audio('/test.mp3');
+      defaultAudio.addEventListener('loadeddata', () => {
+        console.log('defaltAudio data loaded.');
+        console.log(defaultAudio);
+      });
+    } else if (document.getElementById('collabAudioContainer')) {
+      const audioContainer = document.getElementById('collabAudioContainer')
+      const audioUrl = audioContainer.dataset.audioUrl
+      console.log(audioUrl);
+      collabAudio = new Audio(audioUrl);
+      collabAudio.addEventListener('loadeddata', () => {
+        console.log('collabAudio data loaded.');
+        console.log(collabAudio);
+      });
+    }
+  }
+
+  // コラボ元音源を再生
+  function audioSourcePlay() {
+    if (defaultAudio) {
+      defaultAudio.play()
+      console.log('デフォ再生開始');
+    } else if (collabAudio) {
+      collabAudio.play()
+      console.log('コラボ再生開始');
+    }
+  }
+
+  // コラボ元音源を停止
+  function audioSourcePause() {
+    if (defaultAudio) {
+      defaultAudio.pause()
+      defaultAudio.currentTime = 0;
+      console.log('デフォ再生停止');
+    } else if (collabAudio) {
+      collabAudio.pause()
+      collabAudio.currentTime = 0;
+      console.log('コラボ再生停止');
+    }
+  }
+
+
   // オーディオ制約・MIMEタイプを判定
   function settingRecordData() {
+    console.log('オーディオ制約を設定');
     // ボタン設定
-    recordPlayback.disabled = true;
-    buttonNext.style.display = 'none';
+    // recordPlaybackが別関数ないで定義してあるためDOM取得できず。のち修正 23/07/15
+    // recordPlayback.disabled = true;
+
+    // if文でDOMがない場合のエラーを防ぐ
+    if (buttonNext) {
+      buttonNext.style.display = 'none';
+    };
 
     // ブラウザを特定
     const ua = window.navigator.userAgent.toLowerCase() //ブラウザのユーザーエージェントを取得（小文字に変換）し変数uaに格納
@@ -109,18 +167,25 @@ document.addEventListener('DOMContentLoaded', function () {
   // 録音開始
   async function recording() {
     // 録音時に格納したデータをリセット
-    if(audioBlob != null) {
-      resetAudioData();
-    }
+    audioBlob != null ? resetAudioData() : null;
+    // if(audioBlob != null) {
+    //   resetAudioData();
+    // }
 
     // ボタン表示設定
     recordingFlag = true;
     setButtonStatus();
-    buttonNext.style.display = 'none';
+    // if文でDOMがない場合のエラーを防ぐ
+    if (buttonNext) {
+      buttonNext.style.display = 'none';
+    };
     
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     mediaRecorder = new MediaRecorder(stream, {mimeType: mime}); // 「mediaRecorder」: 録音機能とそのデータを取得
     mediaRecorder.start();
+
+    // コラボ元音源がある場合再生する
+    defaultAudio || collabAudio ? audioSourcePlay() : null;
     
     mediaRecorder.addEventListener('dataavailable', (event) => {
       recordedChunks.push(event.data);
@@ -143,71 +208,12 @@ document.addEventListener('DOMContentLoaded', function () {
       // stopAudio();
       mediaRecorder.stop();
 
+      // コラボ元音源がある場合停止する
+      defaultAudio || collabAudio ? audioSourcePause() : null;
+
       recordingFlag = false;
       setButtonStatus();
     }
-  }
-
-
-
-  /// サーバー ///
-  // サーバー送信処理
-  async function sendToSever() {
-    const formData = new FormData();
-    formData.append('recording[voice]', audioBlob, `recording.${subType}`);
-    resetAudioData();
-
-    // 非同期（Ajax）でサーバーに音声データを送信
-    const response = await axios({
-      method: 'post',
-      url: '/recordings',
-      data: formData,
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      }
-    })
-    return response;
-  }
-
-  // async function handleSever() {
-  //   const response = await sendToSever()
-  //   return response
-  // }
-
-
-
-  /// レスポンス ///
-  // フォームの表示
-  function displayElement(id, display) {
-    const element = document.getElementById(id);
-    element.style.display = display;
-  }
-
-  // レスポンス管理
-  async function handleResponse(response) {
-    console.log('handleResponse実行');
-    console.log(response);
-    // サーバーから返されたBlob IDとURLを取得
-    const blobId = response.data.id;
-    const blobUrl = response.data.blob_url;
-    // 隠しフォームDOMを取得
-    const blobIdInput = document.getElementById('post_voice_blob_id');
-
-
-    // 画面表示切り替え
-    displayElement('post_form', 'block');
-    displayElement('recording_screen', 'none');
-
-    // フォームの隠しフィールドにBlob IDを設定
-    blobIdInput.value = blobId;
-
-    // レスポンスの音声データをバッファに更新
-    audioBuffer = await fetchAudio(blobUrl)
-    console.log(audioBuffer);
-
-    // 再生処理実行
-    playBackControls('form')
   }
 
 
@@ -267,13 +273,10 @@ document.addEventListener('DOMContentLoaded', function () {
         // ボタンの状態を更新
         playingFlag = false;
         setButtonStatus();
-
-        // recordStop.removeEventListener('click', handlePlayBack);
-        
       }
     }
 
-    /// 音声コントローラー
+    // 音声コントローラー
     function resetPlayback() {
       slider.value = 0;
       playbackTime.textContent = '0:00';
@@ -347,10 +350,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     // 実行管理
-    function handlePlayBack (event) {
+    function handlePlayBack(event) {
       console.log('handle実行');
-      playStatus = ['post-record-playback', 'form-record-playback' ]
-      pauseStatus = ['post-record-stop', 'form-record-stop']
+      playStatus = ['post-record-playback', 'form-record-playback', 'collab-record-playback']
+      pauseStatus = ['post-record-stop', 'form-record-stop', 'collab-record-stop']
       
       
       if (playStatus.includes(event.currentTarget.id)) {
@@ -366,6 +369,9 @@ document.addEventListener('DOMContentLoaded', function () {
     slider.addEventListener('input', async (event) => sliderHandring(event));
   }
 
+
+
+  /// 変換 ///
   // 新規音声データをバッファーへ変換
   async function createAudioBuffer(audioBlob) {
     console.log('createAudioBuffer実行');
@@ -379,16 +385,19 @@ document.addEventListener('DOMContentLoaded', function () {
       });
       audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
-      buttonNext.style.display = 'inline-block';
+      // if文でDOMがない場合のエラーを防ぐ
+      if (buttonNext) {
+        buttonNext.style.display = 'inline-block';
+      };
 
       return audioBuffer;
     }
   }
 
   // 既存音声ファイルを読み込みバッファへ変換
-  async function fetchAudio(blobUrl) {
+  async function fetchAudio(audioUrl) {
     console.log('fetchAudio実行');
-    const response = await fetch(blobUrl);
+    const response = await fetch(audioUrl);
     const arrayBuffer = await response.arrayBuffer();
     
     // オーディオバッファにデコード
@@ -431,16 +440,77 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+  /// サーバー ///
+  // サーバー送信処理
+  async function sendToSever() {
+    const formData = new FormData();
+    formData.append('recording[voice]', audioBlob, `recording.${subType}`);
+    resetAudioData();
 
-  //// 関数の実行 ////
+    // 非同期（Ajax）でサーバーに音声データを送信
+    const response = await axios({
+      method: 'post',
+      url: '/recordings',
+      data: formData,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+    })
+    return response;
+  }
 
-  // 引数に録音画面時の再生用ののDOMを渡す（関数内で再生イベント発火）
+
+
+  /// レスポンス ///
+  // フォームの表示
+  function displayElement(id, display) {
+    const element = document.getElementById(id);
+    element.style.display = display;
+  }
+
+  // レスポンス管理
+  async function handleResponse(response) {
+    console.log('handleResponse実行');
+    console.log(response);
+    // サーバーから返されたBlob IDとURLを取得
+    const blobId = response.data.id;
+    const blobUrl = response.data.blob_url;
+    // 隠しフォームDOMを取得
+    const blobIdInput = document.getElementById('post_voice_blob_id');
+
+
+    // 画面表示切り替え
+    displayElement('post_form', 'block');
+    displayElement('recording_screen', 'none');
+
+    // フォームの隠しフィールドにBlob IDを設定
+    blobIdInput.value = blobId;
+
+    // レスポンスの音声データをバッファに更新
+    audioBuffer = await fetchAudio(blobUrl)
+    console.log(audioBuffer);
+
+    // 再生処理実行
+    playBackControls('form')
+  }
+
+
+
+
+  //// イベント・関数の実行 ////
+  /// 事前に実行 ///
+  // 引数に録音画面時の再生用DOMを渡す（関数内で再生イベント発火）
   playBackControls('post')
+
+  // 録音時のコラボ音源を設定
+  collabSourceSetting()
 
   // オーディオ設定
   settingRecordData()
 
-  //// イベント ////
+
+  /// イベント ///
   // 録音
   // 録音完了したら、結果（blobデータ）を受け取ってバッファを作成する
   recordButton.addEventListener('click', () => {
@@ -450,7 +520,9 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("An error occurred during recording or decoding: ", e);
       })
     });
-  stopButton.addEventListener('click', stopRecording)
+
+  // 録音停止
+  stopButton.addEventListener('click', stopRecording);
   
   // try {
   //   await recording()
@@ -461,14 +533,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   // サーバー送信以降
-  buttonNext.addEventListener('click', () => {
-    sendToSever().then((response) => {
-      handleResponse(response);
-    }).catch((e) => {
-      console.log(e);
+  // if文でDOMがない場合のエラーを防ぐ
+  if (buttonNext) {
+    buttonNext.addEventListener('click', () => {
+      sendToSever().then((response) => {
+        handleResponse(response);
+      }).catch((e) => {　
+        console.log(e);
+      });
     });
-  });
+  };
 });
-
-
-
