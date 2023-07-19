@@ -28,31 +28,36 @@
         </div>
         <div class="d-flex justify-content-center">
           <%= render "layouts/guest_tutorial/audio_slider", slider_type: "post-record", size: "50" %>
-          <button type="button" class="btn stop-btn btn-lg text-white ms-3 none" id="buttonNext" >Next</button>
+          <% if logged_in? %>
+            <button type="button" class="btn stop-btn btn-lg text-white ms-3 none" id="buttonNext" >Next</button>
+          <% end %>
         </div>
       </div>
     </div>
+
   </div>
 </div>
 
 <%# 投稿フォーム %>
-<div class="bkg-img-pro form-style" id="post_form">
-  <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">投稿画面</h1>
-  <div class="container">
-    <%= render partial: 'layouts/flash' %>
-    <p class="text-white">投稿フォーム</p>
+<% if logged_in? %>
+  <div class="bkg-img-pro form-style" id="post_form">
+    <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">投稿画面</h1>
+    <div class="container">
+      <%= render partial: 'layouts/flash' %>
+      <p class="text-white">投稿フォーム</p>
 
-    <div>
-      <%= render "layouts/guest_tutorial/audio_slider", slider_type: "form-record", size: "100" %>
+      <div>
+        <%= render "layouts/guest_tutorial/audio_slider", slider_type: "form-record", size: "100" %>
+      </div>
+
+
+      <div>
+        <%= render 'posts/form', post: @post %>
+      </div>
+
     </div>
-
-
-    <div>
-      <%= render 'posts/form', post: @post %>
-    </div>
-
   </div>
-</div>
+<% end %>
 
 <%# JS読み込み %>
 <% if @audio_flg.present? %>

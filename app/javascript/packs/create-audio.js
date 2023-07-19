@@ -66,10 +66,10 @@ document.addEventListener('DOMContentLoaded', function () {
   function audioSourcePlay() {
     if (defaultAudio) {
       defaultAudio.play()
-      console.log('再生開始');
+      console.log('デフォ再生開始');
     } else if (collabAudio) {
       collabAudio.play()
-      console.log('再生開始');
+      console.log('コラボ再生開始');
     }
   }
 
@@ -78,22 +78,26 @@ document.addEventListener('DOMContentLoaded', function () {
     if (defaultAudio) {
       defaultAudio.pause()
       defaultAudio.currentTime = 0;
-      console.log('再生停止');
+      console.log('デフォ再生停止');
     } else if (collabAudio) {
       collabAudio.pause()
       collabAudio.currentTime = 0;
-      console.log('再生停止');
+      console.log('コラボ再生停止');
     }
   }
 
 
   // オーディオ制約・MIMEタイプを判定
   function settingRecordData() {
-    console.log('オーディオ制約設定を実行');
+    console.log('オーディオ制約を設定');
     // ボタン設定
     // recordPlaybackが別関数ないで定義してあるためDOM取得できず。のち修正 23/07/15
     // recordPlayback.disabled = true;
-    buttonNext.style.display = 'none';
+
+    // if文でDOMがない場合のエラーを防ぐ
+    if (buttonNext) {
+      buttonNext.style.display = 'none';
+    };
 
     // ブラウザを特定
     const ua = window.navigator.userAgent.toLowerCase() //ブラウザのユーザーエージェントを取得（小文字に変換）し変数uaに格納
@@ -171,7 +175,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // ボタン表示設定
     recordingFlag = true;
     setButtonStatus();
-    buttonNext.style.display = 'none';
+    // if文でDOMがない場合のエラーを防ぐ
+    if (buttonNext) {
+      buttonNext.style.display = 'none';
+    };
     
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     mediaRecorder = new MediaRecorder(stream, {mimeType: mime}); // 「mediaRecorder」: 録音機能とそのデータを取得
@@ -378,7 +385,10 @@ document.addEventListener('DOMContentLoaded', function () {
       });
       audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
-      buttonNext.style.display = 'inline-block';
+      // if文でDOMがない場合のエラーを防ぐ
+      if (buttonNext) {
+        buttonNext.style.display = 'inline-block';
+      };
 
       return audioBuffer;
     }
@@ -523,11 +533,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   // サーバー送信以降
-  buttonNext.addEventListener('click', () => {
-    sendToSever().then((response) => {
-      handleResponse(response);
-    }).catch((e) => {
-      console.log(e);
+  // if文でDOMがない場合のエラーを防ぐ
+  if (buttonNext) {
+    buttonNext.addEventListener('click', () => {
+      sendToSever().then((response) => {
+        handleResponse(response);
+      }).catch((e) => {　
+        console.log(e);
+      });
     });
-  });
+  };
 });

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   # 実際の使用するコード
-  before_action :require_login, except: %i[index show]
+  before_action :require_login, except: %i[index show new]
 
   # 一時利用
   # skip_before_action :require_login

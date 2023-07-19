@@ -2,6 +2,7 @@
   <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">詳細</h1>
   <div class="container">
 
+    <%# コラボが2回以上されていなければボタンを表示 %>
     <% unless @root_collab_post %>
         <div class="d-grid gap-2">
         <%# コラボ音声取得のためにクエリパラメータに投稿idを設定 %>
