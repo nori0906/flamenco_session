@@ -18,12 +18,14 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     
     # 元音源のデータ取得
-    if @post.collab_src
-      @collab_post = Post.find_by(id: @post.collab_src)
+    if @post.collab_src.present?
+      # @collab_post = Post.find_by(id: @post.collab_src)
+      @collab_post = @post.base_post
     end
     # 大元音源のデータ取得
     if @collab_post.present? && @collab_post.collab_src
-      @root_collab_post = Post.find(@collab_post.collab_src)
+      # @root_collab_post = Post.find(@collab_post.collab_src)
+      @root_collab_post = @collab_post.base_post
     end
   end
 
@@ -41,10 +43,9 @@ class PostsController < ApplicationController
     
     # クエリパラメータで取得した投稿データのさらに紐づいた投稿データを確認し取得
     if @collab_post.present? && @collab_post.collab_src #左から実行。present?で値の有無を確認し、エラーを防ぐ
-      @root_collab_post = Post.find(@collab_post.collab_src)
+      # @root_collab_post = Post.find(@collab_post.collab_src)
+      @root_collab_post = @collab_post.base_post
     end
-
-
   end
 
 
@@ -52,7 +53,8 @@ class PostsController < ApplicationController
     @post = Post.new(
       title: post_params[:title],
       body: post_params[:body],
-      status: post_params[:status]
+      status: post_params[:status],
+      user_id: current_user.id
     )
     
     # Blob IDから録音データを取得

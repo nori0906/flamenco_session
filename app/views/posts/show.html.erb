@@ -34,7 +34,7 @@
         <%# 自身のみ表示 %>
         <p class="card-text"><%= "#{@post.status}" %></p>
 
-        <p class="card-text"><%= "ユーザー名: #{}" %></p>
+        <p class="card-text"><%= "ユーザー名: #{@post.user.name}" %></p>
         
         
         <p class="card-text"><%= "ID: #{@post.id}" %></p>
