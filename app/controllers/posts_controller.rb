@@ -53,7 +53,8 @@ class PostsController < ApplicationController
     @post = Post.new(
       title: post_params[:title],
       body: post_params[:body],
-      status: post_params[:status]
+      status: post_params[:status],
+      user_id: current_user.id
     )
     
     # Blob IDから録音データを取得
