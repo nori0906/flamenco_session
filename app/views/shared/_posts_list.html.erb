@@ -1,0 +1,38 @@
+<div class="row row-cols-1 row-cols-md-2 g-5 pb-5">
+  <% posts.each do |post| %>
+    <div class="col">
+      <div class="card">
+        <%# 条件定義でpresent?をつけるかどうか？ %>
+        <% if post.collab_src.present? %>
+          <p><%= "【コラボ投稿】" %></p>
+        <% else %>
+          <p><%= "【投稿】" %></p>
+        <% end %>
+        <p><%= post.user.name %></p>
+
+
+        <div class="card-body">
+          <p>
+            <h5 class="card-title"><%= post.title %></h5>
+            <p class="card-text"><%= post.body %></p>
+            <p class="my-2">
+              <% if post.voice.attached? %>
+                <%= audio_tag(url_for(post.voice), controls: true) %>
+              <% end %>
+            </p>
+            <div class="btn-toolbar">
+              <div class="btn-group ms-auto" role="group" aria-label="Basic outlined example">
+                <%= link_to '詳細', post_path(post), class: "btn btn-outline-primary", type: "button"  %>
+                <%# ログインしているか・投稿者本人かを確認 %>
+                <% if logged_in? && current_user.id == post.user.id %>
+                  <%= link_to '編集', edit_post_path(post), class: "btn btn-outline-primary", type: "button"  %>
+                  <%= link_to '削除', post_path(post), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-primary", type: "button"   %>
+                <% end %>
+              </div>
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -2,7 +2,7 @@
   <h1 class="text-white text-center ps-5 py-3 mb-5">プロフィール</h1>
   <div class="container">
     <%= render partial: 'layouts/flash' %>
-    <div class=" px-5 mx-5 py-3">
+    <div class="px-5 mx-5 py-3">
       <div class="d-flex justify-content-start mt-4">
         <%= link_to '編集', edit_profile_path, class: 'btn btn-success float-right' %>
       </div>
@@ -25,5 +25,22 @@
         </div>
       </div>
     </div>
+    <div class="text-white d-flex justify-content-center">
+      <div class="me-5">
+        <%= link_to '公開記事を表示', profile_path(@user, format: :js, type: 'published'), remote: true, data: { type: 'js' }, class: 'fs-3' %>
+      </div>
+      <div class="me-5">
+        <%= link_to '非公開記事を表示', profile_path(@user, format: :js, type: 'unpublished'), remote: true, data: { type: 'js' }, class: 'fs-3' %>
+      </div>
+      <div>
+        <%= link_to '下書き記事を表示', profile_path(@user, format: :js, type: 'draft'), remote: true, data: { type: 'js' }, class: 'fs-3' %>
+      </div>
+
+    </div>
+
+    <div id="select_posts">
+      <%= render partial: 'shared/posts_list', locals: { posts: @published_posts } %>
+    </div>
+
   </div>
 </div>
