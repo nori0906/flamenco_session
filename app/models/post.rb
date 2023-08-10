@@ -12,5 +12,6 @@ class Post < ApplicationRecord
   validates :collab_src, numericality: true, if: :collab_src?
 
 
-  enum status: { draft: 0, published: 1 }
+  # 投稿の公開・非公開設定
+  enum status: { draft: 0, published: 1, unpublished: 2}
 end

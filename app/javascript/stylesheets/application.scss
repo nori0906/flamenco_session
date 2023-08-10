@@ -82,7 +82,7 @@
 .bkg-img-pro {
   min-height: calc(100vh - 100px);
   max-width: 100%;
-  background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0)), url(../../assets/images/bkg-25160896_m.jpg);
+  background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0)), url(../../assets/images/bkg-city.png);
   background-size:cover;
   background-position: center;
 }

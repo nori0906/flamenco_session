@@ -1,0 +1,10 @@
+<% if @published_posts %>
+  console.log('公開')
+  $('#select_posts').html('<%= escape_javascript(render partial: 'shared/posts_list', locals: { posts: @published_posts }) %>');
+<% elsif @unpublished_posts %>
+  console.log('非公開')
+  $('#select_posts').html('<%= escape_javascript(render partial: 'shared/posts_list', locals: { posts: @unpublished_posts }) %>');
+<% elsif @draft_posts %>
+  console.log('下書き')
+  $('#select_posts').html('<%= escape_javascript(render partial: 'shared/posts_list', locals: { posts: @draft_posts }) %>');
+<% end %>

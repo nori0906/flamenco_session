@@ -1,9 +1,7 @@
 class PostsController < ApplicationController
   # 実際の使用するコード
   before_action :require_login, except: %i[index show new]
-
-  # 一時利用
-  # skip_before_action :require_login
+  before_action :ensure_correct_user, only: %i[edit update destroy]
 
   def index
     browser = request.browser
@@ -48,7 +46,6 @@ class PostsController < ApplicationController
     end
   end
 
-
   def create
     @post = Post.new(
       title: post_params[:title],
@@ -56,7 +53,7 @@ class PostsController < ApplicationController
       status: post_params[:status],
       user_id: current_user.id
     )
-    
+
     # Blob IDから録音データを取得
     voice_blob = ActiveStorage::Blob.find_signed!(post_params[:voice_blob_id])
 
@@ -68,7 +65,6 @@ class PostsController < ApplicationController
     mime_subtype = mime_type.split("/").last
     @post.ext_type = mime_subtype
 
-
     if @post.save
       # 成功したときの処理
       redirect_to posts_path, flash: {success: "投稿しました"}
@@ -79,13 +75,9 @@ class PostsController < ApplicationController
     end
   end
 
-
-  def edit
-    @post = Post.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @post = Post.find(params[:id])
     if @post.update(post_params)
       redirect_to posts_path, flash: {success: "編集しました"}
     else
@@ -95,16 +87,22 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    post = Post.find(params[:id])
-    post.destroy
+    @post.destroy
     redirect_to posts_path, flash: {danger: "削除しました"}
   end
 
-  private
 
+  private
 
   def post_params
     # 「:voice_blob_id」は仮属性として一時的に使用している
     params.require(:post).permit(:title, :body, :status, :ext_type, :voice_blob_id)
+  end
+
+  def ensure_correct_user
+    @post = Post.find(params[:id])
+    if @post.user.id != current_user.id
+      redirect_to posts_path, alert: "権限がありません"
+    end
   end
 end
