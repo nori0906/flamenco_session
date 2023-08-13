@@ -24,16 +24,20 @@
       </div>
 
       <h2 class="text-white">~ My投稿一覧 ~</h2>
-      <div id="select_posts" class="card bg-color-pro w-75 pt-5">
-        <div class="text-white d-flex justify-content-start mb-2">
-          <div class="fs-5 me-2">
-            <%= link_to '公開', profile_path(@user, format: :js, type: 'published'), remote: true, data: { type: 'js' } %>
+      <div class="card bg-color-pro w-75 pt-5">
+        <div  class="card-body">
+          <div class="text-white d-flex justify-content-start mb-2">
+            <div class="fs-5 me-2">
+              <%= link_to '公開', profile_path(@user, format: :js, type: 'published'), remote: true, data: { type: 'js' } %>
+            </div>
+            <div class="fs-5 me-2">
+              <%= link_to '非公開', profile_path(@user, format: :js, type: 'unpublished'), remote: true, data: { type: 'js' } %>
+            </div>
           </div>
-          <div class="fs-5 me-2">
-            <%= link_to '非公開', profile_path(@user, format: :js, type: 'unpublished'), remote: true, data: { type: 'js' } %>
+          <div id="select_posts">
+            <%= render partial: 'shared/posts_list', locals: { posts: @published_posts } %>
           </div>
         </div>
-        <%= render partial: 'shared/posts_list', locals: { posts: @published_posts } %>
       </div>
     </div>
     

@@ -13,5 +13,5 @@ class Post < ApplicationRecord
 
 
   # 投稿の公開・非公開設定
-  enum status: { draft: 0, published: 1, unpublished: 2}
+  enum status: { published: 0, unpublished: 1}
 end

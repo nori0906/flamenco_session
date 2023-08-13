@@ -17,7 +17,6 @@ class ProfilesController < ApplicationController
       format.js {
         @published_posts = user_posts.published.order(created_at: :desc) if params[:type] == "published"
         @unpublished_posts = user_posts.unpublished.order(created_at: :desc) if params[:type] == "unpublished"
-        @draft_posts = user_posts.draft.order(created_at: :desc) if params[:type] == "draft"
       }
     end
   end
