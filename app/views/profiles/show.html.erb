@@ -26,15 +26,27 @@
       <h2 class="text-white">~ My投稿一覧 ~</h2>
       <div class="card bg-color-pro w-75 pt-5">
         <div  class="card-body">
-          <div class="text-white d-flex justify-content-start mb-2">
-            <div class="fs-5 me-2">
-              <%= link_to '公開', profile_path(@user, format: :js, type: 'published'), remote: true, data: { type: 'js' } %>
-            </div>
-            <div class="fs-5 me-2">
-              <%= link_to '非公開', profile_path(@user, format: :js, type: 'unpublished'), remote: true, data: { type: 'js' } %>
-            </div>
-          </div>
-          <div id="select_posts">
+          
+
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <%= link_to '公開', profile_path(@user, format: :js, type: 'published'), remote: true, data: { type: 'js' }, class: "nav-link active #{active_class_for_type('published')}", id: 'js-published', area: { current: area_current_for_type('published') } %>
+              <%# <a class="nav-link active" aria-current="page" href="#">Active</a> %>
+            </li>
+            <li class="nav-item">
+              <%= link_to '非公開', profile_path(@user, format: :js, type: 'unpublished'), remote: true, data: { type: 'js' }, class: "nav-link #{active_class_for_type('unpublished')}",id: 'js-unpublished', area: { current: area_current_for_type('unpublished') } %>
+              <%# <a class="nav-link" href="#">Link</a> %>
+            </li>
+            <li class="nav-item">
+              <%# <a class="nav-link" href="#">Link</a> %>
+            </li>
+            <li class="nav-item">
+              <%# <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> %>
+            </li>
+          </ul>
+
+
+          <div class="mt-2" id="select_posts">
             <%= render partial: 'shared/posts_list', locals: { posts: @published_posts } %>
           </div>
         </div>
