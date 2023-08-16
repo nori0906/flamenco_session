@@ -181,6 +181,15 @@ a.top-anchor-link {
   position: absolute;
 }
 
+// プロフィール
+.btn-profile-custom {
+  background: #aad3b8eb;
+}
+
+.btn-profile-custom:hover {
+  background: #1987548a;
+}
+
 /* 画像を暗くするオーバーレイ (参考： https://dezanari.com/css-img-darken/)  */
 // .top-wrapper::before {
 //   content: '';

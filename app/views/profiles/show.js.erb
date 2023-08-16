@@ -2,15 +2,11 @@
 function isActive(selectedStatus, notSelectedStatus) {
   const selectedElm = $('#js-' + selectedStatus);
   const notSelectedElm = $('#js-' + notSelectedStatus);
-  <%# console.log('選択タブ: ', selectedElm);
-  console.log('非選択タブ: ', notSelectedElm); %>
 
   if (!(selectedElm.hasClass('active'))) {
-    console.log('don`t has active in class')
-    selectedElm.addClass('active')
-    notSelectedElm.removeClass('active')
+    selectedElm.addClass('active');
+    notSelectedElm.removeClass('active');
   } else {
-    console.log('has active in class')
   }
 }
 
