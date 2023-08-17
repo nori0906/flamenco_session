@@ -6,9 +6,21 @@
     <% unless @root_collab_post %>
         <div class="d-grid gap-2">
         <%# コラボ音声取得のためにクエリパラメータに投稿idを設定 %>
-          <%= link_to 'コラボする', new_post_path(audio_flg: "post_audio", collab_post_id: @post.id), type: "button", class: "btn btn-custom  text-white border border-dark" %>
+          <%= link_to 'セッションする', new_post_path(audio_flg: "post_audio", collab_post_id: @post.id), type: "button", class: "btn btn-custom  text-white border border-dark" %>
         </div>
     <% end %>
+
+    <%# カードレイアウト実装 8/17 %>
+    <div class="card">
+      <div class="card-header">
+        Featured
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
 
     <div class="card">
       <div class="card-body">
