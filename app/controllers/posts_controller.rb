@@ -30,6 +30,7 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
     
+    # audio_flg: 録音画面表示時に、新規・コラボ録音のどちらかを判断
     if params[:audio_flg]
       @audio_flg = params[:audio_flg]
     end
