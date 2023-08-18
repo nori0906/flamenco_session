@@ -8,14 +8,12 @@
     <% if @audio_flg.present? && @audio_flg == "default_audio" %>
       <div class="d-flex flex-column align-items-center mb-5">
         <h3 class="text-white text-start mb-4">↓↓ コラボ元音源を確認 ↓↓</h3>
-        <div class="js-deault-audio-container"></div>
-        <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", size: "50" %>
+        <%= render "shared/audio_player", audio_container_class: "js-default-audio-container", slider_size: "50" %>
       </div>
     <% elsif @audio_flg.present? && @audio_flg == "posted_audio" %>
       <div class="d-flex flex-column align-items-center mb-5">
         <h3 class="text-white text-start mb-4">↓↓ コラボ元音源を確認 ↓↓</h3>
-        <div class="js-posted-audio-container" data-audio-url="<%= rails_blob_path(@collab_post.voice, disposition: "attachment") %>"></div>
-        <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", size: "50" %>
+        <%= render "shared/audio_player", audio_container_class: "js-posted-audio-container", audio_blob: @collab_post.voice, slider_size: "50" %>
       </div>
     <% end %>
 
@@ -27,7 +25,7 @@
           <%= render "layouts/guest_tutorial/recording_btn" %>
         </div>
         <div class="d-flex justify-content-center">
-          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "post-record", size: "50" %>
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "post-record", slider_size: "50" %>
           <% if logged_in? %>
             <button type="button" class="btn stop-btn btn-lg text-white ms-3 none" id="buttonNext" >Next</button>
           <% end %>
@@ -47,7 +45,7 @@
       <p class="text-white">投稿フォーム</p>
 
       <div>
-        <%= render "layouts/guest_tutorial/audio_slider", slider_type: "form-record", size: "100" %>
+        <%= render "layouts/guest_tutorial/audio_slider", slider_type: "form-record", slider_size: "100" %>
       </div>
 
 

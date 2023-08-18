@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function collabSourceSetting() {
     console.log('コラボ音源の設定を実行');
     // コラボ音源の再生分岐
-    if (document.querySelector('.js-deault-audio-container') ) {
+    if (document.querySelector('.js-default-audio-container') ) {
       defaultAudio = new Audio('/test.mp3');
       defaultAudio.addEventListener('loadeddata', () => {
         console.log('defaltAudio data loaded.');
@@ -500,6 +500,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //// イベント・関数の実行 ////
   /// 事前に実行 ///
+  console.log("create-audio実行");
   // 引数に録音画面時の再生用DOMを渡す（関数内で再生イベント発火）
   playBackControls('post')
 

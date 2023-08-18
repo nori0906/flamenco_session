@@ -1,0 +1,7 @@
+<% if audio_container_class == "js-default-audio-container" %>
+  <div class=<%= audio_container_class %> ></div>
+<% elsif audio_container_class == "js-posted-audio-container" %>
+  <div class=<%= audio_container_class %> data-audio-url="<%= rails_blob_path(audio_blob, disposition: "attachment") %>"></div>
+<% end %>
+<%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: slider_size %>
+

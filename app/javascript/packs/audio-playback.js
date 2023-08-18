@@ -32,7 +32,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 読み込む音源を選択
   async function selectFetch() {
-    if (document.querySelector('.js-deault-audio-container')) {
+    if (document.querySelector('.js-default-audio-container')) {
+      console.log("コンテナー表示", document.querySelector('.js-default-audio-container'));
       const fetched = await fetchAudio('/test.mp3');
       console.log(fetched);
     } else if (document.querySelector('.js-posted-audio-container')){
@@ -179,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   ///// 関数・イベントの実行 /////
+  console.log("audio-playback実行");
   selectFetch();
   addEventListeners();
 });
