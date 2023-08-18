@@ -29,7 +29,7 @@
             <div class="card-body my-2 mx-3">
               <h2 class="card-title fw-bold fs-5"><%= post.title %></h2>
               <p class="card-text text-truncate"><%= post.body %></p>
-              <div class="ms-auto mt-3 me-5 mb-2">
+              <div class="ms-auto mt-4 me-5 mb-2">
                 <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", size: "100" %>
               </div>
               <% if post.voice.attached? %>
@@ -51,7 +51,6 @@
             </div>
           </div>
         </div>
-
       <% end %>
     </div>
 
