@@ -1,3 +1,4 @@
+// 新規録音画面:コラボ元・デフォルトの音声を再生させるためのJS
 document.addEventListener('DOMContentLoaded', function () {
   // 再生スライダーDOM
   const audioPLayback = document.getElementById('audio-playback');
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  // 既存音声ファイルを読み込み
+  // 音声ファイルを読み込み
   async function fetchAudio(url) {
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
@@ -31,11 +32,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 読み込む音源を選択
   async function selectFetch() {
-    if (document.getElementById('defaultAudioContainer')) {
+    if (document.querySelector('.js-deault-audio-container')) {
       const fetched = await fetchAudio('/test.mp3');
       console.log(fetched);
-    } else if (document.getElementById('collabAudioContainer')){
-      const audioContainer = document.getElementById('collabAudioContainer')
+    } else if (document.querySelector('.js-posted-audio-container')){
+      const audioContainer = document.querySelector('.js-posted-audio-container')
+      // 「.dataset.audioUrl」: HTMLのdata-* 属性(data-audio-url)とそれに対応するDOMのこと（dataset.プロパティ）/ ここでは音声blobデータのURLを取得している
       const audioUrl = audioContainer.dataset.audioUrl
       console.log(audioUrl);
       const fetched = await fetchAudio(audioUrl);

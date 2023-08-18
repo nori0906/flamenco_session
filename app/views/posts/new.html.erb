@@ -4,17 +4,17 @@
   <div class="container">
     <h1 class="text-white py-5">RECORDING</h1>
 
-    <%# 一覧または詳細画面で、コラボボタンがクリックされた場合に音源再生用のスライダーを表示 %>
+    <%# 一覧または詳細画面からコラボボタンがクリックされた場合、音源再生用のスライダーを表示する %>
     <% if @audio_flg.present? && @audio_flg == "default_audio" %>
       <div class="d-flex flex-column align-items-center mb-5">
         <h3 class="text-white text-start mb-4">↓↓ コラボ元音源を確認 ↓↓</h3>
-        <div id="defaultAudioContainer"></div>
+        <div class="js-deault-audio-container"></div>
         <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", size: "50" %>
       </div>
-    <% elsif @audio_flg.present? && @audio_flg == "post_audio" %>
+    <% elsif @audio_flg.present? && @audio_flg == "posted_audio" %>
       <div class="d-flex flex-column align-items-center mb-5">
         <h3 class="text-white text-start mb-4">↓↓ コラボ元音源を確認 ↓↓</h3>
-        <div id="collabAudioContainer" data-audio-url="<%= rails_blob_path(@collab_post.voice, disposition: "attachment") %>"></div>
+        <div class="js-posted-audio-container" data-audio-url="<%= rails_blob_path(@collab_post.voice, disposition: "attachment") %>"></div>
         <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", size: "50" %>
       </div>
     <% end %>
@@ -61,7 +61,7 @@
 
 <%# JS読み込み %>
 <% if @audio_flg.present? %>
-  <%= javascript_pack_tag 'collab-play-audio' %>
+  <%= javascript_pack_tag 'audio-playback' %>
 <% end %>
 
 <%= javascript_pack_tag 'create-audio' %>

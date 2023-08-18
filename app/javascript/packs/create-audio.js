@@ -44,14 +44,14 @@ document.addEventListener('DOMContentLoaded', function () {
   function collabSourceSetting() {
     console.log('コラボ音源の設定を実行');
     // コラボ音源の再生分岐
-    if (document.getElementById('defaultAudioContainer') ) {
+    if (document.querySelector('.js-deault-audio-container') ) {
       defaultAudio = new Audio('/test.mp3');
       defaultAudio.addEventListener('loadeddata', () => {
         console.log('defaltAudio data loaded.');
         console.log(defaultAudio);
       });
-    } else if (document.getElementById('collabAudioContainer')) {
-      const audioContainer = document.getElementById('collabAudioContainer')
+    } else if (document.querySelector('.js-posted-audio-container')) {
+      const audioContainer = document.querySelector('.js-posted-audio-container')
       const audioUrl = audioContainer.dataset.audioUrl
       console.log(audioUrl);
       collabAudio = new Audio(audioUrl);

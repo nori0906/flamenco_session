@@ -22,7 +22,7 @@
                 <%= post.user.name %>
               </div>
               <% unless @root_collab_post %>
-                  <%= link_to 'セッションする', new_post_path(audio_flg: "post_audio", collab_post_id: post.id), type: "button", class: "btn btn-custom text-white border border-dark fw-bold py-2 mb-1 ms-1" %>
+                  <%= link_to 'セッションする', new_post_path(audio_flg: "posted_audio", collab_post_id: post.id), type: "button", class: "btn btn-custom text-white border border-dark fw-bold py-2 mb-1 ms-1" %>
               <% end %>
             </div>
 

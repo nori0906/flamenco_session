@@ -7,7 +7,7 @@
       <% unless @root_collab_post %>
           <div class="d-grid gap-2 mb-3 d-flex justify-content-center">
           <%# コラボ音声取得のためにクエリパラメータに投稿idを設定 %>
-            <%= link_to 'セッションする', new_post_path(audio_flg: "post_audio", collab_post_id: @post.id), type: "button", class: "btn btn-custom fs-5 fw-bold text-white border border-dark py-2 w-50" %>
+            <%= link_to 'セッションする', new_post_path(audio_flg: "posted_audio", collab_post_id: @post.id), type: "button", class: "btn btn-custom fs-5 fw-bold text-white border border-dark py-2 w-50" %>
           </div>
       <% end %>
 
@@ -23,6 +23,8 @@
               <% if logged_in? && current_user.id == @post.user.id %>
                 <%= link_to '編集', edit_post_path(@post), class: "btn btn-outline-dark fs-5 py-2 px-4", type: "button" %>
                 <%= link_to '削除', post_path(@post), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-dark fs-5 py-2 px-4", type: "button" %>
+                <%= link_to '戻る', posts_path, class: "btn btn-outline-dark fs-5 py-2 px-4", type: "button" %>
+
               <% end %>
             </div>
         </div>
