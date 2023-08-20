@@ -1,10 +1,10 @@
 // 新規録音画面:コラボ元・デフォルトの音声を再生させるためのJS
 document.addEventListener('DOMContentLoaded', function () {
   // 再生スライダーDOM
-  const audioPLayback = document.getElementById('audio-playback');
-  const audioStop = document.getElementById('audio-stop');
-  const playbackTime = document.getElementById('audio-playback-time');
-  const slider = document.getElementById('audio-slider');
+  const audioPLayback = document.querySelector('.audio-playback');
+  const audioStop = document.querySelector('.audio-stop');
+  const playbackTime = document.querySelector('.audio-playback-time');
+  const slider = document.querySelector('.audio-slider');
   console.log(slider);
   let source;
   let startTime;

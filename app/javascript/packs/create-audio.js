@@ -223,10 +223,10 @@ document.addEventListener('DOMContentLoaded', function () {
   async function playBackControls(displayType) {
     console.log('playBackControls実行');
     /// 再生処理に関するDOM取得 ///
-    recordPlayback = document.getElementById(`${displayType}-record-playback`);
-    recordStop = document.getElementById(`${displayType}-record-stop`);
-    playbackTime = document.getElementById(`${displayType}-record-playback-time`);
-    slider = document.getElementById(`${displayType}-record-slider`);
+    recordPlayback = document.querySelector(`.${displayType}-record-playback`);
+    recordStop = document.querySelector(`.${displayType}-record-stop`);
+    playbackTime = document.querySelector(`.${displayType}-record-playback-time`);
+    slider = document.querySelector(`.${displayType}-record-slider`);
     console.log(recordPlayback);
     console.log(recordStop);
     console.log(playbackTime);
@@ -356,9 +356,9 @@ document.addEventListener('DOMContentLoaded', function () {
       pauseStatus = ['post-record-stop', 'form-record-stop', 'collab-record-stop']
       
       
-      if (playStatus.includes(event.currentTarget.id)) {
+      if (playStatus.some(className => event.currentTarget.classList.contains(className))) {
         playRecording()
-      } else if (pauseStatus.includes(event.currentTarget.id)) {
+      } else if (pauseStatus.some(className => event.currentTarget.classList.contains(className))) {
         stopPlayRecording()
       }
     }
