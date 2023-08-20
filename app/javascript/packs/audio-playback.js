@@ -1,7 +1,7 @@
 // 新規録音画面:コラボ元・デフォルトの音声を再生させるためのJS
 document.addEventListener('DOMContentLoaded', function () {
   // 再生スライダーDOM
-  const audioPLayback = document.querySelector('.audio-playback');
+  const audioPlayback = document.querySelector('.audio-playback');
   const audioStop = document.querySelector('.audio-stop');
   const playbackTime = document.querySelector('.audio-playback-time');
   const slider = document.querySelector('.audio-slider');
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
       source.buffer = buffer;
       source.connect(audioContext.destination);
       source.start(0, resumeTime);
-      audioPLayback.disabled = true;
+      audioPlayback.disabled = true;
       audioStop.disabled = false;
 
       // 再生を開始する前にupdateProgress関数を呼び出す
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
       source = null;
 
       // ボタンの状態を更新
-      audioPLayback.disabled = false;
+      audioPlayback.disabled = false;
       audioStop.disabled = true;
     }
   }
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
       playbackTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
       if (elapsedTime >= buffer.duration) {
-        audioPLayback.disabled = false;
+        audioPlayback.disabled = false;
         audioStop.disabled = true;
 
         // 再生が終了した場合、再生時間をリセット
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
       // 再生が停止したら、ボタンの状態を更新
       source.onended = () => {
-        audioPLayback.disabled = false;
+        audioPlayback.disabled = false;
         audioStop.disabled = true;
       };
   
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //イベントリスナー
   function addEventListeners() {
-    audioPLayback.addEventListener('click', playAudio);
+    audioPlayback.addEventListener('click', playAudio);
     audioStop.addEventListener('click', stopAudio);
   };
 
