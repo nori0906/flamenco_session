@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // イベントリスナー
     const audioBlobPromis = new Promise((resolve) => {
       mediaRecorder.addEventListener('stop', async () => {
-        // コンストにすると値を引き渡せない?
+        // constにすると値を引き渡せない?
         audioBlob = new Blob(recordedChunks, {type: mime});
         resolve(audioBlob);
       });
@@ -440,7 +440,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  /// サーバー ///
+  /// サーバーへリクエスト処理 ///
   // サーバー送信処理
   async function sendToSever() {
     const formData = new FormData();
@@ -462,18 +462,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  /// レスポンス ///
+  /// サーバーからのレスポンス処理 ///
   // フォームの表示
   function displayElement(id, display) {
     const element = document.getElementById(id);
     element.style.display = display;
   }
 
-  // レスポンス管理
+  // レスポンス処理の一連管理
   async function handleResponse(response) {
     console.log('handleResponse実行');
     console.log(response);
-    // サーバーから返されたBlob IDとURLを取得
+
+    // サーバーから返されたBlob IDとURL（activestorage）を取得
     const blobId = response.data.id;
     const blobUrl = response.data.blob_url;
     // 隠しフォームDOMを取得
@@ -539,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function () {
     buttonNext.addEventListener('click', () => {
       sendToSever().then((response) => {
         handleResponse(response);
-      }).catch((e) => {　
+      }).catch((e) => {
         console.log(e);
       });
     });

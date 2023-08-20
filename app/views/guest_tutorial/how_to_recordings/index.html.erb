@@ -9,6 +9,7 @@
       <%= render "layouts/guest_tutorial/#{@level}_help_text" %>
     </div>
 
+    <%# 録音 %>
     <div class="pt-4 pb-3 mt-5 mb-5">
       <h3 class="text-center mb-4">↓↓ レコーディング開始!! ↓↓</h3>
       <div class="mb-3">
@@ -34,7 +35,10 @@
   </div>
 </div>
 
-<%# ここで一旦js読み込み %>
+<%# js読み込み %>
+<%# お手本 %>
 <%= javascript_pack_tag 'tutorial-model-audio' %>
+<%# 元音源 %>
 <%= javascript_pack_tag 'tutorial-audio' %>
-<%= javascript_pack_tag 'tutorial-recording' %>
+<%# 録音 %>
+<%= javascript_pack_tag 're' %>

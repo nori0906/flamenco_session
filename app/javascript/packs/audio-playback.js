@@ -160,23 +160,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   // エラーハンドリングをまとめる
-  function withErrorHandling(fn) {
-    return async function (...args) {
-      try {
-        await fn(...args);
-      } catch (error) {
-        console.error(`Error in ${fn.name}:`, error);
-      }
-    };
-  }
+  // function withErrorHandling(fn) {
+  //   return async function (...args) {
+  //     try {
+  //       await fn(...args);
+  //     } catch (error) {
+  //       console.error(`Error in ${fn.name}:`, error);
+  //     }
+  //   };
+  // }
 
 
   //イベントリスナー
-  // withErrorHandlingで各関数をラップしてエラーハンドリングおこなう
   function addEventListeners() {
-    audioPLayback.addEventListener('click', () => withErrorHandling(playAudio)());
-    audioStop.addEventListener('click', () => withErrorHandling(stopAudio)());
-  }
+    audioPLayback.addEventListener('click', playAudio);
+    audioStop.addEventListener('click', stopAudio);
+  };
 
 
   ///// 関数・イベントの実行 /////

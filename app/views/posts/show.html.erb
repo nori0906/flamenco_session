@@ -41,7 +41,7 @@
           <h2 class="card-title fw-bold fs-2"><%= @post.title %></h2>
           <p class="card-text text-truncate fs-5"><%= @post.body %></p>
           <div class="ms-auto mt-4 me-5 mb-2">
-            <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "75" %>
+            <%= render "shared/audio_player", audio_container_class: "js-posted-audio-container", audio_blob: @post.voice, slider_size: "75" %>
           </div>
           <%# if @post.voice.attached? %>
             <%#= audio_tag(url_for(post.voice), controls: true, class: "w-100") %>
@@ -130,5 +130,4 @@
 
 
 
-
-<%= javascript_pack_tag 'playback-audio' %>
+<%= javascript_pack_tag 'audio-playback' %>
