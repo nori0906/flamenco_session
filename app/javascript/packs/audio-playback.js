@@ -11,15 +11,12 @@ document.addEventListener('DOMContentLoaded', function () {
   let currentBuffer;
   let startTime; // 再生開始時間を示す（再生ボタンがクリックされた際のaudioCntext.currentTimeで表す）
   let resumeTime = 0; // 再開時間（秒）を示す
-  // let source;
+  
 
 
 
-  // 仮実装
+  // 追加実装: カードごとに音声プレイヤーを実行させる 23/8/24
   const playButtons = document.querySelectorAll('.audio-playback');
-  const stopButtons = document.querySelectorAll('.audio-stop');
-  const playbackTimes = document.querySelectorAll('.audio-playback-time');
-  const sliders = document.querySelectorAll('.audio-slider');
   let currentSource;
   let playButton;
   let stopButton;
@@ -28,11 +25,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   
   playButtons.forEach((button) => button.addEventListener('click', async function() {
-    
-
     const parentContainer = button.closest('.js-audio-player-container')
     playbackTime = parentContainer.querySelector('.audio-playback-time');
     slider = parentContainer.querySelector('.audio-slider');
+    stopButton = parentContainer.querySelector('.audio-stop');
     
     // イベントリスナーが多重で呼ばれないための分岐（ECMAScriptの仕様により必要ないかも）
     if (!slider.hasAttribute('data-listener-added')) {
@@ -40,7 +36,14 @@ document.addEventListener('DOMContentLoaded', function () {
       // イベントリスナー実行を表すdata属性をセット
       slider.setAttribute('data-listener-added', 'true')
     }
+
+    if (!stopButton.hasAttribute('data-listener-added')) {
+      stopButton.addEventListener('click', stopAudio, console.log('一時停止イベント実行'));
+      // イベントリスナー実行を表すdata属性をセット
+      stopButton.setAttribute('data-listener-added', 'true')
+    }
     
+    // 音声データurlを取得・デコード
     console.log('クリックボタン要素', button);
     playButton = button;
     const audioUrl = button.dataset.audioUrl
@@ -48,21 +51,40 @@ document.addEventListener('DOMContentLoaded', function () {
     const fetched = await fetchAudio(audioUrl);
     console.log('fetchedレスポンス', fetched);
 
+    // 取得したデータを元に再生開始
     playAudio(fetched);
   })
   );
 
-  stopButtons.forEach((button) => button.addEventListener('click', stopAudio));
-  
-  // playbackTimes.forEach((currentPlaybackTime) => playbackTime = currentPlaybackTime);
-  
-  // sliders.forEach((currentSlider) => slider = currentSlider);
+
+  function setButtonStatus(isPlaying) {
+    // disabledの状態（真偽値）のデータを格納
+    const buttonStatus = {
+      playing: { playback: true, pause: false },
+      pausing: { playback: false, pause: true }
+    };
+    let currentState;
+
+    if(isPlaying == true) {
+      console.log('ボタン: 再生中');
+      currentState = buttonStatus.playing;
+      // 全ての再生ボタン状態を非活性にする（他カードのクリック防止）
+      playButtons.forEach((button) => button.disabled = true);
+    } else {
+      console.log('ボタン: 停止中');
+      currentState = buttonStatus.pausing;
+      // 全ての再生ボタン状態を活性にする（他カードの再生ボタンをクリックできるようにする）
+      playButtons.forEach((button) => button.disabled = false);
+    };
+
+    // 状態を変更
+    playButton.disabled = currentState.playback; //再生ボタン
+    stopButton.disabled = currentState.pause; //一時停止ボタン
+  }
 
 
 
 
-
-  
 
   // 読み込む音源を選択
   // async function selectFetch() {
@@ -82,9 +104,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  function playingTime(audiContext, startTime) {
-    return audioContext.currentTime - startTime;
-  }
+  // function playingTime(audiContext, startTime) {
+  //   return audioContext.currentTime - startTime;
+  // }
 
   // 音声ファイルを読み込み
   async function fetchAudio(url) {
@@ -94,9 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
     console.log('読み込み完了');
     return audioBuffer;
-    
-    // 再生時間を更新するためのスライダーの最大値を設定
-    // slider.max = buffer.duration;
   }
 
   // 再生・停止
@@ -122,11 +141,8 @@ document.addEventListener('DOMContentLoaded', function () {
       source.start(0, resumeTime);
       currentSource = source;
 
-
-      // audioPlayback.disabled = true;
-      // audioStop.disabled = false;
-      // playButton.disabled = true;
-      // stopButton.disabled = false;
+      // ボタンの状態を更新
+      setButtonStatus(true);
 
       // スライダーの更新
       updateProgress();
@@ -144,11 +160,8 @@ document.addEventListener('DOMContentLoaded', function () {
       currentSource.onended = null; // onendedイベントリスナーを削除
       currentSource = null;
 
-      // ボタンの状態を更新
-      // audioPlayback.disabled = false;
-      // audioStop.disabled = true;
-      // playButton.disabled = false;
-      // stopButton.disabled = true;
+      // ボタン状態の更新
+      setButtonStatus(false);
     }
   }
 
@@ -167,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function updateProgress() {
     if (currentSource && currentBuffer) {
+      console.log('バー進行中');
       // 再生開始からの経過時間
       const elapsedTime = audioContext.currentTime - startTime;
       
@@ -176,9 +190,8 @@ document.addEventListener('DOMContentLoaded', function () {
       // 上記コードに変更 23/8/22
       // const progressRatio = elapsedTime / currentBuffer.duration;
       // slider.value = progressRatio * 100;
-      // slider.max = 100 // DOMですでに定義してあるため必要ないかも
 
-      
+
       // 経過時間をDOMに反映
       // 経過時間(秒)を60で割った切り捨て値を分単位として定義
       const minutes = Math.floor(elapsedTime / 60);
@@ -190,14 +203,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // 再生終了時のボタン・再生時間の設定
       if (elapsedTime >= currentBuffer.duration) {
-        // audioPlayback.disabled = false;
-        // audioStop.disabled = true;
-        // playButton.disabled = false;
-        // stopButton.disabled = true;
+        // ボタン状態の更新
+        setButtonStatus(false);
 
         // 再生時間をリセット
         resetPlayback();
-        
       } else {
         // アニメーションの更新
         requestAnimationFrame(updateProgress);
@@ -205,9 +215,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // スライダークリック時の更新イベント
+  // ユーザーがスライダーをクリックした場合の更新処理
   async function sliderIvent(event) {
-    console.log('スライダー関数実行', event);
+    console.log('スライダークリック時の更新', event);
     if (currentBuffer) {
       const sliderValue = event.target.value; // イベント発生時の現在値を取得
       const clickPositionRatio = sliderValue / 100; // 0から1の比率を算出
@@ -220,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
       
       // 経過時間をDOMに更新
       playbackTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  
+
       // 音声が一時停止中であれば終了 / 音声が再生中であれば元の音声の停止＆更新した時間帯から再生開始
       if (!currentSource || currentSource.playbackState !== AudioBufferSourceNode.PLAYING_STATE) {
         return;
@@ -230,8 +240,7 @@ document.addEventListener('DOMContentLoaded', function () {
         playAudio(currentBuffer);
       }
 
-      // resumeTime = newTime;
-  
+
       // 新たに算出した経過時間（newTime）を基準に再生開始 playback関数を呼び出せばこの記述減らせるかも
       // startTime = audioContext.currentTime - newTime;
       // currentSource = audioContext.createBufferSource();
@@ -239,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // currentSource.connect(audioContext.destination);
       // currentSource.start(0, newTime);
       // updateProgress();
-      
+
       // 再生が停止時に発火、ボタンの状態を更新
       // currentSource.onended = () => {
       //   // audioPlayback.disabled = false;
@@ -267,14 +276,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   //イベントリスナー
-  function addEventListeners() {
-    audioPlayback.addEventListener('click', playAudio);
-    audioStop.addEventListener('click', stopAudio);
-  };
+  // function addEventListeners() {
+  //   audioPlayback.addEventListener('click', playAudio);
+  //   audioStop.addEventListener('click', stopAudio);
+  // };
 
 
   ///// 関数・イベントの実行 /////
-  console.log("audio-playback実行");
   // selectFetch();
   // addEventListeners();
+  console.log("audio-playback実行");
 });
