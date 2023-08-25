@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // コラボ元音源を格納するための変数を定義（録音時）
   let collabAudio;
 
+  // 録音画面が投稿用かチュートリアル用かを判別
+  let activeScreen;
+
 
 
 
@@ -44,18 +47,25 @@ document.addEventListener('DOMContentLoaded', function () {
   // コラボ元音源の読み込み
   function collabSourceSetting() {
     console.log('コラボ音源の設定を実行');
+    let audioContainer;
     if (document.querySelector('.audio-playback')) {
-      const audioContainer = document.querySelector('.audio-playback')
-      
-      console.log(audioContainer);
-      const audioUrl = audioContainer.dataset.audioUrl;
-      console.log(audioUrl);
-      collabAudio = new Audio(audioUrl);
-      console.log(collabAudio);
-      collabAudio.addEventListener('loadeddata', () => {
-        console.log('読み込み完了')
-      });
+      // 新規投稿時のコラボ元音源DOMを取得
+      audioContainer = document.querySelector('.audio-playback')
+    } else if (document.querySelector('.tutorial-audio-playback'))  {
+      // チュートリアル投稿時のコラボ元音源DOMを取得
+      audioContainer = document.querySelector('.tutorial-audio-playback')
+    } else {
+      return;
     }
+
+    console.log(audioContainer);
+    const audioUrl = audioContainer.dataset.audioUrl;
+    console.log(audioUrl);
+    collabAudio = new Audio(audioUrl);
+    console.log(collabAudio);
+    collabAudio.addEventListener('loadeddata', () => {
+      console.log('読み込み完了')
+    });
   }
 
   // コラボ元音源を再生
@@ -83,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // recordPlayback.disabled = true;
 
     // if文でDOMがない場合のエラーを防ぐ
-    if (buttonNext) {
+    if (buttonNext && activeScreen == 'post') {
       buttonNext.style.display = 'none';
     };
 
@@ -165,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setButtonStatus();
     
     // if文でDOMがない場合のエラーを防ぐ
-    if (buttonNext) {
+    if (buttonNext && activeScreen == 'post') {
       buttonNext.style.display = 'none';
     };
     
@@ -343,11 +353,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // 実行管理
+    // 再生・停止の実行管理 そもそもこの関数は必要かどうか検討 23/8/26
     function handlePlayBack(event) {
       console.log('handle実行');
-      playStatus = ['post-record-playback', 'form-record-playback', 'collab-record-playback']
-      pauseStatus = ['post-record-stop', 'form-record-stop', 'collab-record-stop']
+      playStatus = ['post-record-playback', 'form-record-playback', 'tutorial-record-playback']
+      pauseStatus = ['post-record-stop', 'form-record-stop', 'tutorial-record-stop']
       
       
       if (playStatus.some(className => event.currentTarget.classList.contains(className))) {
@@ -381,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function () {
       audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
       // if文でDOMがない場合のエラーを防ぐ
-      if (buttonNext) {
+      if (buttonNext && activeScreen == 'post') {
         buttonNext.style.display = 'inline-block';
       };
 
@@ -396,8 +406,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const arrayBuffer = await response.arrayBuffer();
     
     // オーディオバッファにデコード
-    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    return audioBuffer;
+    const baseAudioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    return baseAudioBuffer;
     // try{
     // }catch(e){
     //   console.log(e);
@@ -497,14 +507,25 @@ document.addEventListener('DOMContentLoaded', function () {
   //// イベント・関数の実行 ////
   /// 事前に実行 ///
   console.log("create-audio実行");
-  // 引数に録音画面時の再生用DOMを渡す（関数内で再生イベント発火）
-  playBackControls('post')
+  
+  // 表示されている録音画面がチュートリアルか投稿かを確認
+  if (document.querySelector('.post-record-playback')) {
+    console.log('新規投稿画面のDOMを取得');
+    activeScreen = 'post'
+  } else if (document.querySelector('.tutorial-record-playback')) {
+    console.log('チュートリアル画面のDOMを取得');
+    activeScreen = 'tutorial'
+  }
+  
+  // 録音再生用のDOMを表示画面（投稿かチュートリアル）に合わせて取得できるようにしておく
+  playBackControls(activeScreen);
+
 
   // 録音時のコラボ音源を設定
-  collabSourceSetting()
+  collabSourceSetting();
 
   // オーディオ設定
-  settingRecordData()
+  settingRecordData();
 
 
   /// イベント ///
@@ -531,7 +552,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // サーバー送信以降
   // if文でDOMがない場合のエラーを防ぐ
-  if (buttonNext) {
+  if (buttonNext && activeScreen == 'post') {
     buttonNext.addEventListener('click', () => {
       sendToSever().then((response) => {
         handleResponse(response);
