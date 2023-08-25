@@ -30,8 +30,8 @@
               <h2 class="card-title fw-bold fs-5"><%= post.title %></h2>
               <p class="card-text text-truncate"><%= post.body %></p>
               <div class="ms-auto mt-4 me-5 mb-2">
+                <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_blob_url: post.voice %>
                 <%#= render "shared/audio_player", audio_container_class: "js-posted-audio-container", audio_blob: post.voice, slider_size: "100" %>
-                <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_blob: post.voice %>
               </div>
               <%# if post.voice.attached? %>
                 <%#= audio_tag(url_for(post.voice), controls: true, class: "w-100") %>

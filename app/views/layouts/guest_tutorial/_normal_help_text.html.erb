@@ -17,11 +17,13 @@
       <div class="row">
         <div class="col">
           <h3>お手本</h3>
-          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "model-audio", slider_size: "100" %>
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_blob_url: "/test.mp3" %>
+          <%#= render "layouts/guest_tutorial/audio_slider", slider_type: "model-audio", slider_size: "100" %>
         </div>
         <div class="col">
           <h3>コラボ音源</h3>
-          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100" %>
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_blob_url: "/test.mp3" %>
+          <%#= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100" %>
         </div>
       </div>
     </div>

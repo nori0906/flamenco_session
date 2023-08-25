@@ -8,12 +8,15 @@
     <% if @audio_flg.present? && @audio_flg == "default_audio" %>
       <div class="d-flex flex-column align-items-center mb-5">
         <h3 class="text-white text-start mb-4">↓↓ コラボ元音源を確認 ↓↓</h3>
-        <%= render "shared/audio_player", audio_container_class: "js-default-audio-container", slider_size: "50" %>
+        <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "50", audio_data_url: "/test.mp3" %>
+        <%#= render "shared/audio_player", audio_container_class: "js-default-audio-container", slider_size: "50" %>
       </div>
     <% elsif @audio_flg.present? && @audio_flg == "posted_audio" %>
       <div class="d-flex flex-column align-items-center mb-5">
         <h3 class="text-white text-start mb-4">↓↓ コラボ元音源を確認 ↓↓</h3>
-        <%= render "shared/audio_player", audio_container_class: "js-posted-audio-container", audio_blob: @collab_post.voice, slider_size: "50" %>
+
+        <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "50", audio_blob_url: @collab_post.voice  %>
+        <%#= render "shared/audio_player", audio_container_class: "js-posted-audio-container", audio_blob: @collab_post.voice, slider_size: "50" %>
       </div>
     <% end %>
 
