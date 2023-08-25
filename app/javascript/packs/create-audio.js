@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let audioSource;
 
   // コラボ元音源を格納するための変数を定義（録音時）
-  let defaultAudio;
   let collabAudio;
 
 
@@ -40,49 +39,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //// 関数定義 ////
   /// 録音 ///
-  // コラボ元の音源がある場合音声データを取得
+
+  // コラボ元関連
+  // コラボ元音源の読み込み
   function collabSourceSetting() {
     console.log('コラボ音源の設定を実行');
-    // コラボ音源の再生分岐
-    if (document.querySelector('.js-default-audio-container') ) {
-      defaultAudio = new Audio('/test.mp3');
-      defaultAudio.addEventListener('loadeddata', () => {
-        console.log('defaltAudio data loaded.');
-        console.log(defaultAudio);
-      });
-    } else if (document.querySelector('.js-posted-audio-container')) {
-      const audioContainer = document.querySelector('.js-posted-audio-container')
-      const audioUrl = audioContainer.dataset.audioUrl
+    if (document.querySelector('.audio-playback')) {
+      const audioContainer = document.querySelector('.audio-playback')
+      
+      console.log(audioContainer);
+      const audioUrl = audioContainer.dataset.audioUrl;
       console.log(audioUrl);
       collabAudio = new Audio(audioUrl);
+      console.log(collabAudio);
       collabAudio.addEventListener('loadeddata', () => {
-        console.log('collabAudio data loaded.');
-        console.log(collabAudio);
+        console.log('読み込み完了')
       });
     }
   }
 
   // コラボ元音源を再生
-  function audioSourcePlay() {
-    if (defaultAudio) {
-      defaultAudio.play()
-      console.log('デフォ再生開始');
-    } else if (collabAudio) {
-      collabAudio.play()
+  function playCollabAudio() {
+    if(collabAudio) {
       console.log('コラボ再生開始');
+      collabAudio.play();
     }
   }
 
   // コラボ元音源を停止
-  function audioSourcePause() {
-    if (defaultAudio) {
-      defaultAudio.pause()
-      defaultAudio.currentTime = 0;
-      console.log('デフォ再生停止');
-    } else if (collabAudio) {
-      collabAudio.pause()
-      collabAudio.currentTime = 0;
+  function pauseCollabAudio() {
+    if (collabAudio) {
       console.log('コラボ再生停止');
+      collabAudio.pause();
     }
   }
 
@@ -175,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // ボタン表示設定
     recordingFlag = true;
     setButtonStatus();
+    
     // if文でDOMがない場合のエラーを防ぐ
     if (buttonNext) {
       buttonNext.style.display = 'none';
@@ -185,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
     mediaRecorder.start();
 
     // コラボ元音源がある場合再生する
-    defaultAudio || collabAudio ? audioSourcePlay() : null;
+    collabAudio ? playCollabAudio() : null;
     
     mediaRecorder.addEventListener('dataavailable', (event) => {
       recordedChunks.push(event.data);
@@ -205,12 +194,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // 録音停止
   async function stopRecording() {
     if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-      // stopAudio();
+      // 録音終了
       mediaRecorder.stop();
 
       // コラボ元音源がある場合停止する
-      defaultAudio || collabAudio ? audioSourcePause() : null;
+      collabAudio ? pauseCollabAudio() : null;
 
+      //ボタンの状態を更新
       recordingFlag = false;
       setButtonStatus();
     }
@@ -276,6 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
+
     // 音声コントローラー
     function resetPlayback() {
       slider.value = 0;
@@ -284,6 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
       resumeTime = 0; // 再生が最後まで終了した場合にresumeTimeをリセット
       audioSource = null; // 再生が最後まで終了した場合にsourceをリセット
     }
+
     function updateProgress() {
       if (audioSource && audioBuffer) {
         const elapsedTime = audioContext.currentTime - startTime;
@@ -309,6 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     }
+
     async function sliderHandring(event) {
       if (audioBuffer) {
         const sliderValue = event.target.value;
@@ -348,7 +341,8 @@ document.addEventListener('DOMContentLoaded', function () {
         updateProgress();
       }
     }
-    
+
+
     // 実行管理
     function handlePlayBack(event) {
       console.log('handle実行');
@@ -362,7 +356,8 @@ document.addEventListener('DOMContentLoaded', function () {
         stopPlayRecording()
       }
     }
-    
+
+
     /// イベント ///
     recordPlayback.addEventListener('click', handlePlayBack);
     recordStop.addEventListener('click', handlePlayBack);
@@ -411,7 +406,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  /// ボタン表示 ///
+  /// ボタン活性設定 ///
   function setButtonStatus() {
     const buttonStatus = {
       recording: { record: true, stop: false, playback: true, pause: true },
