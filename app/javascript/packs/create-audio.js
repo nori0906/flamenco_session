@@ -61,14 +61,19 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    console.log(audioContainer);
-    const audioUrl = audioContainer.dataset.audioUrl;
-    console.log(audioUrl);
-    collabAudio = new Audio(audioUrl);
-    console.log(collabAudio);
-    collabAudio.addEventListener('loadeddata', () => {
-      console.log('読み込み完了')
-    });
+    if (audioContainer) {
+      console.log('audioContainerあり', audioContainer);
+      const audioUrl = audioContainer.dataset.audioUrl;
+      console.log(audioUrl);
+      collabAudio = new Audio(audioUrl);
+      console.log(collabAudio);
+      collabAudio.addEventListener('loadeddata', () => {
+        console.log('読み込み完了')
+      });
+    } else {
+      console.log('audioContainerなし')
+      return;
+    }
   }
 
   // コラボ元音源を再生
@@ -152,16 +157,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function resetAudioData() {
     console.log('データリセット前確認');
-    console.log(audioBlob);
-    console.log(audioSource);
-    console.log(audioBuffer);
-    console.log(recordedChunks);
+    console.log('audiBlob', audioBlob);
+    console.log('audioSource', audioSource);
+    console.log('audioBuffer', audioBuffer);
+    console.log('recordedChunks', recordedChunks);
 
     console.log('データリセット確認');
-    console.log(audioBlob = null);
-    console.log(audioSource = null);
-    console.log(audioBuffer = null);
-    console.log(recordedChunks = []);
+    console.log('audioBlob', audioBlob = null);
+    console.log('audioSource', audioSource = null);
+    console.log('audioBuffer', audioBuffer = null);
+    console.log('recordedChunks', recordedChunks = []);
   }
 
 
@@ -513,10 +518,10 @@ document.addEventListener('DOMContentLoaded', function () {
   
   // 表示されている録音画面がチュートリアルか投稿かを確認
   if (document.querySelector('.post-record-playback')) {
-    console.log('新規投稿画面のDOMを取得');
+    console.log('新規投稿画面のDOMを取得：post');
     activeScreen = 'post'
   } else if (document.querySelector('.tutorial-record-playback')) {
-    console.log('チュートリアル画面のDOMを取得');
+    console.log('チュートリアル画面のDOMを取得:tutorial');
     activeScreen = 'tutorial'
   }
   
