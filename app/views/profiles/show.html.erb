@@ -8,10 +8,12 @@
         <div class="card bg-color-pro w-100 mb-5">
           <table class="table rounded text-center text-white">
             <tr>
-              <th class="table-td-color border border-1 rounded border-dark">プロフィール画像</th><th class="table-td-color border border-1 rounded border-dark">ユーザーネーム</th>
+              <th class="table-td-color border border-1 rounded border-dark">プロフィール画像</th>
+              <th class="table-td-color border border-1 rounded border-dark">ユーザーネーム</th>
             </tr>
             <tr>
-              <td rowspan="3" class="border border-1 border-dark pt-4"><%= image_tag("#{@user.avatar}", size: '100x100', class: 'rounded-circle') %></td><td class="border border-1 border-dark py-3"><%= @user.name %></td>
+              <td rowspan="3" class="border border-1 border-dark pt-4"><%= image_tag("#{@user.avatar}", size: '100x100', class: 'rounded-circle') %></td>
+              <td class="border border-1 border-dark py-3"><%= @user.name %></td>
             </tr>
             <tr>
               <th class="table-td-color border border-1 rounded border-dark">メール</th>

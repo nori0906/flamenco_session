@@ -32,57 +32,63 @@ document.addEventListener('DOMContentLoaded', function () {
   let audioSource;
 
   // コラボ元音源を格納するための変数を定義（録音時）
-  let defaultAudio;
   let collabAudio;
+
+  // 録音画面が投稿用かチュートリアル用かを判別
+  let activeScreen;
 
 
 
 
   //// 関数定義 ////
   /// 録音 ///
-  // コラボ元の音源がある場合音声データを取得
+
+  // コラボ元関連
+  // コラボ元音源の読み込み
   function collabSourceSetting() {
     console.log('コラボ音源の設定を実行');
-    // コラボ音源の再生分岐
-    if (document.getElementById('defaultAudioContainer') ) {
-      defaultAudio = new Audio('/test.mp3');
-      defaultAudio.addEventListener('loadeddata', () => {
-        console.log('defaltAudio data loaded.');
-        console.log(defaultAudio);
-      });
-    } else if (document.getElementById('collabAudioContainer')) {
-      const audioContainer = document.getElementById('collabAudioContainer')
-      const audioUrl = audioContainer.dataset.audioUrl
+
+    let audioContainer;
+    if (activeScreen == 'post') {
+      // 新規投稿時のコラボ元音源DOMを取得
+      audioContainer = document.querySelector('.audio-playback')
+    } else if (activeScreen == 'tutorial') {
+      // チュートリアル投稿時のコラボ元音源DOMを取得
+      const collabSourceContainer = document.getElementById('collab-source-container')
+      console.log('親コンテナ取得',collabSourceContainer);
+      audioContainer = collabSourceContainer.querySelector('.audio-playback')
+    } else {
+      return;
+    }
+
+    if (audioContainer) {
+      console.log('audioContainerあり', audioContainer);
+      const audioUrl = audioContainer.dataset.audioUrl;
       console.log(audioUrl);
       collabAudio = new Audio(audioUrl);
+      console.log(collabAudio);
       collabAudio.addEventListener('loadeddata', () => {
-        console.log('collabAudio data loaded.');
-        console.log(collabAudio);
+        console.log('読み込み完了')
       });
+    } else {
+      console.log('audioContainerなし')
+      return;
     }
   }
 
   // コラボ元音源を再生
-  function audioSourcePlay() {
-    if (defaultAudio) {
-      defaultAudio.play()
-      console.log('デフォ再生開始');
-    } else if (collabAudio) {
-      collabAudio.play()
+  function playCollabAudio() {
+    if(collabAudio) {
       console.log('コラボ再生開始');
+      collabAudio.play();
     }
   }
 
   // コラボ元音源を停止
-  function audioSourcePause() {
-    if (defaultAudio) {
-      defaultAudio.pause()
-      defaultAudio.currentTime = 0;
-      console.log('デフォ再生停止');
-    } else if (collabAudio) {
-      collabAudio.pause()
-      collabAudio.currentTime = 0;
+  function pauseCollabAudio() {
+    if (collabAudio) {
       console.log('コラボ再生停止');
+      collabAudio.pause();
     }
   }
 
@@ -95,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // recordPlayback.disabled = true;
 
     // if文でDOMがない場合のエラーを防ぐ
-    if (buttonNext) {
+    if (buttonNext && activeScreen == 'post') {
       buttonNext.style.display = 'none';
     };
 
@@ -104,33 +110,45 @@ document.addEventListener('DOMContentLoaded', function () {
     const chrome = (ua.indexOf('chrome') !== -1) && (ua.indexOf('edge') === -1) && (ua.indexOf('opr') === -1); // ブラウザがchromeかどうかを確認し、結果の真偽値を変数に格納
 
     // オーディオ制約を設定
-    if(chrome){
-      constraints = {
-        "video": false,
-        "audio": {
-          // 参考: https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings#instance_properties_of_audio_tracks
-          "mandatory": {
-            // chrome固有の設定->最新のブラウザではMediaTrackConstraints APIの使用が一般的なため、記述を統一しても良いかもしれない
-            "googEchoCancellation" : false, // エコーキャンセルが必須か優先かを指定するオブジェクト
-            "googAutoGainControl" : false, // 自動ゲイン制御が優先か必須かどうか
-            "googNoiseSuppression" : false, // ノイズ抑制が優先か必要か
-            "googHighpassFilter" : false // 指定した周波数以上を通過させ、低域をカットできるフィルターを指定するか
-          }
-        }
-      };
-    // FireFox/Edge/safari
-    }else{
-      constraints = {
-        "video": false,
-        "audio": {
-          "mandatory": {
-            "echoCancellation" : false,
-            "autoGainControl" : false,
-            "noiseSuppression" : false
-          }
-        }
-      };
-    }
+    // console.log('オーディオ制約A');
+    // if(chrome){
+    //   constraints = {
+    //     "video": false,
+    //     "audio": {
+    //       // 参考: https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings#instance_properties_of_audio_tracks
+    //       "mandatory": {
+    //         // chrome固有の設定->最新のブラウザではMediaTrackConstraints APIの使用が一般的なため、記述を統一しても良いかもしれない
+    //         "googEchoCancellation" : false, // エコーキャンセルが必須か優先かを指定するオブジェクト
+    //         "googAutoGainControl" : false, // 自動ゲイン制御が優先か必須かどうか
+    //         "googNoiseSuppression" : false, // ノイズ抑制が優先か必要か
+    //         "googHighpassFilter" : false // 指定した周波数以上を通過させ、低域をカットできるフィルターを指定するか
+    //       }
+    //     }
+    //   };
+    // // FireFox/Edge/safari
+    // }else{
+    //   constraints = {
+    //     "video": false,
+    //     "audio": {
+    //       "mandatory": {
+    //         "echoCancellation" : false,
+    //         "autoGainControl" : false,
+    //         "noiseSuppression" : false
+    //       }
+    //     }
+    //   };
+    // }
+
+    console.log('オーディオ制約B');
+    constraints = {
+      "video": false,
+      "audio": {
+        "echoCancellation": false,
+        "autoGainControl": false,
+        "noiseSuppression": false
+      }
+    };
+  
 
     // MIMEタイプを指定
     // サポート状況を確認し、変数に格納
@@ -151,16 +169,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function resetAudioData() {
     console.log('データリセット前確認');
-    console.log(audioBlob);
-    console.log(audioSource);
-    console.log(audioBuffer);
-    console.log(recordedChunks);
+    console.log('audiBlob', audioBlob);
+    console.log('audioSource', audioSource);
+    console.log('audioBuffer', audioBuffer);
+    console.log('recordedChunks', recordedChunks);
 
     console.log('データリセット確認');
-    console.log(audioBlob = null);
-    console.log(audioSource = null);
-    console.log(audioBuffer = null);
-    console.log(recordedChunks = []);
+    console.log('audioBlob', audioBlob = null);
+    console.log('audioSource', audioSource = null);
+    console.log('audioBuffer', audioBuffer = null);
+    console.log('recordedChunks', recordedChunks = []);
   }
 
 
@@ -175,8 +193,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // ボタン表示設定
     recordingFlag = true;
     setButtonStatus();
+    
     // if文でDOMがない場合のエラーを防ぐ
-    if (buttonNext) {
+    if (buttonNext && activeScreen == 'post') {
       buttonNext.style.display = 'none';
     };
     
@@ -185,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
     mediaRecorder.start();
 
     // コラボ元音源がある場合再生する
-    defaultAudio || collabAudio ? audioSourcePlay() : null;
+    collabAudio ? playCollabAudio() : null;
     
     mediaRecorder.addEventListener('dataavailable', (event) => {
       recordedChunks.push(event.data);
@@ -194,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // イベントリスナー
     const audioBlobPromis = new Promise((resolve) => {
       mediaRecorder.addEventListener('stop', async () => {
-        // コンストにすると値を引き渡せない?
+        // constにすると値を引き渡せない?
         audioBlob = new Blob(recordedChunks, {type: mime});
         resolve(audioBlob);
       });
@@ -205,12 +224,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // 録音停止
   async function stopRecording() {
     if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-      // stopAudio();
+      // 録音終了
       mediaRecorder.stop();
 
       // コラボ元音源がある場合停止する
-      defaultAudio || collabAudio ? audioSourcePause() : null;
+      collabAudio ? pauseCollabAudio() : null;
 
+      //ボタンの状態を更新
       recordingFlag = false;
       setButtonStatus();
     }
@@ -223,10 +243,10 @@ document.addEventListener('DOMContentLoaded', function () {
   async function playBackControls(displayType) {
     console.log('playBackControls実行');
     /// 再生処理に関するDOM取得 ///
-    recordPlayback = document.getElementById(`${displayType}-record-playback`);
-    recordStop = document.getElementById(`${displayType}-record-stop`);
-    playbackTime = document.getElementById(`${displayType}-record-playback-time`);
-    slider = document.getElementById(`${displayType}-record-slider`);
+    recordPlayback = document.querySelector(`.${displayType}-record-playback`);
+    recordStop = document.querySelector(`.${displayType}-record-stop`);
+    playbackTime = document.querySelector(`.${displayType}-record-playback-time`);
+    slider = document.querySelector(`.${displayType}-record-slider`);
     console.log(recordPlayback);
     console.log(recordStop);
     console.log(playbackTime);
@@ -276,6 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
+
     // 音声コントローラー
     function resetPlayback() {
       slider.value = 0;
@@ -284,6 +305,7 @@ document.addEventListener('DOMContentLoaded', function () {
       resumeTime = 0; // 再生が最後まで終了した場合にresumeTimeをリセット
       audioSource = null; // 再生が最後まで終了した場合にsourceをリセット
     }
+
     function updateProgress() {
       if (audioSource && audioBuffer) {
         const elapsedTime = audioContext.currentTime - startTime;
@@ -309,6 +331,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     }
+
     async function sliderHandring(event) {
       if (audioBuffer) {
         const sliderValue = event.target.value;
@@ -348,21 +371,23 @@ document.addEventListener('DOMContentLoaded', function () {
         updateProgress();
       }
     }
-    
-    // 実行管理
+
+
+    // 再生・停止の実行管理 そもそもこの関数は必要かどうか検討 23/8/26
     function handlePlayBack(event) {
       console.log('handle実行');
-      playStatus = ['post-record-playback', 'form-record-playback', 'collab-record-playback']
-      pauseStatus = ['post-record-stop', 'form-record-stop', 'collab-record-stop']
+      playStatus = ['post-record-playback', 'form-record-playback', 'tutorial-record-playback']
+      pauseStatus = ['post-record-stop', 'form-record-stop', 'tutorial-record-stop']
       
       
-      if (playStatus.includes(event.currentTarget.id)) {
+      if (playStatus.some(className => event.currentTarget.classList.contains(className))) {
         playRecording()
-      } else if (pauseStatus.includes(event.currentTarget.id)) {
+      } else if (pauseStatus.some(className => event.currentTarget.classList.contains(className))) {
         stopPlayRecording()
       }
     }
-    
+
+
     /// イベント ///
     recordPlayback.addEventListener('click', handlePlayBack);
     recordStop.addEventListener('click', handlePlayBack);
@@ -386,7 +411,7 @@ document.addEventListener('DOMContentLoaded', function () {
       audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
       // if文でDOMがない場合のエラーを防ぐ
-      if (buttonNext) {
+      if (buttonNext && activeScreen == 'post') {
         buttonNext.style.display = 'inline-block';
       };
 
@@ -401,8 +426,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const arrayBuffer = await response.arrayBuffer();
     
     // オーディオバッファにデコード
-    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    return audioBuffer;
+    const baseAudioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    return baseAudioBuffer;
     // try{
     // }catch(e){
     //   console.log(e);
@@ -411,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  /// ボタン表示 ///
+  /// ボタン活性設定 ///
   function setButtonStatus() {
     const buttonStatus = {
       recording: { record: true, stop: false, playback: true, pause: true },
@@ -440,7 +465,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  /// サーバー ///
+  /// サーバーへリクエスト処理 ///
   // サーバー送信処理
   async function sendToSever() {
     const formData = new FormData();
@@ -462,18 +487,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  /// レスポンス ///
+  /// サーバーからのレスポンス処理 ///
   // フォームの表示
   function displayElement(id, display) {
     const element = document.getElementById(id);
     element.style.display = display;
   }
 
-  // レスポンス管理
+  // レスポンス処理の一連管理
   async function handleResponse(response) {
     console.log('handleResponse実行');
     console.log(response);
-    // サーバーから返されたBlob IDとURLを取得
+
+    // サーバーから返されたBlob IDとURL（activestorage）を取得
     const blobId = response.data.id;
     const blobUrl = response.data.blob_url;
     // 隠しフォームDOMを取得
@@ -500,14 +526,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //// イベント・関数の実行 ////
   /// 事前に実行 ///
-  // 引数に録音画面時の再生用DOMを渡す（関数内で再生イベント発火）
-  playBackControls('post')
+  console.log("create-audio実行");
+  
+  // 表示されている録音画面がチュートリアルか投稿かを確認
+  if (document.querySelector('.post-record-playback')) {
+    console.log('新規投稿画面のDOMを取得：post');
+    activeScreen = 'post'
+  } else if (document.querySelector('.tutorial-record-playback')) {
+    console.log('チュートリアル画面のDOMを取得:tutorial');
+    activeScreen = 'tutorial'
+  }
+  
+  // 録音再生用のDOMを表示画面（投稿かチュートリアル）に合わせて取得できるようにしておく
+  playBackControls(activeScreen);
+
 
   // 録音時のコラボ音源を設定
-  collabSourceSetting()
+  collabSourceSetting();
 
   // オーディオ設定
-  settingRecordData()
+  settingRecordData();
 
 
   /// イベント ///
@@ -534,11 +572,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // サーバー送信以降
   // if文でDOMがない場合のエラーを防ぐ
-  if (buttonNext) {
+  if (buttonNext && activeScreen == 'post') {
     buttonNext.addEventListener('click', () => {
       sendToSever().then((response) => {
         handleResponse(response);
-      }).catch((e) => {　
+      }).catch((e) => {
         console.log(e);
       });
     });
