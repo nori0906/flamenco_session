@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   let currentBuffer;
   let startTime; // 再生開始時間を示す（再生ボタンがクリックされた際のaudioCntext.currentTimeで表す）
-  let resumeTime = 0; // 再開時間（秒）を示す
+  // let resumeTime; // 再開時間（秒）を示す
   
 
 
@@ -29,16 +29,31 @@ document.addEventListener('DOMContentLoaded', function () {
     playbackTime = parentContainer.querySelector('.audio-playback-time');
     slider = parentContainer.querySelector('.audio-slider');
     stopButton = parentContainer.querySelector('.audio-stop');
+
+    // resumeTimeの初期化（異なる再生ボタンからのクリックの場合にリセット）
+    if (!button.dataset.resumeTime) {
+      button.dataset.resumeTime = "0"; // 初期値は0
+    }
+    console.log('再生クリックイベント時data-resumeTime：', button.dataset.resumeTime);
+    
     
     // イベントリスナーが多重で呼ばれないための分岐（ECMAScriptの仕様により必要ないかも）
     if (!slider.hasAttribute('data-listener-added')) {
-      slider.addEventListener('input', sliderIvent, console.log('スライダーイベント実行'));
+      // slider.addEventListener('input', sliderIvent, console.log('スライダーイベント実行'));
+      slider.addEventListener('input', (event) => {
+        console.log('スライダーイベント実行', button);
+        sliderIvent(event, button);
+      });
       // イベントリスナー実行を表すdata属性をセット
       slider.setAttribute('data-listener-added', 'true')
     }
 
     if (!stopButton.hasAttribute('data-listener-added')) {
-      stopButton.addEventListener('click', stopAudio, console.log('一時停止イベント実行'));
+      // stopButton.addEventListener('click', stopAudio, console.log('一時停止イベント実行'));
+      stopButton.addEventListener('click', () => {
+        console.log('一時停止イベント実行', button);
+        stopAudio(button);
+      });
       // イベントリスナー実行を表すdata属性をセット
       stopButton.setAttribute('data-listener-added', 'true')
     }
@@ -47,12 +62,12 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('クリックボタン要素', button);
     playButton = button;
     const audioUrl = button.dataset.audioUrl
-    console.log(audioUrl);
+    console.log('audioURL:', audioUrl);
     const fetched = await fetchAudio(audioUrl);
     console.log('fetchedレスポンス', fetched);
 
     // 取得したデータを元に再生開始
-    playAudio(fetched);
+    playAudio(fetched, button);
   })
   );
 
@@ -83,27 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-
-
-
-  // 読み込む音源を選択
-  // async function selectFetch() {
-  //   if (document.querySelector('.js-default-audio-container')) {
-  //     console.log("コンテナー表示", document.querySelector('.js-default-audio-container'));
-  //     const fetched = await fetchAudio('/test.mp3');
-  //     console.log(fetched);
-  //   } else if (document.querySelector('.js-posted-audio-container')){
-  //     const audioContainer = document.querySelector('.js-posted-audio-container')
-  //     // 「.dataset.audioUrl」: HTMLのdata-* 属性(data-audio-url)とそれに対応するDOMのこと（dataset.プロパティ）/ ここでは音声blobデータのURLを取得している
-  //     const audioUrl = audioContainer.dataset.audioUrl
-  //     console.log(audioUrl);
-  //     const fetched = await fetchAudio(audioUrl);
-  //     console.log(fetched);
-  //   }
-  // }
-
-
-
   // function playingTime(audiContext, startTime) {
   //   return audioContext.currentTime - startTime;
   // }
@@ -119,12 +113,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // 再生・停止
-  async function playAudio(buffer) {
+  async function playAudio(buffer, button) {
     if (buffer) {
-      console.log('再生開始');
-      console.log('再生開始buffer', buffer);
+      let resumeTime;
+      console.log('再生開始:', buffer, button);
       currentBuffer = buffer;
       
+      // ボタンのdata属性からresumeTimeを取得(数値に変換)
+      resumeTime = parseFloat(button.dataset.resumeTime);
+      console.log('セット後/resumeTime：', resumeTime);
 
       // スライダー内の時間表示設定
       // 再生開始時のaudioContext.currentTimeを基準に再生時間を操作していく
@@ -149,11 +146,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  async function stopAudio() {
+  async function stopAudio(button) {
     if (currentSource) {
       console.log('再生停止');
+
       // 一時停止時間を保存
-      resumeTime = audioContext.currentTime - startTime;
+      button.dataset.resumeTime = (audioContext.currentTime - startTime).toString();
+      // resumeTime = audioContext.currentTime - startTime;
+      console.log('一時停止時data-resumeTime：', button.dataset.resumeTime);
 
       // ソースを停止
       currentSource.stop();
@@ -171,10 +171,12 @@ document.addEventListener('DOMContentLoaded', function () {
     slider.value = 0;
     playbackTime.textContent = '0:00';
     startTime = 0;
-    resumeTime = 0; // 再生が最後まで終了した場合にresumeTimeをリセット
+    // resumeTime = 0; // 再生が最後まで終了した場合にresumeTimeをリセット
+    playButton.dataset.resumeTime = "0";
     currentSource = null; // 再生が最後まで終了した場合にsourceをリセット
     // startTime = audioContext.currentTime;
-    console.log('再生リセット');
+    console.log('再生リセット/再生ボタンDOM', playButton);
+    console.log('data-resumeTime', playButton.dataset.resumeTime);
 
   }
 
@@ -199,11 +201,12 @@ document.addEventListener('DOMContentLoaded', function () {
       const seconds = Math.floor(elapsedTime % 60);
       // DOMに反映
       playbackTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      // console.log(playbackTime.textContent);
 
 
       // 再生終了時のボタン・再生時間の設定
       if (elapsedTime >= currentBuffer.duration) {
-        // ボタン状態の更新
+        // ボタン状態の更新(停止)
         setButtonStatus(false);
 
         // 再生時間をリセット
@@ -216,8 +219,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ユーザーがスライダーをクリックした場合の更新処理
-  async function sliderIvent(event) {
-    console.log('スライダークリック時の更新', event);
+  async function sliderIvent(event, button) {
+    console.log('スライダークリック時の更新', event, button);
     if (currentBuffer) {
       const sliderValue = event.target.value; // イベント発生時の現在値を取得
       const clickPositionRatio = sliderValue / 100; // 0から1の比率を算出
@@ -226,10 +229,14 @@ document.addEventListener('DOMContentLoaded', function () {
       const minutes = Math.floor(newTime / 60);
       const seconds = Math.floor(newTime % 60);
       
-      resumeTime = newTime;
+      button.dataset.resumeTime = newTime.toString();
+      console.log('data-resumeTime', button.dataset.resumeTime);
       
+      console.log('経過時間変更前', playbackTime.textContent);
       // 経過時間をDOMに更新
       playbackTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      console.log('経過時間変更後', playbackTime.textContent);
+
 
       // 音声が一時停止中であれば終了 / 音声が再生中であれば元の音声の停止＆更新した時間帯から再生開始
       if (!currentSource || currentSource.playbackState !== AudioBufferSourceNode.PLAYING_STATE) {
@@ -237,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } else if (currentSource) {
         currentSource.stop(); // 現在の音声sourceの停止
         currentSource.onended = null; // onendedイベントリスナーを削除
-        playAudio(currentBuffer);
+        playAudio(currentBuffer, button);
       }
 
 
@@ -285,5 +292,5 @@ document.addEventListener('DOMContentLoaded', function () {
   ///// 関数・イベントの実行 /////
   // selectFetch();
   // addEventListeners();
-  console.log("audio-playback実行");
+  console.log('audio-playback実行');
 });
