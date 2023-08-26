@@ -47,13 +47,16 @@ document.addEventListener('DOMContentLoaded', function () {
   // コラボ元音源の読み込み
   function collabSourceSetting() {
     console.log('コラボ音源の設定を実行');
+
     let audioContainer;
-    if (document.querySelector('.audio-playback')) {
+    if (activeScreen == 'post') {
       // 新規投稿時のコラボ元音源DOMを取得
       audioContainer = document.querySelector('.audio-playback')
-    } else if (document.querySelector('.tutorial-audio-playback'))  {
+    } else if (activeScreen == 'tutorial') {
       // チュートリアル投稿時のコラボ元音源DOMを取得
-      audioContainer = document.querySelector('.tutorial-audio-playback')
+      const collabSourceContainer = document.getElementById('collab-source-container')
+      console.log('親コンテナ取得',collabSourceContainer);
+      audioContainer = collabSourceContainer.querySelector('.audio-playback')
     } else {
       return;
     }

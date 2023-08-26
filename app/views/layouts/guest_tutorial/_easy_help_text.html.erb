@@ -11,14 +11,14 @@
         </ol>
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col" id="role-model-container">
           <h3>お手本</h3>
-          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "role-model-audio", slider_size: "100", audio_data_url: "/test.mp3" %>
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_data_url: "/test.mp3" %>
           <%#= render "layouts/guest_tutorial/audio_slider", slider_type: "model-audio", slider_size: "100" %>
         </div>
-        <div class="col">
+        <div class="col" id="collab-source-container">
           <h3>コラボ音源</h3>
-          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "tutorial-audio", slider_size: "100", audio_data_url: "/test.mp3" %>
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_data_url: "/test.mp3" %>
           <%#= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100" %>
         </div>
       </div>
