@@ -1,29 +1,61 @@
 <div class="bkg-img-pro">
-  <h1 class="bg-color-pro-head text-white  text-left ps-5 py-3 mb-5">プロフィール詳細</h1>
+  <h1 class="text-white text-center display-5 ps-5 py-3 mb-5">プロフィール</h1>
   <div class="container">
     <%= render partial: 'layouts/flash' %>
-    <div class=" px-5 mx-5 py-3">
-      <div class="d-flex justify-content-start mt-4">
-        <%= link_to '編集', edit_profile_path, class: 'btn btn-success float-right' %>
-      </div>
-      <div class="card bg-color-pro">
-        <div class="card-body">
-          <table class="table mt-3 text-white">
+    <div class="d-flex flex-column align-items-center">
+      <div class="w-75 mb-4">
+
+        <div class="card bg-color-pro w-100 mb-5">
+          <table class="table rounded text-center text-white">
             <tr>
-              <th scope="row">メールアドレス</th>
-              <td><%= @user.email %></td>
+              <th class="table-td-color border border-1 rounded border-dark">プロフィール画像</th>
+              <th class="table-td-color border border-1 rounded border-dark">ユーザーネーム</th>
             </tr>
             <tr>
-              <th scope="row">氏名</th>
-              <td><%= @user.name %></td>
+              <td rowspan="3" class="border border-1 border-dark pt-4"><%= image_tag("#{@user.avatar}", size: '100x100', class: 'rounded-circle') %></td>
+              <td class="border border-1 border-dark py-3"><%= @user.name %></td>
             </tr>
             <tr>
-              <th scope="row">アバター</th>
-              <td><%= image_tag("#{@user.avatar}", size: '100x100', class: 'rounded-circle') %></td>
+              <th class="table-td-color border border-1 rounded border-dark">メール</th>
+            </tr>
+            <tr>
+              <td class="border border-1 border-dark py-3"><%= @user.email %></td>
             </tr>
           </table>
+          <div class="px-4 pb-3 text-center">
+            <%= link_to '編集', edit_profile_path, class: 'btn btn-success float-right w-100 fs-5' %>
+          </div>
+        </div>
+
+        <h2 class="text-white text-center">~~ My投稿一覧 ~~</h2>
+        <div class="card bg-color-pro w-100 pt-2">
+          <div  class="card-body">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <%= link_to '公開', profile_path(@user, format: :js, type: 'published'), remote: true, data: { type: 'js' }, class: "nav-link active #{active_class_for_type('published')}", id: 'js-published', area: { current: area_current_for_type('published') } %>
+                <%# <a class="nav-link active" aria-current="page" href="#">Active</a> %>
+              </li>
+              <li class="nav-item">
+                <%= link_to '非公開', profile_path(@user, format: :js, type: 'unpublished'), remote: true, data: { type: 'js' }, class: "nav-link #{active_class_for_type('unpublished')}",id: 'js-unpublished', area: { current: area_current_for_type('unpublished') } %>
+                <%# <a class="nav-link" href="#">Link</a> %>
+              </li>
+              <li class="nav-item">
+                <%# <a class="nav-link" href="#">Link</a> %>
+              </li>
+              <li class="nav-item">
+                <%# <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> %>
+              </li>
+            </ul>
+            <div class="my-4" id="select_posts">
+              <%= render partial: 'shared/posts_list', locals: { posts: @published_posts } %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    
+
+
+
   </div>
 </div>

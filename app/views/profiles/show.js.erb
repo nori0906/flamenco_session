@@ -1,0 +1,22 @@
+<%# 選択中のタブにactive(クラス属性)を付与 %>
+function isActive(selectedStatus, notSelectedStatus) {
+  const selectedElm = $('#js-' + selectedStatus);
+  const notSelectedElm = $('#js-' + notSelectedStatus);
+
+  if (!(selectedElm.hasClass('active'))) {
+    selectedElm.addClass('active');
+    notSelectedElm.removeClass('active');
+  } else {
+  }
+}
+
+<%# 投稿一覧とタブの切り替え %>
+<% if @published_posts %>
+  <%# console.log('公開'); %>
+  isActive('published', 'unpublished');
+  $('#select_posts').html('<%= escape_javascript(render partial: 'shared/posts_list', locals: { posts: @published_posts }) %>');
+<% elsif @unpublished_posts %>
+  <%# console.log('非公開'); %>
+  isActive('unpublished', 'published');
+  $('#select_posts').html('<%= escape_javascript(render partial: 'shared/posts_list', locals: { posts: @unpublished_posts }) %>');
+<% end %>

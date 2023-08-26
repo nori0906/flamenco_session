@@ -5,6 +5,8 @@ test:
 local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
+  # 一定時間経過後URLが変更し、再生不可になる問題の対策により追加。永続的なURLに変更する（23/4/10 参考1：https://blog.ingage.jp/entry/2021/01/27/090000  参考2：https://edgeguides.rubyonrails.org/active_storage_overview.html#public-access）
+  public: true
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 amazon:

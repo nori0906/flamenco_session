@@ -1,0 +1,40 @@
+<div class="bkg-img-index text-white">
+  <p class="fs-2 pt-2 ps-4">RECORDING</p>
+  <div class="container">
+    <div class="text-center mb-4" id="level-select">
+      <%# how_to_recordings_helper.rbでメソッド作成 %>
+      <h1 class="fs-2 fw-bold"><%= by_level_title(@level) %></h1>
+    </div>
+    <div class="d-flex justify-content-center mb-4">
+      <%= render "layouts/guest_tutorial/#{@level}_help_text" %>
+    </div>
+
+    <%# 録音 %>
+    <div class="pt-4 pb-3 mt-5 mb-5">
+      <h3 class="text-center mb-4">↓↓ レコーディング開始!! ↓↓</h3>
+      <div class="mb-3">
+        <div class="mb-5 d-flex justify-content-center">
+          <%= render "layouts/guest_tutorial/recording_btn" %>
+        </div>
+        <div class="d-flex justify-content-center">
+          <%= render "layouts/guest_tutorial/audio_slider", slider_type: "tutorial-record", slider_size: "50" %>
+        </div>
+      </div>
+    </div>
+
+    <% if @level == 'hard' %>
+      <div class="d-flex justify-content-center pb-5">
+        <%= link_to "みんなの投稿を見る", guest_index_path, class: "btn btn-lg btn-custom text-white rounded-pill px-3 py-3 fw-bold" , type: "button" %>
+      </div>
+    <% else %>
+      <div class="d-flex justify-content-center pb-5">
+        <%= link_to "次のステップへ", guest_tutorial_introductions_path, class: "btn btn-lg btn-custom text-white rounded-pill px-3 py-3 fw-bold" , type: "button" %>
+      </div>
+    <% end %>
+
+  </div>
+</div>
+
+<%# js読み込み %>
+<%= javascript_pack_tag 'audio-playback' %>
+<%= javascript_pack_tag 'create-audio' %>

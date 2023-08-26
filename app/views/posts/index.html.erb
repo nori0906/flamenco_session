@@ -1,53 +1,54 @@
 <div class="bkg-img">
   <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">投稿一覧</h1>
   <div class="container">
+    <%= render partial: 'layouts/flash' %>
 
-    <div class="col-12 d-flex justify-content-center mb-5 ">
-      <%= link_to "新規作成", new_post_path, class: "btn btn-custom col-5 py-3 me-5 btn-lg text-white border border-dark", type: "button" %>
-      <%= link_to "セッションする", new_post_path, class: "btn btn-custom col-5 py-3 btn-lg text-white border border-dark", type: "button" %>
+    <div class="col-12 d-flex justify-content-center mb-5">
+      <% if logged_in? %>
+        <%= link_to "新規作成", new_post_path, class: "btn btn-custom col-5 py-3 me-5 btn-lg text-white border border-dark fw-bold", type: "button" %>
+        <%= link_to "セッションする", new_post_path(audio_flg: 'default_audio'), class: "btn btn-custom col-5 py-3 btn-lg text-white border border-dark fw-bold", type: "button" %>
+      <% end %>
     </div>
 
-    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-      <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-      <label class="btn btn-outline-danger" for="btnradio1">すべて</label>
 
-      <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-      <label class="btn btn-outline-danger" for="btnradio2">セッション待ち</label>
-
-      <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-      <label class="btn btn-outline-danger" for="btnradio3">セッション</label>
-    </div>
-
+    <%# カードレイアウト実装 8/17 %>
     <div class="row row-cols-1 row-cols-md-2 g-5 pb-5">
       <% @posts.each do |post| %>
         <div class="col">
-          <div class="card">
-            <%# 条件定義でpresent?をつけるかどうか？ %>
-            <% if post.collab_src.present? %>
-              <p><%= "【コラボ投稿】" %></p>
-            <% else %>
-              <p><%= "【投稿】" %></p>
-            <% end %>
-            <p><%= post.id %></p>
-            
+          <div class="card bg-color-post-card">
+            <div class="card-header d-flex justify-content-between mx-2">
+              <div class= "fw-bold">
+                <%= image_tag("#{post.user.avatar}", size: '40x40', class: 'rounded-circle') %>
+                <%= post.user.name %>
+              </div>
+              <% unless @root_collab_post %>
+                  <%= link_to 'セッションする', new_post_path(audio_flg: "posted_audio", collab_post_id: post.id), type: "button", class: "btn btn-custom text-white border border-dark fw-bold py-2 mb-1 ms-1" %>
+              <% end %>
+            </div>
 
-            <div class="card-body">
-              <p>
-                <h5 class="card-title"><%= post.title %></h5>
-                <p class="card-text"><%= post.body %></p>
-                <p class="my-2">
-                  <% if post.voice.attached? %>
-                    <%= audio_tag(url_for(post.voice), controls: true) %>
-                  <% end %>
-                </p>
-                <div class="btn-toolbar">
-                  <div class="btn-group ms-auto" role="group" aria-label="Basic outlined example">
-                    <%= link_to '詳細', post_path(post), class: "btn btn-outline-primary", type: "button"  %>
-                    <%= link_to '編集', edit_post_path(post), class: "btn btn-outline-primary", type: "button"  %>
-                    <%= link_to '削除', post_path(post), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-primary", type: "button"   %> 
-                  </div>
-                </div>
-              </p>
+            <div class="card-body my-2 mx-3">
+              <h2 class="card-title fw-bold fs-5"><%= post.title %></h2>
+              <p class="card-text text-truncate"><%= post.body %></p>
+              <div class="ms-auto mt-4 me-5 mb-2">
+                <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_blob_url: post.voice %>
+                <%#= render "shared/audio_player", audio_container_class: "js-posted-audio-container", audio_blob: post.voice, slider_size: "100" %>
+              </div>
+              <%# if post.voice.attached? %>
+                <%#= audio_tag(url_for(post.voice), controls: true, class: "w-100") %>
+              <%# end %>
+            </div>
+
+            <div class="card-footer d-flex justify-content-end text-muted mx-2">
+              <a href="#">コメント 10件</a>
+              <a href="#" class="ms-2">オレ〜!! 20件</a>
+              <div class="btn-group ms-auto" role="group" aria-label="Basic outlined example">
+                <%= link_to '詳細', post_path(post), class: "btn btn-outline-dark px-3", type: "button"  %>
+                <%# ログインしているか・投稿者本人かを確認 %>
+                <% if logged_in? && current_user.id == post.user.id %>
+                  <%= link_to '編集', edit_post_path(post), class: "btn btn-outline-dark px-3", type: "button"  %>
+                  <%= link_to '削除', post_path(post), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-dark px-3", type: "button"   %>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
@@ -55,3 +56,5 @@
     </div>
   </div>
 </div>
+
+<%= javascript_pack_tag 'audio-playback' %>

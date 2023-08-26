@@ -2,11 +2,12 @@
 <div class="bkg-img-pro">
   <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">投稿画面</h1>
   <div class="container">
-
+    <%= render partial: 'layouts/flash' %>
     <p class="text-white">投稿フォーム</p>
     <div>
-      <%= audio_tag(url_for(@post.voice), id: "record", controls: true) %>
-      <button type="button" class="btn btn-outline-secondary mb-3" id="playback">再生する</button>
+      <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "75", audio_blob_url: @post.voice %>
+      <%#= audio_tag(url_for(@post.voice), id: "record", controls: true) %>
+      <%# <button type="button" class="btn btn-outline-secondary mb-3" id="playback">再生する</button> %>
     </div>
 
     <div>
@@ -34,4 +35,4 @@
   </div>
 </div>
 
-<%= javascript_pack_tag 'playback-audio' %>
+<%= javascript_pack_tag 'audio-playback' %>
