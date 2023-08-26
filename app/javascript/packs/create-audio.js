@@ -110,33 +110,45 @@ document.addEventListener('DOMContentLoaded', function () {
     const chrome = (ua.indexOf('chrome') !== -1) && (ua.indexOf('edge') === -1) && (ua.indexOf('opr') === -1); // ブラウザがchromeかどうかを確認し、結果の真偽値を変数に格納
 
     // オーディオ制約を設定
-    if(chrome){
-      constraints = {
-        "video": false,
-        "audio": {
-          // 参考: https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings#instance_properties_of_audio_tracks
-          "mandatory": {
-            // chrome固有の設定->最新のブラウザではMediaTrackConstraints APIの使用が一般的なため、記述を統一しても良いかもしれない
-            "googEchoCancellation" : false, // エコーキャンセルが必須か優先かを指定するオブジェクト
-            "googAutoGainControl" : false, // 自動ゲイン制御が優先か必須かどうか
-            "googNoiseSuppression" : false, // ノイズ抑制が優先か必要か
-            "googHighpassFilter" : false // 指定した周波数以上を通過させ、低域をカットできるフィルターを指定するか
-          }
-        }
-      };
-    // FireFox/Edge/safari
-    }else{
-      constraints = {
-        "video": false,
-        "audio": {
-          "mandatory": {
-            "echoCancellation" : false,
-            "autoGainControl" : false,
-            "noiseSuppression" : false
-          }
-        }
-      };
-    }
+    // console.log('オーディオ制約A');
+    // if(chrome){
+    //   constraints = {
+    //     "video": false,
+    //     "audio": {
+    //       // 参考: https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings#instance_properties_of_audio_tracks
+    //       "mandatory": {
+    //         // chrome固有の設定->最新のブラウザではMediaTrackConstraints APIの使用が一般的なため、記述を統一しても良いかもしれない
+    //         "googEchoCancellation" : false, // エコーキャンセルが必須か優先かを指定するオブジェクト
+    //         "googAutoGainControl" : false, // 自動ゲイン制御が優先か必須かどうか
+    //         "googNoiseSuppression" : false, // ノイズ抑制が優先か必要か
+    //         "googHighpassFilter" : false // 指定した周波数以上を通過させ、低域をカットできるフィルターを指定するか
+    //       }
+    //     }
+    //   };
+    // // FireFox/Edge/safari
+    // }else{
+    //   constraints = {
+    //     "video": false,
+    //     "audio": {
+    //       "mandatory": {
+    //         "echoCancellation" : false,
+    //         "autoGainControl" : false,
+    //         "noiseSuppression" : false
+    //       }
+    //     }
+    //   };
+    // }
+
+    console.log('オーディオ制約B');
+    constraints = {
+      "video": false,
+      "audio": {
+        "echoCancellation": false,
+        "autoGainControl": false,
+        "noiseSuppression": false
+      }
+    };
+  
 
     // MIMEタイプを指定
     // サポート状況を確認し、変数に格納
