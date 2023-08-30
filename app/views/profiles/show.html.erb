@@ -6,23 +6,23 @@
       <div class="w-75 mb-4">
 
         <div class="card bg-color-pro w-100 mb-5">
-          <table class="table rounded text-center text-white">
+          <table class="table rounded text-center">
             <tr>
-              <th class="table-td-color border border-1 rounded border-dark">プロフィール画像</th>
-              <th class="table-td-color border border-1 rounded border-dark">ユーザーネーム</th>
+              <th class="table-th-color border border-1 rounded border-dark text-white">プロフィール画像</th>
+              <th class="table-th-color border border-1 rounded border-dark text-white">ユーザーネーム</th>
             </tr>
             <tr>
-              <td rowspan="3" class="border border-1 border-dark pt-4"><%= image_tag("#{@user.avatar}", size: '100x100', class: 'rounded-circle') %></td>
-              <td class="border border-1 border-dark py-3"><%= @user.name %></td>
+              <td rowspan="3" class="table-td-color border border-1 border-dark pt-4"><%= image_tag("#{@user.avatar}", size: '100x100', class: 'rounded-circle') %></td>
+              <td class="table-td-color border border-1 border-dark text-white py-3"><%= @user.name %></td>
             </tr>
             <tr>
-              <th class="table-td-color border border-1 rounded border-dark">メール</th>
+              <th class="table-th-color border border-1 rounded border-dark text-white">メール</th>
             </tr>
             <tr>
-              <td class="border border-1 border-dark py-3"><%= @user.email %></td>
+              <td class="table-td-color border border-1 border-dark text-white py-3"><%= @user.email %></td>
             </tr>
           </table>
-          <div class="px-4 pb-3 text-center">
+          <div class="table-td-color px-4 pb-3 text-center">
             <%= link_to '編集', edit_profile_path, class: 'btn btn-success float-right w-100 fs-5' %>
           </div>
         </div>
