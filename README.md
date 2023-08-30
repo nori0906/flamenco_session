@@ -95,3 +95,15 @@ https://www.figma.com/file/GfcgtW6N7RErEmUW9kavrY/%E3%83%95%E3%83%A9%E3%81%A3%E3
 
 ### ■ER図
 https://drive.google.com/file/d/1b7UCW6JECBBLWLkOtfTDfo9CXTabIKKg/view?usp=sharing
+
+## 環境
+Rails 6.1.7
+ruby 3.0.4
+Bundler version 2.2.33
+node v20.5.1
+yarn -v1.22.19
+npm -v9.8.0
+nvm -v0.38.0
+node-gyp -v9.4.0
+nodenv 1.4.1
+nodebrew 1.2.0
