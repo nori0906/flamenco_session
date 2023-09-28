@@ -38,3 +38,5 @@ yarn-debug.log*
 /vender/bundle
 
 .env
+
+memo.md
