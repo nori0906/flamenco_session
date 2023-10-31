@@ -2,6 +2,7 @@
   "name": "flamenco-session",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@popperjs/core": "^2.11.6",
     "@rails/actioncable": "^6.0.0",
@@ -15,6 +16,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "webpack-dev-server": "^3"
   }
 }
