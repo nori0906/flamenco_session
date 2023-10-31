@@ -6,13 +6,14 @@
 import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-import "jquery"  // プレビュー機能実装のため追加 23/4/5
+// import "jquery"  // プレビュー機能実装のため追加 23/4/5
 
-import "bootstrap";
-import "../stylesheets/application.scss";
-// fontawesome追加
-import '@fortawesome/fontawesome-free/js/all';
 
 Rails.start()
 ActiveStorage.start()
 console.log("Hello from Webpacker");
+
+import "bootstrap";
+import "../stylesheets/application.scss";
+// fontawesome追加
+import "@fortawesome/fontawesome-free/js/all";
