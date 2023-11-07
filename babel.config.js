@@ -54,13 +54,23 @@ module.exports = function(api) {
         }
       ],
       [
-        '@babel/plugin-proposal-private-methods',
+        // 以下参考
+        // https://github.com/rails/rails/issues/48372
+        // https://github.com/simonbaird/tiddlyhost/commit/c1063d6040b95b059248c236097faca5e6f608a6
+        
+        // '@babel/plugin-proposal-private-methods',
+        '@babel/plugin-transform-private-methods',
         {
           loose: true
         }
       ],
       [
-        '@babel/plugin-proposal-private-property-in-object',
+        // 以下参考
+        // https://github.com/rails/rails/issues/48372
+        // https://github.com/simonbaird/tiddlyhost/commit/c1063d6040b95b059248c236097faca5e6f608a6
+
+        // '@babel/plugin-proposal-private-property-in-object',
+        '@babel/plugin-transform-private-property-in-object',
         {
           loose: true
         }
