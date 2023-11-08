@@ -2,6 +2,8 @@
 # exit on error
 set -o errexit
 
+export NODE_OPTIONS=--openssl-legacy-provider
+
 bundle install
 RAILS_ENV=production bundle exec rails db:migrate
 RAILS_ENV=production bundle exec rails assets:clean
