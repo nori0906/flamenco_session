@@ -36,7 +36,6 @@ yarn-debug.log*
 .yarn-integrity
 
 /vender/bundle
-
 .env
-
 memo.md
+render.yaml

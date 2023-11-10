@@ -16,7 +16,8 @@ default: &default
   cache_manifest: false
 
   # Extract and emit a css file
-  extract_css: false
+  # 23/11/10 本番環境に合わせてtrueに変更
+  extract_css: true
 
   static_assets_extensions:
     - .jpg
