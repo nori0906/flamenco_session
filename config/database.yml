@@ -81,6 +81,8 @@ test:
 #
 production:
   <<: *default
-  database: flamenco_session_production
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['FLAMENCO_SESSION_DATABASE_PASSWORD'] %>
+  # 本番環境でのデプロイ参照： https://render.com/docs/deploy-rails#go-production-ready
+  url: <%= ENV['DATABASE_URL'] %>
+  # database: flamenco_session_production
+  # username: <%= ENV['DB_USERNAME'] %>
+  # password: <%= ENV['FLAMENCO_SESSION_DATABASE_PASSWORD'] %>
