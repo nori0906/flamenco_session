@@ -24,4 +24,19 @@ if (process.env.RAILS_ENV === 'production') {
   )
 }
 
+// 画像ファイル用のローダー設定
+environment.loaders.append('file', {
+  test: /\.(jpg|jpeg|png|gif|tiff|ico|svg|eot|otf|ttf|woff|woff2)$/i,
+  use: [
+    {
+      loader: 'file-loader',
+      options: {
+        name: '[name]-[hash].[ext]',
+        outputPath: 'media/images',
+        publicPath: '/packs/media/images'
+      }
+    }
+  ]
+})
+
 module.exports = environment

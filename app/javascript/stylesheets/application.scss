@@ -85,7 +85,7 @@
 .bkg-img {
   min-height: calc(100vh - 100px);
   max-width: 100%;
-  background-image: url(../../assets/images/fla12.png);
+  background-image: url(../../javascript/packs/images/fla12.png);
   background-size:cover;
   background-position: center;
 }
@@ -93,7 +93,7 @@
 .bkg-img-pro {
   min-height: calc(100vh - 100px);
   max-width: 100%;
-  background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0)), url(../../assets/images/bkg-city.png);
+  background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0)), url(../../javascript/packs/images/bkg-city.png);
   background-size:cover;
   background-position: center;
 }
@@ -109,7 +109,7 @@
 .bkg-img-index {
   min-height: calc(100vh - 100px);
   max-width: 100%;
-  background-image: url(../../assets/images/unsplash_recording.png);
+  background-image: url(../../javascript/packs/images/unsplash_recording.png);
   background-size:cover;
   background-position: center;
 }
@@ -174,7 +174,7 @@ a.top-anchor-link {
 .top-wrapper {
   min-height: 800px;
   max-width: 100%;
-  background-image: url(../../assets/images/bkg_image.jpg);
+  background-image: url(../../javascript/packs/images/bkg_image.jpg);
   // height: calc(100vh - 50px);
   position: relative;
   background-position: center;
