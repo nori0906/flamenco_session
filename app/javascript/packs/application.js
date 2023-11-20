@@ -13,6 +13,9 @@ import "../stylesheets/application.scss";
 // fontawesome追加
 import "@fortawesome/fontawesome-free/js/all";
 
+const images = require.context('../images/', true)
+const imagePath = name => images(name, true)
+
 Rails.start()
 ActiveStorage.start()
 console.log("Hello from Webpacker");
