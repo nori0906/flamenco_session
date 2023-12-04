@@ -468,10 +468,15 @@ document.addEventListener('DOMContentLoaded', function () {
   /// サーバーへリクエスト処理 ///
   // サーバー送信処理
   async function sendToSever() {
+    console.log("sendToSever実行");
     const formData = new FormData();
+    console.log('before/formData:', audioBlob);
+    console.log('audioBlob:', audioBlob);
+    console.log('subType:', subType);
     formData.append('recording[voice]', audioBlob, `recording.${subType}`);
     resetAudioData();
-
+    
+    console.log('after/formData:', audioBlob);
     // 非同期（Ajax）でサーバーに音声データを送信
     const response = await axios({
       method: 'post',
@@ -482,6 +487,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
       }
     })
+    console.log('response確認:', response);
     return response;
   }
 
