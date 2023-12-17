@@ -1,8 +1,16 @@
 const { environment } = require('@rails/webpacker')
 
+// 23/12/17 profiles/show.html.erbの非公開ボタンクリックができない問題の対応
+const webpack = require('webpack')
+environment.plugins.prepend('Provide',
+    new webpack.ProvidePlugin({
+        $: 'jquery/src/jquery',
+        jQuery: 'jquery/src/jquery'
+    })
+)
+
 // 全ての環境でMiniCssExtractPlugin.loaderに統一
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-console.log('プラグインの代入を確認', MiniCssExtractPlugin)
 const styleLoader = MiniCssExtractPlugin.loader;
 environment.loaders.append('sass', {
   test: /\.scss$/,
