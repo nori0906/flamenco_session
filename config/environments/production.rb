@@ -22,6 +22,10 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
+  
+  # ローカル時の設定
+  # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  
   # 2022/10/26 Renderでデプロイする際に変更 renderのドキュメント（https://render.com/docs/deploy-rails#go-production-ready）
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
 
@@ -39,6 +43,8 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
+  # TODO: 23/12/4 ローカル/productionで起動させるために一時的に変更
+  # config.active_storage.service = :local
   config.active_storage.service = :amazon
 
   # Mount Action Cable outside main process or domain.

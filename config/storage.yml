@@ -9,6 +9,7 @@ local:
   public: true
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# TODO: パブリックアクセスが必要か確認（https://railsguides.jp/active_storage_overview.html#%E3%83%91%E3%83%96%E3%83%AA%E3%83%83%E3%82%AF%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9）
 amazon:
   service: S3
   access_key_id: <%= ENV['ACCESS_KEY_ID'] %>

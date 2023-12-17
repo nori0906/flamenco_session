@@ -6,12 +6,16 @@
 import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-// import "jquery"  // プレビュー機能実装のため追加 23/4/5
+// 23/12/17 profiles/show.html.erbの非公開ボタンクリックができない問題により対応
+import "jquery"
 
 import "bootstrap";
 import "../stylesheets/application.scss";
 // fontawesome追加
 import "@fortawesome/fontawesome-free/js/all";
+
+const images = require.context('../images/', true)
+const imagePath = name => images(name, true)
 
 Rails.start()
 ActiveStorage.start()

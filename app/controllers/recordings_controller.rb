@@ -8,7 +8,7 @@ class RecordingsController < ApplicationController
 
     # MIMEタイプのチェック：真の場合にblobを作成
     if permitted_mime_types.include?(mime_type)
-      # attachだとモデルのデータベースへの保存されないとblobを参照できないため、直接blobを作成
+      # attachの場合、データベースへ保存されないとblobを参照できないため、直接blobを作成
       blob = ActiveStorage::Blob.create_after_upload!(
         io: audio_params[:voice].open,
         filename: audio_params[:voice].original_filename,
@@ -17,6 +17,7 @@ class RecordingsController < ApplicationController
       blob_url = rails_blob_path(blob)
 
       # 保存済みかのチェック
+      # TODO: 条件がfalseの際の、エラー表示についての確認が必要 23/12/4
       if blob.persisted?
         # クライアントへblob Idを渡す
         render json: { id: blob.signed_id, blob_url: blob_url}
