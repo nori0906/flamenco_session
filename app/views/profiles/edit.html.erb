@@ -22,7 +22,12 @@
                   <%= f.file_field :avatar, class: "form-control", id: 'avatarImg', accept: 'image/*' %>
                   <%= f.hidden_field :avatar_cache %>
                   <div class='mt-3 py-2 mb-4 text-center'>
-                    <%= image_tag @user.avatar.url, id: 'preview', size: '100x100', class: 'rounded-circle' %>
+
+                    <%# FIXME: 画像ファイルが正しく読みこまえれない場合一、時的にデフォルトアバターを表示させる 23/12/24 %>
+                    <%#= image_tag @user.avatar.url, id: 'preview', class: 'rounded-circle', size: '100x100' %>
+                    <%= avatar_image_tag(@user, 'rounded-circle', '100x100') %>
+
+
                   </div>
                 </div>
 
