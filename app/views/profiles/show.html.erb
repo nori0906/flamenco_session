@@ -12,7 +12,16 @@
               <th class="table-th-color border border-1 rounded border-dark text-white">ユーザーネーム</th>
             </tr>
             <tr>
-              <td rowspan="3" class="table-td-color border border-1 border-dark pt-4"><%= image_tag("#{@user.avatar}", size: '100x100', class: 'rounded-circle') %></td>
+
+              <%# FIXME: 画像ファイルが正しく読みこまえれない場合一、時的にデフォルトアバターを表示させる 23/12/24 %>
+              <%# <td rowspan="3" class="table-td-color border border-1 border-dark pt-4"> %>
+                <%#= image_tag("#{@user.avatar}", class: 'rounded-circle', size: '100x100') %>
+              <%# </td> %>
+              <td rowspan="3" class="table-td-color border border-1 border-dark pt-4">
+                <%= avatar_image_tag(@user, 'rounded-circle', '100x100') %>
+              </td>
+
+
               <td class="table-td-color border border-1 border-dark text-white py-3"><%= @user.name %></td>
             </tr>
             <tr>

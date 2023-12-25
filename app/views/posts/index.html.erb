@@ -18,7 +18,11 @@
           <div class="card bg-color-post-card">
             <div class="card-header d-flex justify-content-between mx-2">
               <div class= "fw-bold">
-                <%= image_tag("#{post.user.avatar}", size: '40x40', class: 'rounded-circle') %>
+
+                <%# FIXME: 画像ファイルが正しく読みこまえれない場合一、時的にデフォルトアバターを表示させる 23/12/24 %>
+                <%#= image_tag("#{post.user.avatar}", class: 'rounded-circle', size: '40x40') %>
+                <%= avatar_image_tag(post.user, 'rounded-circle', '40x40') %>
+
                 <%= post.user.name %>
               </div>
               <% unless @root_collab_post %>
