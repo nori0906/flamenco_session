@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // let resumeTime; // 再開時間（秒）を示す
   
 
-
-
   // 追加実装: カードごとに音声プレイヤーを実行させる 23/8/24
   const playButtons = document.querySelectorAll('.audio-playback');
   let currentSource;
@@ -23,7 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let playbackTime;
   let slider;
 
-  
+
+  // イベントリスナー
   playButtons.forEach((button) => button.addEventListener('click', async function() {
     const parentContainer = button.closest('.js-audio-player-container')
     playbackTime = parentContainer.querySelector('.audio-playback-time');
@@ -72,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
   );
 
 
+  // 再生・停止ボタンの表示処理
   function setButtonStatus(isPlaying) {
     // disabledの状態（真偽値）のデータを格納
     const buttonStatus = {
@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
   //   return audioContext.currentTime - startTime;
   // }
 
+
   // 音声ファイルを読み込み
   async function fetchAudio(url) {
     const response = await fetch(url);
@@ -111,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('読み込み完了');
     return audioBuffer;
   }
+
 
   // 再生・停止
   async function playAudio(buffer, button) {
@@ -167,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   // 録音コントローラー
+  // 再生状況のリセット処理
   function resetPlayback() {
     slider.value = 0;
     playbackTime.textContent = '0:00';
@@ -180,6 +183,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   }
 
+
+  // 再生中のバーの進行処理
   function updateProgress() {
     if (currentSource && currentBuffer) {
       console.log('バー進行中');
@@ -217,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   }
+
 
   // ユーザーがスライダーをクリックした場合の更新処理
   async function sliderIvent(event, button) {
@@ -266,8 +272,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
   }
-
-
 
 
   // エラーハンドリングをまとめる
