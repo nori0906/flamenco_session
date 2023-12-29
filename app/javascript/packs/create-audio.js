@@ -486,7 +486,10 @@ document.addEventListener('DOMContentLoaded', function () {
         'X-Requested-With': 'XMLHttpRequest',
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
       }
-    })
+    }).catch((e) => {
+      console.log(e);
+    });
+    
     console.log('response確認:', response);
     return response;
   }

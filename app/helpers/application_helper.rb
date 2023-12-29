@@ -4,7 +4,6 @@ module ApplicationHelper
     if user.avatar.present? && File.exist?(user.avatar.path)
       image_tag(user.avatar.url, class: class_name, size: size)
     else
-      # binding.pry
       image_tag(user.avatar.default_url, class: class_name, size: size)
     end
   end
