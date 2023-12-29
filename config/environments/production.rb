@@ -23,7 +23,7 @@ Rails.application.configure do
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   
-  # ローカル時の設定
+  # FIXME: ローカル時のproduction設定
   # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
   
   # 2022/10/26 Renderでデプロイする際に変更 renderのドキュメント（https://render.com/docs/deploy-rails#go-production-ready）
