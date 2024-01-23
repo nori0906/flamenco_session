@@ -15,7 +15,7 @@ amazon:
   access_key_id: <%= ENV['ACCESS_KEY_ID'] %>
   secret_access_key: <%=  ENV['SECRET_ACCESS_KEY'] %>
   region: ap-northeast-1
-  bucket: fla-app-221223
+  bucket: fla-app-240120
 
   # FIXME: ローカルでS3を使用する/本番で使用する場合に変更必要 23/12/29
   # access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
