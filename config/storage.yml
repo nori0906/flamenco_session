@@ -17,7 +17,7 @@ amazon:
   region: ap-northeast-1
   bucket: fla-app-240120
 
-  # FIXME: ローカルでS3を使用する/本番で使用する場合に変更必要 23/12/29
+  # FIXME: ローカル環境でS3を使用する場合に変更必要 23/12/29
   # access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
   # secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
 
