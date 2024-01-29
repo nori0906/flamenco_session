@@ -89,7 +89,11 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to posts_path, flash: {danger: "削除しました"}
+    unless params[:current_page] == "profile"
+      redirect_to posts_path, flash: {danger: "削除しました"}
+    else
+      redirect_to profile_path, flash: {danger: "削除しました"}
+    end
   end
 
 

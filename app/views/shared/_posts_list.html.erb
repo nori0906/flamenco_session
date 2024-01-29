@@ -26,7 +26,7 @@
                 <%# ログインしているか・投稿者本人かを確認 %>
                 <% if logged_in? && current_user.id == post.user.id %>
                   <%= link_to '編集', edit_post_path(post), class: "btn btn-outline-primary", type: "button"  %>
-                  <%= link_to '削除', post_path(post), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-primary", type: "button"   %>
+                  <%= link_to '削除', post_path(post, current_page: 'profile'), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-primary", type: "button"   %>
                 <% end %>
               </div>
             </div>
