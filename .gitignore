@@ -38,7 +38,7 @@ yarn-debug.log*
 # ローカルで作成したユーザーのアバター画像をgitにあげないように設定 23/12/24
 /public/uploads
 
-/vender/bundle
+/vendor/bundle
 .env
 memo.md
 render.yaml
