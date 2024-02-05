@@ -36,6 +36,7 @@ gem 'browser'
 gem 'rack-user_agent'
 gem 'carrierwave', '~> 2.2', '>= 2.2.3'
 gem 'fog-aws'
+gem 'faker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

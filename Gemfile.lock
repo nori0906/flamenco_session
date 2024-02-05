@@ -102,6 +102,8 @@ GEM
       railties (>= 3.2)
     erubi (1.12.0)
     excon (0.109.0)
+    faker (3.2.3)
+      i18n (>= 1.8.11, < 2)
     faraday (2.7.2)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -293,6 +295,7 @@ DEPENDENCIES
   byebug
   carrierwave (~> 2.2, >= 2.2.3)
   dotenv-rails
+  faker
   fog-aws
   jbuilder (~> 2.7)
   listen (~> 3.3)
