@@ -22,8 +22,7 @@ Rails.application.routes.draw do
   resources :recordings, only: %i[new create]
   resources :users, only: %i[new create]
   resource :profile, only: %i[show edit update]
-
-
+  resources :password_resets, only: %i[new create edit update]
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
