@@ -6,7 +6,7 @@
 # :magic_login, :external
 
 # 2024/2/13 sorceryのreset_passwordモジュールの導入により追加
-Rails.application.config.sorcery.submodules = [:reset_password, blabla, blablu, ...]
+Rails.application.config.sorcery.submodules = [:reset_password]
 
 # Here you can configure each submodule's features.
 Rails.application.config.sorcery.configure do |config|
