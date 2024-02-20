@@ -72,6 +72,21 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.default_url_options = Settings.default_url_options.to_h
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    domain: 'gmail.com',
+    port: 587,
+    # 本番環境用
+    user_name: ENV['GMAIL_ADDRESS'],  #Gmailアドレス（RENDERで管理）
+    password: ENV['GMAIL_PASSWORD'],  #アプリパスワード（RENDERで管理）
+
+    # ローカル環境用
+    # user_name: Rails.application.credentials.gmail[:user_name],  #Gmailアドレス（credentials.yml.encで管理）
+    # password: Rails.application.credentials.gmail[:password],  #アプリパスワード（credentials.yml.encで管理）
+
+    authentication: :login
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
