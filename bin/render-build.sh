@@ -6,10 +6,7 @@ bundle install
 RAILS_ENV=production bundle exec rails assets:precompile
 RAILS_ENV=production bundle exec rails assets:clean
 RAILS_ENV=production bundle exec rails db:migrate
-RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:migrate:reset
-RAILS_ENV=production bundle exec rails db:seed
+# FIXME: デプロイのたびにseedデータが作成され、バリデーションエラーになるため一時的にコメントアウト 24/2/21
+# RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:migrate:reset
+# RAILS_ENV=production bundle exec rails db:seed
 
-
-# bundle exec rake assets:precompile
-# bundle exec rake assets:clean
-# bundle exec rake db:migrate
