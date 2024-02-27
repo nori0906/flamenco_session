@@ -32,7 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
   let audioSource;
 
   // コラボ元音源を格納するための変数を定義（録音時）
+  // FIXME: 24/2/27 webaudioapiでの再生処理に変更するため変数名を後で変更させる
   let collabAudio;
+  let collabAudioSource
 
   // 録音画面が投稿用かチュートリアル用かを判別
   let activeScreen;
@@ -45,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // コラボ元関連
   // コラボ元音源の読み込み
-  function collabSourceSetting() {
+  async function collabSourceSetting() {
     console.log('コラボ音源の設定を実行');
 
     let audioContainer;
@@ -65,11 +67,17 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('audioContainerあり', audioContainer);
       const audioUrl = audioContainer.dataset.audioUrl;
       console.log(audioUrl);
-      collabAudio = new Audio(audioUrl);
-      console.log(collabAudio);
-      collabAudio.addEventListener('loadeddata', () => {
-        console.log('読み込み完了')
-      });
+      // webaudioAPIの処理
+      collabAudio = await fetchAudio(audioUrl)
+      console.log('コラボオーディオバッファ', collabAudio);
+
+
+      //// MediaRecordingAPIの再生処理
+      // collabAudio = new Audio(audioUrl);
+      // console.log(collabAudio);
+      // collabAudio.addEventListener('loadeddata', () => {
+      //   console.log('読み込み完了')
+      // });
     } else {
       console.log('audioContainerなし')
       return;
@@ -79,16 +87,29 @@ document.addEventListener('DOMContentLoaded', function () {
   // コラボ元音源を再生
   function playCollabAudio() {
     if(collabAudio) {
+      // MediaRecordingAPI
+      // collabAudio.play();
+
+      // WebAudioAPI
+      collabAudioSource = audioContext.createBufferSource();
+      collabAudioSource.buffer = collabAudio;
+      collabAudioSource.connect(audioContext.destination);
+      collabAudioSource.start(0);
       console.log('コラボ再生開始');
-      collabAudio.play();
+
+      
     }
   }
 
   // コラボ元音源を停止
   function pauseCollabAudio() {
     if (collabAudio) {
+      // collabAudio.pause();
+
+      collabAudioSource.stop();
+      collabAudioSource.onended = null; // onendedイベントリスナーを削除
+      collabAudioSource = null;
       console.log('コラボ再生停止');
-      collabAudio.pause();
     }
   }
 
@@ -239,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   /// 再生 ///
-  // 再生・停止処理
+  // 再生・停止・音声コントローラー処理
   async function playBackControls(displayType) {
     console.log('playBackControls実行');
     /// 再生処理に関するDOM取得 ///
@@ -255,7 +276,6 @@ document.addEventListener('DOMContentLoaded', function () {
     /// 関数 ///
     // 再生・一時停止
     function playRecording() {
-      console.log('再生');
       if (audioBuffer) {
         startTime = audioContext.currentTime - resumeTime; // resumeTimeを考慮する
         
@@ -268,6 +288,7 @@ document.addEventListener('DOMContentLoaded', function () {
         audioSource.buffer = audioBuffer;
         audioSource.connect(audioContext.destination);
         audioSource.start(0, resumeTime);
+        console.log('再生');
         
 
         playingFlag = true;
@@ -280,7 +301,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function stopPlayRecording() {
-      console.log('停止');
       if (audioSource) {
         // 一時停止時間を保存
         resumeTime = audioContext.currentTime - startTime;
@@ -289,6 +309,7 @@ document.addEventListener('DOMContentLoaded', function () {
         audioSource.stop();
         audioSource.onended = null; // onendedイベントリスナーを削除
         audioSource = null;
+        console.log('停止');
         
         // ボタンの状態を更新
         playingFlag = false;
@@ -421,17 +442,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 既存音声ファイルを読み込みバッファへ変換
   async function fetchAudio(audioUrl) {
-    console.log('fetchAudio実行');
-    const response = await fetch(audioUrl);
-    const arrayBuffer = await response.arrayBuffer();
-    
-    // オーディオバッファにデコード
-    const baseAudioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    return baseAudioBuffer;
-    // try{
-    // }catch(e){
-    //   console.log(e);
-    // }
+    try{
+      console.log('fetchAudio実行');
+      const response = await fetch(audioUrl);
+      const arrayBuffer = await response.arrayBuffer();
+      
+      // オーディオバッファにデコード
+      const baseAudioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+      return baseAudioBuffer;
+    }catch(e){
+      console.error('音声ファイルの処理に失敗しました:', e);
+    }
+
   }
 
 
@@ -537,7 +559,8 @@ document.addEventListener('DOMContentLoaded', function () {
   /// 事前に実行 ///
   console.log("create-audio実行");
   
-  // 表示されている録音画面がチュートリアルか投稿かを確認
+  // 表示されている録音画面がチュートリアルか投稿かを確認し、結果を変数に格納することで画面を判別する
+  /// 音声スライダーのボタンタグに定義済みのクラス`<%= "#{slider_type}" %>-playback`から確認している
   if (document.querySelector('.post-record-playback')) {
     console.log('新規投稿画面のDOMを取得：post');
     activeScreen = 'post'
