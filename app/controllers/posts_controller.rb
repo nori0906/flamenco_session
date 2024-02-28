@@ -8,7 +8,7 @@ class PostsController < ApplicationController
     if browser == "Chrome" || browser == "Edge"
       @posts = Post.published.where(ext_type: "webm").order(created_at: :desc)
     elsif browser == "Safari"
-      @posts = Post.published.where(ext_type: "m4a").order(created_at: :desc)
+      @posts = Post.published.where(ext_type: "mp4").order(created_at: :desc)
     end
   end
 
