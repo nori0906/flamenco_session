@@ -23,17 +23,18 @@
   </div>
 </div>
 
+<%# ビュー %>
 <section>
   <div class="top-wrapper">
     <div class="text-white d-flex justify-content-center w-100 h-100 bkg-overlay">
       <div class="align-self-center text-center">
         <div class="py-5">
-          <h1 class="top-title-size fw-bold mb-4" >フラッと×セッション</h1>
-          <p class="fs-2">〜フラメンコ音楽で繋がる・体験する・発見する〜</p>
+          <h1 class="display-3 fs-md-xxxlarge fs-sm-xxlarge fw-bold mb-4" >フラッと×セッション</h1>
+          <p class="fs-xlarge fs-md-large fs-sm-medium">〜フラメンコ音楽で繋がる・体験する・発見する〜</p>
         </div>
-        <div class="my-5 py-5">
-          <%= link_to "はじめる", posts_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill me-5 px-3 py-3 fw-bold" , type: "button", data: { bs_toggle: "modal", bs_target: "#gusetModal" } %>
-          <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill ms-5 px-3 py-3 fw-bold", type: "button" %>
+        <div class="d-inline-flex flex-column flex-sm-row py-5">
+          <%= link_to "はじめる", posts_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold py-3 mb-5 mb-sm-0 me-sm-5" , type: "button", data: { bs_toggle: "modal", bs_target: "#gusetModal" } %>
+          <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold py-3 ms-sm-3", type: "button" %>
         </div>
         <div class="pt-5">
           <a href="#app_overview" class="top-anchor-link"><i class="fa-solid fa-hand-point-down fa-beat castom-size"></i></a>

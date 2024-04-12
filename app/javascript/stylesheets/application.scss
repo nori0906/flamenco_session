@@ -159,9 +159,9 @@ a.hover-test {
 
 
 // トップページのレイアウト
-.top-title-size {
-  font-size: 3.5rem;
-}
+// .top-title-size {
+//   font-size: 3.5rem;
+// }
 
 .castom-size {
   font-size: 3.5rem;
@@ -204,16 +204,59 @@ a.top-anchor-link {
 }
 
 
-/* 画像を暗くするオーバーレイ (参考： https://dezanari.com/css-img-darken/)  */
-// .top-wrapper::before {
-//   content: '';
-//   /* ↓暗いオーバーレイを半透明で配置 */
-//   background-color: rgba(0, 0, 0, 0.4);
-//   /* ↓全体を覆うように配置 */
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   display: block;
-// }
+
+//参考 https://ricordo.blog/archives/328#3
+.fs-10px { font-size: 10px !important; }
+.fs-11px { font-size: 11px !important; }
+.fs-12px { font-size: 12px !important; }
+.fs-13px { font-size: 13px !important; }
+.fs-14px { font-size: 14px !important; }
+.fs-15px { font-size: 15px !important; }
+.fs-16px { font-size: 16px !important; }
+.fs-normal { font-size: normal !important; }
+.fs-medium { font-size: medium !important; }
+.fs-small { font-size: small !important; }
+.fs-xsmall { font-size: x-small !important; }
+.fs-xxsmall { font-size: xx-small !important; }
+.fs-large { font-size: large !important; }
+.fs-xlarge { font-size: x-large !important; }
+.fs-xxlarge { font-size: xx-large !important; }
+.fs-xxxlarge { font-size: xxx-large !important; }
+
+
+@media (max-width: 576px) {
+  .fs-sm-10px { font-size: 10px !important; }
+  .fs-sm-11px { font-size: 11px !important; }
+  .fs-sm-12px { font-size: 12px !important; }
+  .fs-sm-13px { font-size: 13px !important; }
+  .fs-sm-14px { font-size: 14px !important; }
+  .fs-sm-15px { font-size: 15px !important; }
+  .fs-sm-16px { font-size: 16px !important; }
+  .fs-sm-normal { font-size: normal !important; }
+  .fs-sm-medium { font-size: medium !important; }
+  .fs-sm-small { font-size: small !important; }
+  .fs-sm-xsmall { font-size: x-small !important; }
+  .fs-sm-xxsmall { font-size: xx-small !important; }
+  .fs-sm-large { font-size: large !important; }
+  .fs-sm-xlarge { font-size: x-large !important; }
+  .fs-sm-xxlarge { font-size: xx-large !important; }
+}
+
+@media (max-width: 768px) {
+  .fs-md-10px { font-size: 10px !important; }
+  .fs-md-11px { font-size: 11px !important; }
+  .fs-md-12px { font-size: 12px !important; }
+  .fs-md-13px { font-size: 13px !important; }
+  .fs-md-14px { font-size: 14px !important; }
+  .fs-md-15px { font-size: 15px !important; }
+  .fs-md-16px { font-size: 16px !important; }
+  .fs-md-normal { font-size: normal !important; }
+  .fs-md-medium { font-size: medium !important; }
+  .fs-md-small { font-size: small !important; }
+  .fs-md-xsmall { font-size: x-small !important; }
+  .fs-md-xxsmall { font-size: xx-small !important; }
+  .fs-md-large { font-size: large !important; }
+  .fs-md-xlarge { font-size: x-large !important; }
+  .fs-md-xxlarge { font-size: xx-large !important; }
+  .fs-xxxlarge { font-size: xxx-large !important; }
+}
