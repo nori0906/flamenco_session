@@ -4,68 +4,74 @@
   </div>
 
   <section>
-    <div class="py-5 px-4" id="explain-recording">
-      <div class="container">
-        <h2 class="text-white fw-bold">①録音する</h2>
-        <div class="d-lg-flex flex-row">
-          <div class="col">
-            <div class="card h-100 p-2">
-              <div class="card-body font-monospace">
-                <h3 class="card-title fw-bold mb-4">STEP1：録音画面へ移動</h3>
-                <div class="card-text fw-bold fs-5 px-3">
-                  <p class="mb-2">①投稿一覧画面に移動</p>
-                  <p>②録音ボタンを押す</p>
-                </div>
-              </div>
-              <%# 画像は仮で設定 %>
-              <div class="d-flex justify-content-center pb-4">
-                <%= image_pack_tag "media/images/録音テキスト1.png", size: "225x400" %>
-              </div>
-            </div>
-          </div>
-          
-          <div class="text-center align-self-lg-center text-white mx-3">
-            <i class="fa-solid fa-angle-right fa-3x d-none d-lg-block"></i>
-            <i class="fa-solid fa-angle-down fa-3x d-lg-none"></i>
-          </div>
-          
-          <div class="col">
-            <div class="card h-100 p-2">
-              <div class="card-body font-monospace">
-                <h3 class="card-title fw-bold mb-4">STEP2：録音開始</h3>
-                <div class="card-text fw-bold fs-5 px-3">
-                  <p class="mb-2">①recボタン押して録音開始/stopボタンで停止</p>
-                  <p>②play＆pauseボタンで音声確認したらnextボタンでフォームへ移動</p>
-                </div>
-              </div>
-              <%# 画像は仮で設定 %>
-              <div class="d-flex justify-content-center pb-4">
-                <%= image_pack_tag "media/images/録音テキスト1.png", size: "225x400" %>
-              </div>
-            </div>
-          </div>
+    <div class="container py-5 px-4 px-sm-3 px-md-5" id="explain-recording">
+      <h2 class="text-white fw-bold">①録音する</h2>
 
-          <div class="text-center align-self-lg-center text-white mx-3">
-            <i class="fa-solid fa-angle-right fa-3x d-none d-lg-block"></i>
-            <i class="fa-solid fa-angle-down fa-3x d-lg-none"></i>
+      <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner d-flex flex-row">
+          <div class="carousel-item active card text-light border border-5 border-light rounded-5 bg-dark-card">
+            <div class="card-body font-monospace px-3 px-sm-5 pb-5 mb-md-1">
+              <h3 class="card-title text-center fw-bold fs-xxlarge my-3">STEP1</h3>
+              <div class="card-text">
+                <h4 class="fw-bold fs-xlarge fs-sm-large mb-1">録音画面へ移動</h4>
+                <ol class="mb-0">
+                  <li><p class="fs-large fs-md-medium fs-sm-small mb-2">投稿一覧画面に移動</p></li>
+                  <li><p class="fs-large fs-md-medium fs-sm-small mb-0">録音ボタンを押す</p></li>
+                </ol>
+              </div>
+            </div>
+            <%# 画像は仮で設定 %>
+            <div class="text-center pb-5">
+              <%= image_pack_tag "media/images/録音テキスト1.png", class: "rounded-3 w-75", size: "280x400" %>
+            </div>
           </div>
-          
-          <div class="col">
-            <div class="card h-100 p-2">
-              <div class="card-body font-monospace">
-                <h3 class="card-title fw-bold mb-4">STEP3：投稿する</h3>
-                <div class="card-text fw-bold fs-5 px-3">
-                  <p class="mb-2">①タイトル・詳細・公開設定を記入</p>
-                  <p>②投稿ボタンを押して投稿完了</p>
-                </div>
+          <div class="carousel-item card text-light border border-5 border-light rounded-5 bg-dark-card">
+            <div class="card-body font-monospace px-3 px-sm-5">
+              <h3 class="card-title text-center fw-bold fs-xxlarge my-3">STEP2</h3>
+              <div class="card-text">
+                <h4 class="fw-bold fs-xlarge fs-sm-large mb-1">録音開始</h4>
+                <ol class="mb-0">
+                  <li><p class="fs-large fs-md-medium fs-sm-small mb-2">RECボタン押して録音開始/STOPボタンで停止</p></li>
+                  <li><p class="fs-large fs-md-medium fs-sm-small mb-2">PLAY/PAUSEボタンで音声確認</p></li>
+                  <li><p class="fs-large fs-md-medium fs-sm-small mb-0">NEXTボタンを押して投稿フォームへ移動</p></li>
+                </ol>
               </div>
-              <%# 画像は仮で設定 %>
-              <div class="d-flex justify-content-center pb-4">
-                <%= image_pack_tag "media/images/録音テキスト1.png", size: "225x400" %>
+            </div>
+            <%# 画像は仮で設定 %>
+            <div class="text-center pb-5">
+              <%= image_pack_tag "media/images/録音テキスト1.png", class: "rounded-3 w-75", size: "225x400" %>
+            </div>
+          </div>
+          <div class="carousel-item card text-light border border-5 border-light rounded-5 bg-dark-card">
+            <div class="card-body font-monospace px-3 px-sm-5 pb-5 mb-md-1">
+              <h3 class="card-title text-center fw-bold fs-xxlarge my-3">STEP3</h3>
+              <div class="card-text">
+                <h4 class="fw-bold fs-xlarge fs-sm-large mb-1">投稿する</h4>
+                <ol class="mb-0">
+                  <li><p class="fs-large fs-md-medium fs-sm-small mb-2">タイトル・詳細・公開設定を記入</p></li>
+                  <li><p class="fs-large fs-md-medium fs-sm-small mb-0">投稿ボタンを押して投稿完了</p></li>
+                </ol>
               </div>
+            </div>
+            <%# 画像は仮で設定 %>
+            <div class="text-center pb-5">
+              <%= image_pack_tag "media/images/録音テキスト1.png", class: "rounded-3 w-75", size: "225x400" %>
             </div>
           </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
     </div>
   </section>
@@ -192,17 +198,19 @@
 
           <div class="col">
             <div class="card h-100 p-2">
+              <div class="card-title pt-4 pb-3">
+                <h3 class="fw-bold">STEP3：パルマ（手拍子）を叩いて録音</h3>
+              </div>
               <div class="card-body font-monospace">
-                <h3 class="card-title fw-bold mb-4">STEP3：パルマ（手拍子）を叩いて録音</h3>
                 <div class="card-text fw-bold fs-5 px-3">
                   <p class="mb-2">①録音方法、お手本音声を確認する</p>
                   <p class="mb-2">②recボタンで録音開始/stopボタンで録音停止</p>
                   <p>③play＆pauseボタンで録音した音声を確認</p>
                 </div>
-              </div>
-              <%# 画像は仮で設定 %>
-              <div class="d-flex justify-content-center pb-4">
-                <%= image_pack_tag "media/images/録音テキスト1.png", size: "225x400" %>
+                <%# 画像は仮で設定 %>
+                <div class="d-flex justify-content-center pb-4">
+                  <%= image_pack_tag "media/images/録音テキスト1.png", class: "app-use-image" %>
+                </div>
               </div>
             </div>
           </div>

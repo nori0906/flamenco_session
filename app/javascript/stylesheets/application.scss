@@ -175,7 +175,7 @@ a.top-anchor-link {
   min-height: 800px;
   max-width: 100%;
   background-image: url(../images/bkg_image.jpg);
-  // height: calc(100vh - 50px);
+  height: calc(100vh - 50px);
   position: relative;
   background-position: center;
   background-size: cover;
@@ -204,6 +204,17 @@ a.top-anchor-link {
 }
 
 
+.app-use-image {
+  width: 200px;
+  height: 400px;
+}
+
+
+// トップページ：録音説明カード
+.bg-dark-card {
+  background-color: #565b65;
+}
+
 
 //参考 https://ricordo.blog/archives/328#3
 .fs-10px { font-size: 10px !important; }
@@ -223,25 +234,6 @@ a.top-anchor-link {
 .fs-xxlarge { font-size: xx-large !important; }
 .fs-xxxlarge { font-size: xxx-large !important; }
 
-
-@media (max-width: 576px) {
-  .fs-sm-10px { font-size: 10px !important; }
-  .fs-sm-11px { font-size: 11px !important; }
-  .fs-sm-12px { font-size: 12px !important; }
-  .fs-sm-13px { font-size: 13px !important; }
-  .fs-sm-14px { font-size: 14px !important; }
-  .fs-sm-15px { font-size: 15px !important; }
-  .fs-sm-16px { font-size: 16px !important; }
-  .fs-sm-normal { font-size: normal !important; }
-  .fs-sm-medium { font-size: medium !important; }
-  .fs-sm-small { font-size: small !important; }
-  .fs-sm-xsmall { font-size: x-small !important; }
-  .fs-sm-xxsmall { font-size: xx-small !important; }
-  .fs-sm-large { font-size: large !important; }
-  .fs-sm-xlarge { font-size: x-large !important; }
-  .fs-sm-xxlarge { font-size: xx-large !important; }
-}
-
 @media (max-width: 768px) {
   .fs-md-10px { font-size: 10px !important; }
   .fs-md-11px { font-size: 11px !important; }
@@ -260,3 +252,27 @@ a.top-anchor-link {
   .fs-md-xxlarge { font-size: xx-large !important; }
   .fs-xxxlarge { font-size: xxx-large !important; }
 }
+
+@media (max-width: 576px) {
+  .fs-sm-10px { font-size: 10px !important; }
+  .fs-sm-11px { font-size: 11px !important; }
+  .fs-sm-12px { font-size: 12px !important; }
+  .fs-sm-13px { font-size: 13px !important; }
+  .fs-sm-14px { font-size: 14px !important; }
+  .fs-sm-15px { font-size: 15px !important; }
+  .fs-sm-16px { font-size: 16px !important; }
+  .fs-sm-normal { font-size: normal !important; }
+  .fs-sm-medium { font-size: medium !important; }
+  .fs-sm-small { font-size: small !important; }
+  .fs-sm-xsmall { font-size: x-small !important; }
+  .fs-sm-xxsmall { font-size: xx-small !important; }
+  .fs-sm-large { font-size: large !important; }
+  .fs-sm-xlarge { font-size: x-large !important; }
+  .fs-sm-xxlarge { font-size: xx-large !important; }
+  
+  .app-use-image {
+    width: 200px;
+    height: 400px;
+  }
+}
+
