@@ -172,7 +172,7 @@ a.top-anchor-link {
 }
 
 .top-wrapper {
-  min-height: 800px;
+  min-height: 600px;
   max-width: 100%;
   background-image: url(../images/bkg_image.jpg);
   height: calc(100vh - 50px);
@@ -216,6 +216,56 @@ a.top-anchor-link {
 }
 
 
+
+// トップページ: カルーセル内カードの高さ・画像サイズの調整
+.carousel-inner .card {
+  height: 780px;
+}
+.app-use-image {
+  width: 350px;
+  height: 400px;
+}
+
+@media (max-width: 575px) {
+  .carousel-inner .card {
+    height: 630px;
+  }
+  .app-use-image {
+    width: 225px;
+    height: 300px;
+  }
+}
+
+
+@media (min-width: 997px) {
+  .app-use-image {
+    width: 450px;
+    height: 400px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .app-use-image {
+    width: 630px;
+    height: 380px;
+  }
+}
+
+// トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
+@media (max-width: 575px) {
+  .app-use-section .container {
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .app-use-section .container {
+    max-width: 540px;
+  }
+}
+
+
+
 //参考 https://ricordo.blog/archives/328#3
 .fs-10px { font-size: 10px !important; }
 .fs-11px { font-size: 11px !important; }
@@ -253,7 +303,7 @@ a.top-anchor-link {
   .fs-xxxlarge { font-size: xxx-large !important; }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .fs-sm-10px { font-size: 10px !important; }
   .fs-sm-11px { font-size: 11px !important; }
   .fs-sm-12px { font-size: 12px !important; }
@@ -269,10 +319,4 @@ a.top-anchor-link {
   .fs-sm-large { font-size: large !important; }
   .fs-sm-xlarge { font-size: x-large !important; }
   .fs-sm-xxlarge { font-size: xx-large !important; }
-  
-  .app-use-image {
-    width: 200px;
-    height: 400px;
-  }
 }
-
