@@ -1,18 +1,15 @@
 <div class="bkg-img">
-  <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">投稿一覧</h1>
   <div class="container">
+    <h1 class="text-white text-left py-4 pb-lg-5">投稿一覧</h1>
     <%= render partial: 'layouts/flash' %>
-
     <div class="col-12 d-flex justify-content-center mb-5">
       <% if logged_in? %>
         <%= link_to "新規作成", new_post_path, class: "btn btn-custom col-5 py-3 me-5 btn-lg text-white border border-dark fw-bold", type: "button" %>
         <%= link_to "セッションする", new_post_path(audio_flg: 'default_audio'), class: "btn btn-custom col-5 py-3 btn-lg text-white border border-dark fw-bold", type: "button" %>
       <% end %>
     </div>
-
-
     <%# カードレイアウト実装 8/17 %>
-    <div class="row row-cols-1 row-cols-md-2 g-5 pb-5">
+    <div class="row row-cols-md-2 gy-5 g-md-5 pb-5">
       <% @posts.each do |post| %>
         <div class="col">
           <div class="card bg-color-post-card">
