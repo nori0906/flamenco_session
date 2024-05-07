@@ -3,17 +3,17 @@
     <div class="container-fluid">
       <div>
         <%= image_pack_tag "media/images/music_icon.png", class: "mb-2", size: 5*5 %>
-        <a class="navbar-brand text-white fw-bold fs-sm-large me-0" href="/">フラッと×セッション</a>
+        <a class="navbar-brand text-white fw-bold fs-large fs-sm-larger me-0" href="/">フラッと×セッション</a>
       </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li><%= link_to "投稿を見る", posts_path, class: "nav-link text-white active" %></li>
+          <li><%= link_to "投稿を見る", posts_path, class: "nav-link text-white active mt-1" %></li>
           <%# アクセス制限 %>
           <% if logged_in? %>
-            <li><%= link_to "録音する", new_post_path, class: "nav-link text-white" %></li>
+            <li><%= link_to "録音する", new_post_path, class: "nav-link text-white mt-1" %></li>
             
             <li>
               <div class="dropdown">
