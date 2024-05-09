@@ -43,7 +43,7 @@
 
         <div class="card-body mb-5 ms-4">
           <h2 class="card-title fw-bold fs-2"><%= @post.title %></h2>
-          <p class="card-text text-truncate fs-5"><%= @post.body %></p>
+          <p class="card-text fs-5"><%= @post.body %></p>
           <div class="ms-auto mt-4 me-5 mb-2">
             <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "75", audio_blob_url: @post.voice %>
             <%#= render "shared/audio_player", audio_container_class: "js-posted-audio-container", audio_blob: @post.voice, slider_size: "75" %>
