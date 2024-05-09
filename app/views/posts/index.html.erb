@@ -28,7 +28,7 @@
               <% end %>
             </div>
 
-            <div class="card-body my-2 mx-2 mx-sm-3">
+            <div class="card-body my-2 mx-1 mx-sm-3">
               <h2 class="card-title fw-bold fs-5"><%= post.title %></h2>
               <p class="card-text text-truncate"><%= post.body %></p>
               <div class="mt-4 mb-2">
@@ -40,16 +40,30 @@
               <%# end %>
             </div>
 
-            <div class="card-footer d-flex justify-content-end text-muted mx-2">
-              <a href="#">コメント 10件</a>
-              <a href="#" class="ms-2">オレ〜!! 20件</a>
-              <div class="btn-group ms-auto" role="group" aria-label="Basic outlined example">
-                <%= link_to '詳細', post_path(post), class: "btn btn-outline-dark px-3", type: "button"  %>
-                <%# ログインしているか・投稿者本人かを確認 %>
-                <% if logged_in? && current_user.id == post.user.id %>
-                  <%= link_to '編集', edit_post_path(post), class: "btn btn-outline-dark px-3", type: "button"  %>
-                  <%= link_to '削除', post_path(post), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-dark px-3", type: "button"   %>
-                <% end %>
+            <div class="card-footer d-flex flex-row justify-content-between mx-sm-2">
+              <div class="mt-2">
+                <a href="#" class="fs-small fs-sm-medium me-2">コメント 10件</a>
+                <a href="#" class="fs-small fs-sm-medium">オレ〜!! 20件</a>
+              </div>
+              <div class="">
+                <button class="btn btn-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                  <%= image_pack_tag "media/images/icon/meatballs-menu.png", size: "30x30" %>
+                </button>
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+                  <div class="offcanvas-header d-flex justify-content-end pt-3 pe-3 pb-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div class="offcanvas-body small">
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                      <%= link_to '詳細', post_path(post), class: "btn btn-outline-dark fs-small fs-sm-medium pt-2 px-sm-3", type: "button"  %>
+                      <%# ログインしているか・投稿者本人かを確認 %>
+                      <% if logged_in? && current_user.id == post.user.id %>
+                        <%= link_to '編集', edit_post_path(post), class: "btn btn-outline-dark fs-small fs-sm-medium pt-2 px-sm-3", type: "button"  %>
+                        <%= link_to '削除', post_path(post), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-dark fs-small fs-sm-medium pt-2 px-sm-3", type: "button"   %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -58,5 +72,6 @@
     </div>
   </div>
 </div>
+
 
 <%= javascript_pack_tag 'audio-playback' %>
