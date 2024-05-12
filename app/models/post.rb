@@ -7,7 +7,7 @@ class Post < ApplicationRecord
   ## コラボ投稿から、元となる投稿を参照
   belongs_to :base_post, class_name: "Post", optional: true, foreign_key: "collab_src"
 
-  validates :title, presence: true, on: :update
+  validates :title, presence: true
   validates :body, length: { maximum: 100 }
   validates :collab_src, numericality: true, if: :collab_src?
 
