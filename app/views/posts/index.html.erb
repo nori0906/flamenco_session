@@ -44,14 +44,14 @@
 
             <div class="card-footer d-flex flex-row justify-content-between mx-sm-2">
               <div class="mt-2">
-                <a href="#" class="fs-small fs-sm-medium me-2">コメント 10件</a>
-                <a href="#" class="fs-small fs-sm-medium">オレ〜!! 20件</a>
+                <a href="#" class="fs-small fs-xl-medium me-2">コメント 10件</a>
+                <a href="#" class="fs-small fs-xl-medium">オレ〜!! 20件</a>
               </div>
-              <div class="">
-                <button class="btn btn-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+              <div class="card-offcanvas">
+                <button class="btn btn-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom<%= "#{post.id}" %>" aria-controls="offcanvasBottom<%= "#{post.id}" %>">
                   <%= image_pack_tag "media/images/icon/meatballs-menu.png", size: "30x30" %>
                 </button>
-                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom<%= "#{post.id}" %>" aria-labelledby="offcanvasBottomLabel">
                   <div class="offcanvas-header d-flex justify-content-end pt-3 pe-3 pb-0">
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                   </div>
