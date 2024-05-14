@@ -251,18 +251,35 @@ a.top-anchor-link {
 }
 
 
-// トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
+
 @media (max-width: 575px) {
+  // トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
   .app-use-section .container {
     max-width: 400px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+  // トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
   .app-use-section .container {
     max-width: 540px;
   }
+
+  // 投稿詳細ページ: カード幅の調整
+  .post-show-section .container {
+    max-width: 720px;
+  }
+
 }
+
+// 投稿詳細: カード幅の調整
+@media (min-width: 992px) {
+  .post-show-section .container {
+    max-width: 820px;
+  }
+
+}
+
 
 
 

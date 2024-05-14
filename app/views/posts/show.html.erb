@@ -1,61 +1,55 @@
-<div class="bkg-img">
-  <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">詳細</h1>
-  <div class="container">
-
-    <div class="px-5 pb-5 mx-5">
-      <%# コラボが2回以上されていなければボタンを表示 %>
-      <% unless @root_collab_post %>
-          <div class="d-grid gap-2 mb-3 d-flex justify-content-center">
-          <%# コラボ音声取得のためにクエリパラメータに投稿idを設定 %>
-            <%= link_to 'セッションする', new_post_path(audio_flg: "posted_audio", collab_post_id: @post.id), type: "button", class: "btn btn-custom fs-5 fw-bold text-white border border-dark py-2 w-50" %>
-          </div>
-      <% end %>
-
-      <%# カードレイアウト実装 8/17 %>
-      <div class="card bg-color-post-card">
-        <div class="card-header d-flex justify-content-between mx-2">
-          <div class= "fw-bold py-1">
-
-            <%# FIXME: 画像ファイルが正しく読みこまえれない場合一、時的にデフォルトアバターを表示させる 23/12/24 %>
-            <%#= image_tag("#{@post.user.avatar}",  class: 'rounded-circle', size: '40x40') %>
+<div class="post-show-section bkg-img">
+  <h1 class="text-white text-left ps-5 py-4 pb-lg-5">投稿詳細</h1>
+  <div class="container px-xxl-5 pb-5">
+    <div class="card bg-color-post-card mx-2">
+      <div class="card-header d-flex justify-content-between px-1">
+        <div class= "d-flex flex-row py-1 me-1">
+          <%# FIXME: 画像ファイルが正しく読みこまえれない場合一、時的にデフォルトアバターを表示させる 23/12/24 %>
+          <%#= image_tag("#{@post.user.avatar}",  class: 'rounded-circle', size: '40x40') %>
+          <div>
             <%= avatar_image_tag(@post.user, 'rounded-circle', '40x40') %>
-
+          </div>
+          <div class="fw-bold fs-sm-large fs-md-larger ms-1 mt-2">
             <%= @post.user.name %>
           </div>
-          <div class="btn-group ms-auto" role="group" aria-label="Basic outlined example">
-              <%# ログインしているか・投稿者本人かを確認 %>
-              <% if logged_in? && current_user.id == @post.user.id %>
-                <%= link_to '編集', edit_post_path(@post), class: "btn btn-outline-dark fs-5 py-2 px-4", type: "button" %>
-                <%= link_to '削除', post_path(@post), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-dark fs-5 py-2 px-4", type: "button" %>
-                <%= link_to '戻る', posts_path, class: "btn btn-outline-dark fs-5 py-2 px-4", type: "button" %>
-
-              <% end %>
-            </div>
         </div>
-        
-        <div class="card-body d-flex justify-content-between mb-3">
-          <div class="btn-group" role="group" aria-label="Basic outlined example">
-            <button type="button" class="btn btn-outline-primary">ギター</button>
-            <button type="button" class="btn btn-outline-primary">アレグリアス</button>
-            <button type="button" class="btn btn-outline-primary">ファルセータ</button>
+        <div class="btn-group ms-auto" role="group" aria-label="Basic outlined example">
+            <%# ログインしているか・投稿者本人かを確認 %>
+            <% if logged_in? && current_user.id == @post.user.id %>
+              <%= link_to '編集', edit_post_path(@post), class: "btn btn-outline-dark fs-small fs-sm-medium py-3 px-3 px-sm-4", type: "button" %>
+              <%= link_to '削除', post_path(@post), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-dark fs-small fs-sm-medium py-3 px-3 px-sm-4", type: "button" %>
+              <%= link_to '戻る', posts_path, class: "btn btn-outline-dark fs-small fs-sm-medium py-3 px-3 px-sm-4", type: "button" %>
+
+            <% end %>
           </div>
-        </div>
+      </div>
 
-        <div class="card-body mb-5 ms-4">
-          <h2 class="card-title fw-bold fs-2"><%= @post.title %></h2>
-          <p class="card-text fs-5"><%= @post.body %></p>
-          <div class="ms-auto mt-4 me-5 mb-2">
-            <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "75", audio_blob_url: @post.voice %>
+
+      <div class="card-body px-4 px-sm-5 mb-3">
+        <div class="mt-4 mb-5">
+          <%# コラボが2回以上されていなければボタンを表示 %>
+          <% unless @root_collab_post %>
+              <div class="row justify-content-center ">
+                <%# コラボ音声取得のためにクエリパラメータに投稿idを設定 %>
+                <%= link_to 'セッションする', new_post_path(audio_flg: "posted_audio", collab_post_id: @post.id), type: "button", class: "btn btn-custom fw-bold text-white border border-dark fs-medium fs-sm-large py-3 col-8 col-sm-6" %>
+              </div>
+          <% end %>
+        </div>
+        <div class="">
+          <h2 class="card-title border-bottom border-1 border-dark fw-bold fs-xlarge fs-md-xxlarge pb-2 mb-4"><%= @post.title %></h2>
+          <p class="card-text fs-large fs-md-large fs-lg-larger"><%= @post.body %></p>
+          <div class="ms-auto my-5">
+            <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_blob_url: @post.voice %>
             <%#= render "shared/audio_player", audio_container_class: "js-posted-audio-container", audio_blob: @post.voice, slider_size: "75" %>
           </div>
           <%# if @post.voice.attached? %>
             <%#= audio_tag(url_for(post.voice), controls: true, class: "w-100") %>
           <%# end %>
           <div class="my-5">
-            <h3>セッション回数</h3>
+            <h3 class="fs-larger fs-md-xlarge fw-bold">セッション回数: <span class="">0</span>回</h3>
           </div>
-          <div>
-            <h3>セッション元サウンド</h3>
+          <div class="mb-5">
+            <h3 class="fs-larger fs-md-xlarge fw-bold mb-3">セッション元サウンド</h3>
             <div class="card text-white bg-secondary mb-3" style="max-width: 540px;">
               <div class="row g-0">
                 <div class="col-md-4">
@@ -71,18 +65,26 @@
               </div>
             </div>
           </div>
+
+          <div class="">
+            <h3 class="fs-larger fs-md-xlarge fw-bold mb-3">タグ</h3>
+            <button type="button" class="btn fw-bold btn-outline-primary rounded-start-pill me-2 mb-2"># ギター</button>
+            <button type="button" class="btn fw-bold btn-outline-primary rounded-start-pill me-2 mb-2"># アレグリアス</button>
+            <button type="button" class="btn fw-bold btn-outline-primary rounded-start-pill me-2 mb-2"># ファルセータ</button>
+          </div>
         </div>
 
-        <div class="card-body border-top border-bottom border-3 border-secondary d-flex justify-content-start text-muted mb-5 mx-4">
-          <div class=""></div>
-          <a href="#" class="fs-5">コメント 10件</a>
-          <a href="#" class="fs-5 ms-2">オレ〜!! 20件</a>
-        </div>
+      </div>
 
-        <div class="card-body mb-5 ms-4">
-          <h3>コメント一覧</h3>
+      <div class="card-body border-top border-bottom border-3 border-secondary d-flex justify-content-start text-muted mb-5 mx-4">
+        <div class=""></div>
+        <a href="#" class="fs-5">コメント 10件</a>
+        <a href="#" class="fs-5 ms-2">オレ〜!! 20件</a>
+      </div>
 
-        </div>
+      <div class="card-body mb-5 ms-4">
+        <h3>コメント一覧</h3>
+
       </div>
     </div>
 
