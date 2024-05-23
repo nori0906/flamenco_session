@@ -1,31 +1,31 @@
 
-<div class="bkg-img-pro">
-  <h1 class="text-white  text-left ps-5 py-3 mb-5 bg-dark bg-gradient">投稿画面</h1>
+<div class="bkg-img">
+  <h1 class="text-white text-left ps-2 ps-md-5 py-3 mb-4">投稿編集</h1>
   <div class="container">
     <%= render partial: 'layouts/flash' %>
-    <p class="text-white">投稿フォーム</p>
-    <div>
-      <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "75", audio_blob_url: @post.voice %>
-      <%#= audio_tag(url_for(@post.voice), id: "record", controls: true) %>
-      <%# <button type="button" class="btn btn-outline-secondary mb-3" id="playback">再生する</button> %>
-    </div>
 
-    <div>
+    <div class="mx-2 mx-md-5 px-lg-5">
+      <div>
+        <p class="text-white">録音音声</p>
+        <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "75", audio_blob_url: @post.voice %>
+        <%#= audio_tag(url_for(@post.voice), id: "record", controls: true) %>
+        <%# <button type="button" class="btn btn-outline-secondary mb-3" id="playback">再生する</button> %>
+      </div>
       <%= form_with model: @post, local: true do |f| %>
         <div class="row">
           <div  class="mb-3">
-            <%= f.label :title, class: "form-label text-white" %>
-            <%= f.text_field :title, class: "form-control", placeholder: "タイトル" %>
+            <%= f.label :title, "タイトル", class: "form-label text-white" %>
+            <%= f.text_field :title, class: "form-control w-50", placeholder: "タイトル" %>
           </div>
           <div  class="mb-3">
-            <%= f.label :body, class: "form-label text-white" %>
+            <%= f.label :body, "内容", class: "form-label text-white" %>
             <%= f.text_area :body, class: "form-control", rows: "3" %>
           </div>
           <div  class="mb-3">
-            <%= f.label :status, class: "form-label text-white" %>
-            <%= f.select :status, Post.statuses.keys.map {|k| [k, k]}, {}, { class: 'form-control', style: 'margin-bottom: 15px;', data: {} }  %>
+            <%= f.label :status, "公開設定", class: "form-label text-white" %>
+            <%= f.select :status, Post.statuses.keys.map {|k| [k, k]}, {}, { class: 'form-control w-25 text-center', style: 'margin-bottom: 15px;', data: {} }  %>
           </div>
-          <div>
+          <div class="mb-4">
             <%= f.submit nil, class: "btn btn-secondary" %>
           </div>
         </div>
