@@ -1,9 +1,9 @@
 <div class="bkg-img">
-  <h1 class="text-white text-left ps-2 ps-md-5 py-3 mb-4">投稿編集</h1>
+  <h1 class="text-white text-left ps-2 ps-md-5 py-3 pb-lg-4">投稿編集</h1>
   <div class="container">
     <%= render partial: 'layouts/flash' %>
 
-    <div class="mx-2 mx-md-5 px-lg-5">
+    <div class="mx-2 mx-md-5 px-lg-5 pb-3">
       <%= form_with model: @post, local: true do |f| %>
         <div class="row card bg-dark-card py-4 px-lg-5 mx-lg-5">
           <div  class="mb-4 px-3 px-sm-5">
@@ -31,10 +31,10 @@
             <%#= audio_tag(url_for(@post.voice), id: "record", controls: true) %>
             <%# <button type="button" class="btn btn-outline-secondary mb-3" id="playback">再生する</button> %>
           </div>
-        </div>
-        <div class="row justify-content-center py-4">
-          <%= f.submit "更新する",  class: "btn btn-success fw-bold fs-large col-4 col-sm-3 py-3 me-3 me-sm-5" %>
-          <%= link_to "戻る", posts_path, class: "btn btn-outline-success fw-bold fs-large col-4 col-sm-3 py-3 me-3 ms-sm-5" %>
+          <div class="row justify-content-center pt-3">
+            <%= f.submit "更新する",  class: "btn btn-success fw-bold fs-large col-4 col-sm-3 py-3 me-3 me-sm-5" %>
+            <%= link_to "戻る", posts_path, class: "btn btn-outline-success btn-profile-custom fw-bold fs-large col-4 col-sm-3 py-3 ms-sm-5" %>
+          </div>
         </div>
       <% end %>
     </div>
