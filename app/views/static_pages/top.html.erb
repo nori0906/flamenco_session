@@ -2,16 +2,21 @@
 <div class="modal fade" id="gusetModal" tabindex="-1" aria-labelledby="gusetModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
-      <div class="modal-header border-0 rounded bg-dark-custom">
+      <div class="modal-header border-0 rounded bg-dark-custom pt-2">
         
-        <div class="bodal-body text-white text-center d-flex justify-content-evenly w-100 my-4">
-          <div>
-            <h5 class="fw-bold mb-4" id="gusetModalLabel">チュートリアルを始める</h5>
-            <%= link_to "チュートリアル", guest_tutorial_introductions_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold" , type: "button" %>
+        <div class="bodal-body row justify-content-center text-white text-center w-100 my-4 mx-lg-5">
+          <div class="col ms-lg-4">
+            <h5 class="fs-large fs-lg-larger fw-bold mb-3" id="gusetModalLabel">チュートリアルを始める</h5>
+            <div class="row justify-content-center">
+              <%= link_to "チュートリアル", guest_tutorial_introductions_path, class: "btn btn-lg btn-custom col-8 col-sm-5 col-md-9 text-white border border-dark rounded-pill fw-bold fs-larder fs-lg-xlarge" , type: "button" %>
+            </div>
           </div>
-          <div>
-            <h5 class="fw-bold mb-4" id="gusetModalLabel">みんなの投稿を見る</h5>
-            <%= link_to "投稿を見る", guest_index_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold" , type: "button" %>
+          <div class="w-100 d-block d-md-none my-3"></div>
+          <div class="col me-lg-4">
+            <h5 class="fs-large fs-lg-larger fw-bold mb-3" id="gusetModalLabel">みんなの投稿を見る</h5>
+            <div class="row justify-content-center">
+              <%= link_to "投稿一覧", guest_index_path, class: "btn btn-lg btn-custom col-8 col-sm-5 col-md-9 text-white border border-dark rounded-pill fw-bold fs-larder fs-lg-xlarge" , type: "button" %>
+            </div>
           </div>
         </div>
 
@@ -39,9 +44,10 @@
           </div>
           <p class="fs-large fs-sm-xlarge font-monospace">フラメンコ音楽で<br class="d-block d-sm-none">繋がる・体験する・発見する</p>
         </div>
-        <div class="d-inline-flex flex-column flex-sm-row py-4 pb-md-5">
-          <%= link_to "はじめる", posts_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold py-3 mb-5 mb-sm-0 me-sm-5" , type: "button", data: { bs_toggle: "modal", bs_target: "#gusetModal" } %>
-          <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold py-3 ms-sm-3", type: "button" %>
+        <div class="row justify-content-center pt-5 pb-4 pb-md-5">
+          <%= link_to "はじめる", posts_path, class: "col-6 col-sm-4 btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold fs-lg-xlarge py-3 mb-4 mb-sm-0 me-sm-4 me-lg-5" , type: "button", data: { bs_toggle: "modal", bs_target: "#gusetModal" } %>
+          <div class="w-100 d-sm-none"></div>
+          <%= link_to "ログイン", login_path, class: "col-6 col-sm-4 btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold fs-lg-xlarge py-3 ms-sm-4 ms-lg-5", type: "button" %>
         </div>
         <div class="pt-5">
           <a href="#app_overview" class="top-anchor-link"><i class="fa-solid fa-hand-point-down fa-beat castom-size"></i></a>
@@ -57,8 +63,8 @@
       <h1 class='fw-bold'>フラっとセッションとは？</h1>
     </div>
     <div class='container font-monospace px-4'>
-      <div class="text-start text-sm-center fs-medium fs-sm-large fs-lg-larger px-3 px-sm-0">
-        <p class="mb-3">
+      <div class="text-start text-sm-center fs-medium fs-sm-large fs-md-larger fs-lg-xlarge px-3 px-sm-0">
+        <p class="mb-2">
           フラメンコ音楽をベースとした録音・音声コラボ・共有が気軽にできる録音投稿アプリです。
         </p>
         <p>
@@ -68,9 +74,9 @@
 
 
       <div class="row row-cols-1 row-cols-lg-2 gy-4 gx-xxl-0 mt-2">
-        <div class="col px-xxl-5">
+        <div class="col ps-xxl-5 pe-xxl-4">
           <div class="pt-5">
-            <h2 class="fw-bold fs-3">フラメンコが初めての方</h2>
+            <h2 class="fw-bold fs-3 border-bottom border-3 d-inline-block">フラメンコが初めての方</h2>
           </div>
           <div class="card bg-transparent border border-white border-4 fw-bold p-3 mt-4 mx-4">
             <div class="card-text text-start">
@@ -81,9 +87,9 @@
             </div>
           </div>
         </div>
-        <div class="col px-xxl-5">
+        <div class="col ps-xxl-4 pe-xxl-5">
           <div class="pt-5">
-            <h2 class="fw-bold fs-3">フラメンコ経験がある方</h2>
+            <h2 class="fw-bold fs-3 border-bottom border-3 d-inline-block">フラメンコ経験がある方</h2>
           </div>
           <div class="card bg-transparent border border-white border-4 fw-bold p-3 mt-4 mx-4">
             <div class="card-text text-start">
@@ -97,11 +103,11 @@
         </div>
 
         <div class="col d-flex flex-column align-items-center">
-          <div class="pt-4">
-            <h2 class="fw-bold fs-3">どんな音楽？</h2>
+          <div class="pt-5">
+            <h2 class="fw-bold fs-3 border-bottom border-3 d-inline-block">どんな音楽？</h2>
           </div>
           <div class="pt-3">
-            <p class="fw-bold mb-1">フラメンコを知る</p>
+            <p class="fw-bold fs-medium fs-sm-large fs-md-larger mb-1">フラメンコを知る</p>
             <a class="hover-test" href="#introduction">
               <div class = "icon-container">
                 <%= image_pack_tag "media/images/icon/guitar-icon.png", size: "50x50" %>
@@ -115,13 +121,13 @@
         </div>
 
         <div class="col">
-          <div class="pt-4">
-            <h2 class="fw-bold fs-3 mb-3">アプリの使い方</h2>
+          <div class="pt-5">
+            <h2 class="fw-bold fs-3 border-bottom border-3 d-inline-block">アプリの使い方</h2>
           </div>
           <div class="row row-cols-1 pt-3">
             <div class="col d-flex flex-column align-items-center">
               <div>
-                <p class="fw-bold mb-1">チュートリアルでフラメンコ体験</p>
+                <p class="fw-bold fs-medium fs-sm-large fs-md-larger mb-1">チュートリアル</p>
               </div>
               <div>
                 <a href="#explain-tutorial">
@@ -140,7 +146,7 @@
               <div class="row row-cols-2">
                 <div class="col d-flex flex-column align-items-center">
                   <div>
-                    <p class="fw-bold mb-1">録音する</p>
+                    <p class="fw-bold fs-medium fs-sm-large fs-md-larger mb-1">録音する</p>
                   </div>
                   <div>
                     <a href="#explain-recording">
@@ -156,7 +162,7 @@
                 </div>
                 <div class="col d-flex flex-column align-items-center">
                   <div>
-                    <p class="fw-bold mb-1">セッションする</p>
+                    <p class="fw-bold fs-medium fs-sm-large fs-md-larger mb-1">セッションする</p>
                   </div>
                   <div>
                     <a href="#explain-collab">
@@ -190,24 +196,22 @@
     </div>
     <div class="container px-4">
       <div class="d-flex flex-column align-items-center font-monospace pb-4">
-        <h2 class="fw-bold fs-3 fs-large fs-sm-xxlarge my-4">フラメンコのリズムを体験</h2>
+        <h2 class="border-bottom border-3 d-inline-block fw-bold fs-xlarge fs-md-xxlarge my-4">フラメンコのリズムを体験</h2>
         <div class="text-start text-sm-center">
           <div class="px-3 px-sm-0 fs-medium fs-sm-large fs-md-larger">
             <p>日本を代表する超絶フラメンコギターデュオを紹介します。<br>
             長年スペインで研鑽を積んできた2人が繰り広げる演奏は圧巻です。</p>
-            <p class="mt-4 text-center">ギターを通してリズム・音色を感じてみましょう！</p>
+            <p class="mt-4">ギターを通してリズム・音色を感じてみましょう！</p>
           </div>
           <div class= "ratio ratio-16x9">
             <iframe src="https://www.youtube.com/embed/mNgTlL5Uik8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
-          <div class="text-end fs-medium fs-sm-large">
+          <div class="text-end fs-medium fs-sm-large pb-4">
             <p>アーティスト名：<%= link_to "徳永兄弟", "https://www.tokunagaduo.com/", class: "text-white" %></p>
           </div>
         </div>
-      </div>
 
-      <div class="pb-4">
-        <h2 class="text-center fw-bold font-monospace fs-3 mt-5 mb-4">フラメンコにおけるQ&A</h2>
+        <h2 class="border-bottom border-3 d-inline-block fw-bold font-monospace fs-xlarge fs-md-xxlarge mt-5 mb-4">フラメンコにおけるQ&A</h2>
         <div class="text-start row row-cols-1 row-cols-lg-2 g-3 g-sm-4 pb-4 mx-3 mx-sm-5">
           <div class="accordion" id="accordionExample">
             <div class="accordion-item border border-white border-4">
@@ -282,7 +286,6 @@
           </div>
         </div>
       </div>
-      
     </div>
   </div>
 </section>
@@ -298,9 +301,10 @@
       <div class="">
         <h3 class="fw-bold">さぁはじめよう!!!</h3>
       </div>
-      <div class="d-inline-flex flex-column flex-sm-row py-5">
-        <%= link_to "はじめる", posts_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold py-3 mb-5 mb-sm-0 me-sm-5" , type: "button", data: { bs_toggle: "modal", bs_target: "#gusetModal" } %>
-        <%= link_to "ログイン", login_path, class: "btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold py-3 ms-sm-3", type: "button" %>
+      <div class="row justify-content-center py-4 pb-md-5">
+        <%= link_to "はじめる", posts_path, class: "col-6 col-sm-3 btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold fs-lg-xlarge py-3 mb-5 mb-sm-0 me-sm-4 me-lg-5" , type: "button", data: { bs_toggle: "modal", bs_target: "#gusetModal" } %>
+        <div class="w-100 d-sm-none"></div>
+        <%= link_to "ログイン", login_path, class: "col-6 col-sm-3 btn btn-lg btn-custom text-white border border-dark rounded-pill fw-bold fs-lg-xlarge py-3 ms-sm-4 ms-lg-5", type: "button" %>
       </div>
     </div>
   </div>
