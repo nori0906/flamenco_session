@@ -4,9 +4,9 @@
     <%= render partial: 'layouts/flash' %>
     <div class="row justify-content-center mb-5">
       <% if logged_in? %>
-        <%= link_to "新規作成", new_post_path, class: "btn btn-custom col-6 col-sm-5 col-md-4 py-3 py-lg-4 px-1 me-sm-5 text-white border border-dark fw-bold fs-lg-larger", type: "button" %>
+        <%= link_to "新規作成", new_post_path, class: "btn btn-custom rounded-pill col-6 col-sm-5 col-md-4 py-3 py-lg-4 px-1 me-sm-5 text-white border border-dark fw-bold fs-lg-larger", type: "button" %>
         <div class="w-100 d-sm-none my-2"></div>
-        <%= link_to "セッションする", new_post_path(audio_flg: 'default_audio'), class: "btn btn-custom col-6 col-sm-5 col-md-4 py-3 py-lg-4 ms-lg-5 text-white border border-dark fw-bold fs-lg-larger", type: "button" %>
+        <%= link_to "セッションする", new_post_path(audio_flg: 'default_audio'), class: "btn btn-custom rounded-pill col-6 col-sm-5 col-md-4 py-3 py-lg-4 ms-lg-5 text-white border border-dark fw-bold fs-lg-larger", type: "button" %>
       <% end %>
     </div>
     <%# カードレイアウト実装 8/17 %>
@@ -22,7 +22,7 @@
                 <%= post.user.name %>
               </div>
               <% unless @root_collab_post %>
-                  <%= link_to 'セッションする', new_post_path(audio_flg: "posted_audio", collab_post_id: post.id), type: "button", class: "btn btn-custom text-white border border-dark fw-bold fs-small fs-lg-medium py-2 mb-1 ms-1" %>
+                  <%= link_to 'セッションする', new_post_path(audio_flg: "posted_audio", collab_post_id: post.id), type: "button", class: "btn btn-custom rounded-pill text-white border border-dark fw-bold fs-small fs-lg-medium py-2 mb-1 ms-1" %>
               <% end %>
             </div>
 

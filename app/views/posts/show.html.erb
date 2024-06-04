@@ -31,7 +31,7 @@
           <% unless @root_collab_post %>
               <div class="row justify-content-center ">
                 <%# コラボ音声取得のためにクエリパラメータに投稿idを設定 %>
-                <%= link_to 'セッションする', new_post_path(audio_flg: "posted_audio", collab_post_id: @post.id), type: "button", class: "btn btn-custom fw-bold text-white border border-dark fs-medium fs-sm-large py-3 col-8 col-sm-6" %>
+                <%= link_to 'セッションする', new_post_path(audio_flg: "posted_audio", collab_post_id: @post.id), type: "button", class: "btn btn-custom rounded-pill fw-bold text-white border border-dark fs-medium fs-sm-large py-3 col-8 col-sm-6" %>
               </div>
           <% end %>
         </div>

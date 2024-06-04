@@ -26,8 +26,8 @@
 
     <div class="pt-4 pb-3 pb-3">
       <h3 class="text-center text-white mb-4">↓↓録音開始↓↓</h3>
-      <div class="row mb-3 justify-content-center">
-        <div class="col mb-5 d-flex justify-content-center">
+      <div class="row justify-content-center mb-3">
+        <div class="col d-flex justify-content-center mb-4">
           <%= render "layouts/guest_tutorial/recording_btn" %>
         </div>
         <div class="w-100"></div>
@@ -35,7 +35,7 @@
           <%= render "layouts/guest_tutorial/audio_slider", slider_type: "post-record", slider_size: "100" %>
           <div class="d-flex justify-content-center pt-5">
             <% if logged_in? %>
-              <button type="button" class="btn btn-success btn-lg text-white fw-bold fs-xlarge py-3 px-4 none" id="buttonNext" >次へ</button>
+              <button type="button" class="btn btn-success btn-lg text-white rounded-pill fw-bold fs-xlarge py-3 px-5 none" id="buttonNext" >次へ</button>
             <% end %>
           </div>
         </div>
