@@ -8,7 +8,7 @@
       <div class="font-monospace px-4 mb-5">
         <h2 class="text-center">STEP1</h2>
         <h2 class="text-center fs-xlarge fs-md-xxlarge mb-4">パルマ(手拍子)の叩き方紹介</h2>
-        <div class="card rounded bg-color border card-shadow-dark border-white border-1 text-white p-2 p-md-4">
+        <div class="card rounded bg-color border card-shadow-dark border-white border-1 text-white py-2 px-sm-2 p-md-4">
           <div class="card-body">
             <h4 class="card-title border-bottom border-2 d-inline-block fs-larger fs-md-xlarge mb-3">1. フラメンコのパルマとは？</h4>
             <div class="card-text fs-lg-large px-2">
@@ -18,7 +18,7 @@
           </div>
           <div class="card-body">
             <h4 class="card-title border-bottom border-2 d-inline-block fs-larger fs-md-xlarge mb-3">2. 叩き方紹介</h4>
-            <div class="row px-3">
+            <div class="row px-sm-3">
               <div class="col">
                 <h5 class="card-text fs-medium fs-md-large fs-lg-larger">★ セコ（高い音）</h5>
                 <div class="ratio ratio-16x9 ">
@@ -34,7 +34,7 @@
                 </div>
                 <%# <iframe width="560" height="315" src="https://www.youtube.com/embed/UHfeQC1aL1Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> %>
               </div>
-              <div class="card-text text-center pt-4 pt-xl-5">
+              <div class="card-text text-center pt-4 pb-1 pb-lg-0 pt-xl-5">
                 <p class="fs-lg-large mb-0">ソルダ(低い音)の方が簡単に叩くことができます！<br>好きな叩き方で真似てみましょう！</p>
               </div>
             </div>
@@ -46,19 +46,18 @@
         <h2 class="text-center fs-xlarge fs-md-xxlarge mb-4 mb-lg-5">音源に合わせてパルマ(手拍子)を録音しよう</h2>
         <%# <p class="text-center text-white pt-2 mb-4">難易度を選択!</p> %>
         <div class="row flex-column flex-lg-row align-items-center justify-content-lg-center">
-          <div class="col-10 col-sm-6 col-md-5 col-lg-3 mb-2 me-lg-5">
-            <p class="text-white border-bottom border-2 fs-medium fs-md-large fs-lg-large mb-2">難易度☆</p>
+          <div class="col-11 col-sm-6 col-md-5 col-lg-4 mb-2 mb-lg-4">
+            <p class="text-white border-bottom border-2 fs-large fs-md-larger fs-lg-xlarge mb-2">初級☆</p>
             <%= render "layouts/guest_tutorial/level_btn", {btn_name: "テンポに合わせて叩こう", level_name: "easy" }%>
           </div>
-          <div class="col-10 col-sm-6 col-md-5 col-lg-3 mb-2 me-lg-5">
-            <p class="text-white border-bottom border-2 fs-medium fs-md-large fs-lg-large mb-2">難易度☆☆</p>
+          <div class="w-100 d-none d-lg-block"></div>
+          <div class="col-11 col-sm-6 col-md-5 col-lg-4 mb-2 me-lg-5">
+            <p class="text-white border-bottom border-2 fs-large fs-md-larger fs-lg-xlarge mb-2">中級☆☆</p>
             <%= render "layouts/guest_tutorial/level_btn", {btn_name: "リズムに合わせて叩こう", level_name: "normal" }%>
           </div>
-          <div class="col-10 col-sm-6 col-md-5 col-lg-3 mb-2">
-            <p class="text-white border-bottom border-2 fs-medium fs-md-large fs-lg-large mb-2">難易度☆☆☆</p>
+          <div class="col-11 col-sm-6 col-md-5 col-lg-4 mb-2 ms-lg-5">
+            <p class="text-white border-bottom border-2 fs-large fs-md-larger fs-lg-xlarge mb-2">上級☆☆☆</p>
             <%= render "layouts/guest_tutorial/level_btn", {btn_name: "メロディーに合わせて叩こう", level_name: "hard" }%>
-          </div>
-          <div class="">
           </div>
         </div>
       </div>
