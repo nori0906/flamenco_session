@@ -10,10 +10,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li><%= link_to "投稿一覧", posts_path, class: "nav-link text-white active mt-1" %></li>
+          <li><%= link_to "投稿一覧", posts_path, class: "nav-link text-white active" %></li>
           <%# アクセス制限 %>
           <% if logged_in? %>
-            <li><%= link_to "録音する", new_post_path, class: "nav-link text-white mt-1" %></li>
+            <li><%= link_to "録音する", new_post_path, class: "nav-link text-white" %></li>
             
             <li>
               <div class="dropdown">
@@ -34,7 +34,7 @@
             </li>
             
           <% else %>
-            <li><%= link_to "登録", new_user_path, class:"nav-link text-white" %></li>
+            <li><%= link_to "新規登録", new_user_path, class:"nav-link text-white" %></li>
             <li><%= link_to 'ログイン', login_path, class: 'nav-link text-white' %></li>
           <% end %>
         </ul>
