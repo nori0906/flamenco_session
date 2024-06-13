@@ -2,23 +2,23 @@
   <h1 class="text-white ps-2 ps-md-5 py-4 pb-lg-5">投稿詳細</h1>
   <div class="container px-xxl-5 pb-5">
     <div class="card bg-color-post-card mx-2">
-      <div class="card-header d-flex justify-content-between px-1">
+      <div class="card-header d-flex justify-content-between px-2">
         <div class= "d-flex flex-row py-1 me-1">
           <%# FIXME: 画像ファイルが正しく読みこまえれない場合一、時的にデフォルトアバターを表示させる 23/12/24 %>
           <%#= image_tag("#{@post.user.avatar}",  class: 'rounded-circle', size: '40x40') %>
           <div>
-            <%= avatar_image_tag(@post.user, 'rounded-circle border border-secondary', '40x40') %>
+            <%= avatar_image_tag(@post.user, 'rounded-circle border border-secondary', '50x50') %>
           </div>
-          <div class="fw-bold fs-sm-large fs-md-larger ms-1 mt-2">
+          <div class="fw-bold fs-sm-large fs-md-larger ms-1 align-self-center">
             <%= @post.user.name %>
           </div>
         </div>
         <div class="btn-group ms-auto" role="group" aria-label="Basic outlined example">
             <%# ログインしているか・投稿者本人かを確認 %>
             <% if logged_in? && current_user.id == @post.user.id %>
-              <%= link_to '編集', edit_post_path(@post), class: "btn btn-outline-dark fs-small fs-sm-medium py-3 px-3 px-sm-4", type: "button" %>
-              <%= link_to '削除', post_path(@post), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-dark fs-small fs-sm-medium py-3 px-3 px-sm-4", type: "button" %>
-              <%= link_to '戻る', posts_path, class: "btn btn-outline-dark fs-small fs-sm-medium py-3 px-3 px-sm-4", type: "button" %>
+              <%= link_to '編集', edit_post_path(@post), class: "btn btn-outline-dark fs-small fs-sm-medium my-1 py-3 px-2 px-sm-4", type: "button" %>
+              <%= link_to '削除', post_path(@post), method: "delete", data: { confirm: "削除しますか？"}, class: "btn btn-outline-dark fs-small fs-sm-medium my-1 py-3 px-2 px-sm-4", type: "button" %>
+              <%= link_to '戻る', posts_path, class: "btn btn-outline-dark fs-small fs-sm-medium my-1 py-3 px-2 px-sm-4", type: "button" %>
 
             <% end %>
           </div>
@@ -77,9 +77,8 @@
       </div>
 
       <div class="card-body border-top border-bottom border-3 border-secondary d-flex justify-content-start text-muted mb-5 mx-4">
-        <div class=""></div>
-        <a href="#" class="fs-5">コメント 10件</a>
-        <a href="#" class="fs-5 ms-2">オレ〜!! 20件</a>
+        <a href="#" class="fs-medium fs-md-large fs-lg-larger">コメント 10件</a>
+        <a href="#" class="fs-medium fs-md-large fs-lg-larger ms-2 ms-sm-3">オレ〜!! 20件</a>
       </div>
 
       <div class="card-body mb-5 ms-4">
