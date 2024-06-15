@@ -13,11 +13,11 @@
           <%= f.password_field :password, class: 'form-control fs-lg-large py-lg-2' %>
         </div>
         <div class="col-11 col-sm-10 col-md-9 col-lg-7 mb-4">
-          <%= f.submit 'ログイン', class: 'btn btn-custom rounded-pill text-white fw-bold fs-lg-larger px-3' %>
+          <%= f.submit 'ログイン', class: 'btn btn-custom rounded-pill text-white fw-bold fs-lg-larger px-4 py-2' %>
         </div>
         <div class='col-11 col-sm-10 col-md-9 col-lg-7 d-flex flex-column'>
-          <%= link_to 'アカウント登録がまだの方はこちら', new_user_path, class: "fs-lg-large mb-1" %>
-          <%= link_to 'パスワードをお忘れの方はこちら', new_password_reset_path, class: "fs-lg-large" %>
+          <%= link_to 'アカウント登録がまだの方', new_user_path, class: "fs-lg-large mb-1" %>
+          <%= link_to 'パスワードをお忘れの方', new_password_reset_path, class: "fs-lg-large" %>
         </div>
       </div>
     <% end %>

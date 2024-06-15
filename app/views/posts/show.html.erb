@@ -2,7 +2,7 @@
   <h1 class="text-white ps-2 ps-md-5 py-4 pb-lg-5">投稿詳細</h1>
   <div class="container px-xxl-5 pb-5">
     <div class="card bg-color-post-card mx-2">
-      <div class="card-header d-flex justify-content-between px-2">
+      <div class="card-header d-flex justify-content-between px-2 py-1">
         <div class= "d-flex flex-row py-1 me-1">
           <%# FIXME: 画像ファイルが正しく読みこまえれない場合一、時的にデフォルトアバターを表示させる 23/12/24 %>
           <%#= image_tag("#{@post.user.avatar}",  class: 'rounded-circle', size: '40x40') %>
@@ -26,7 +26,7 @@
 
 
       <div class="card-body px-4 px-sm-5 mb-3">
-        <div class="mt-4 mb-5">
+        <div class="mb-4">
           <%# コラボが2回以上されていなければボタンを表示 %>
           <% unless @root_collab_post %>
               <div class="row justify-content-center ">

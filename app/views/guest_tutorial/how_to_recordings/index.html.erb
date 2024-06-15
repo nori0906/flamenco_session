@@ -26,11 +26,11 @@
 
     <% if @level == 'hard' %>
       <div class="d-flex justify-content-center pb-5">
-        <%= link_to "みんなの投稿を見る", guest_index_path, class: "btn btn-success btn-lg text-white rounded-pill fw-bold fs-large fs-sm-xlarge py-3 px-4" , type: "button" %>
+        <%= link_to "みんなの投稿を見る", guest_index_path, class: "btn btn-success btn-lg btn-tutorial-custom text-white rounded-pill fw-bold fs-large fs-sm-xlarge py-3 px-4" , type: "button" %>
       </div>
     <% else %>
       <div class="d-flex justify-content-center pb-5">
-        <%= link_to "次のステップへ", guest_tutorial_introductions_path, class: "btn btn-success btn-lg text-white rounded-pill fw-bold fs-large fs-sm-xlarge py-3 px-4" , type: "button" %>
+        <%= link_to "次のステップへ", guest_tutorial_introductions_path, class: "btn btn-success btn-lg btn-tutorial-custom text-white rounded-pill fw-bold fs-large fs-sm-xlarge py-3 px-4" , type: "button" %>
       </div>
     <% end %>
 

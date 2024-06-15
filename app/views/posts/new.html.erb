@@ -35,7 +35,7 @@
           <%= render "layouts/guest_tutorial/audio_slider", slider_type: "post-record", slider_size: "100" %>
           <div class="d-flex justify-content-center pt-5">
             <% if logged_in? %>
-              <button type="button" class="btn btn-success btn-lg text-white rounded-pill fw-bold fs-xlarge py-3 px-5 none" id="buttonNext" >次へ</button>
+              <button type="button" class="btn btn-success btn-lg btn-tutorial-custom text-white rounded-pill fw-bold fs-xlarge py-3 px-5 none" id="buttonNext" >次へ</button>
             <% end %>
           </div>
         </div>
@@ -83,9 +83,9 @@
               <p class="text-white fs-xlarge mb-1">録音音声</p>
               <%= render "layouts/guest_tutorial/audio_slider", slider_type: "form-record", slider_size: "100" %>
             </div>
-          </div>
-          <div class="row justify-content-center py-4">
-            <%= f.submit "投稿する",  class: "btn btn-success rounded-pill fw-bold fs-large col-4 col-sm-3 py-3 me-3 me-sm-5" %>
+            <div class="d-flex justify-content-center pt-4">
+              <%= f.submit "投稿する",  class: "btn btn-success btn-tutorial-custom rounded-pill fw-bold fs-large col-4 col-sm-3 py-3" %>
+            </div>
           </div>
         <% end %>
       </div>

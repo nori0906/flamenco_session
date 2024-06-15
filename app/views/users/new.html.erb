@@ -3,7 +3,7 @@
   <div class="container">
     <%= render partial: 'layouts/flash' %>
     <%= form_with model: @user, local: true do |f| %>
-      <div class="row justify-content-center text-white">
+      <div class="row justify-content-center text-white pb-5">
         <div class="col-11 col-sm-10 col-md-9 col-lg-7 mb-4">
           <%= f.label :name, "名前", class: "fw-bold fs-lg-larger" %>
           <%= f.text_field :name, class: 'form-control fs-lg-large py-lg-2' %>
@@ -16,13 +16,13 @@
           <%= f.label :password, "パスワード", class: "fw-bold fs-lg-larger" %>
           <%= f.password_field :password, class: 'form-control fs-lg-large py-lg-2' %>
         </div>
-        <div class="col-11 col-sm-10 col-md-9 col-lg-7 mb-3">
+        <div class="col-11 col-sm-10 col-md-9 col-lg-7 mb-4">
           <%= f.label :password_confirmation, "パスワード確認", class: "fw-bold fs-lg-larger" %>
           <%= f.password_field :password_confirmation, class: 'form-control fs-lg-large py-lg-2' %>
         </div>
 
         <div class="col-11 col-sm-10 col-md-9 col-lg-7 mb-4">
-          <%= f.submit '登録', class: 'btn btn-custom rounded-pill text-white fw-bold fs-lg-larger px-4' %>
+          <%= f.submit '登録', class: 'btn btn-custom rounded-pill text-white fw-bold fs-lg-larger px-4 py-2' %>
         </div>
         <div class='col-11 col-sm-10 col-md-9 col-lg-7 d-flex flex-column'>
           <%= link_to 'ログインページへ', login_path, class: "fs-lg-large mb-1" %>

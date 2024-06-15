@@ -31,9 +31,9 @@
             <%#= audio_tag(url_for(@post.voice), id: "record", controls: true) %>
             <%# <button type="button" class="btn btn-outline-secondary mb-3" id="playback">再生する</button> %>
           </div>
-          <div class="row justify-content-center pt-3">
-            <%= f.submit "更新する",  class: "btn btn-success fw-bold fs-large col-4 col-sm-3 py-3 me-3 me-sm-5" %>
-            <%= link_to "戻る", posts_path, class: "btn btn-outline-success btn-profile-custom fw-bold fs-large col-4 col-sm-3 py-3 ms-sm-5" %>
+          <div class="d-flex justify-content-center pt-4">
+            <%= f.submit "更新する",  class: "btn btn-success btn-tutorial-custom rounded-pill fw-bold fs-large col-4 col-sm-3 py-3 me-3 me-sm-3" %>
+            <%= link_to "戻る", posts_path, class: "btn btn-outline-success btn-tutorial-custom rounded-pill btn-profile-custom fw-bold fs-large col-4 col-sm-3 py-3 ms-sm-3" %>
           </div>
         </div>
       <% end %>
