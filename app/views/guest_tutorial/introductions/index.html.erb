@@ -2,48 +2,63 @@
   <div class="container">
 
     <div class="row justify-content-center text-white pt-1 pb-3">
-      <div class="text-center py-5 mb-3">
-        <h1 class="fw-bold ">チュートリアル</h1>
+      <div class="text-center py-4">
+        <h1 class="fw-bold">チュートリアル</h1>
       </div>
-
-      <div class="w-75 mb-5">
-        <h2 class="mb-4">STEP1： パルマ(手拍子)の叩き方を知ろう!!</h2>
-        <div class="card rounded bg-color border card-shadow-dark border-white border-1 text-white p-4">
-          <div class="card-body text-start mb-5">
-            <h4 class="card-title fs-3 mb-3">パルマとは？</h4>
-            <p class="card-text fs-5">フラメンコでは手拍子を表します。<br>セコ（高い音）・ソルダ（低い音）の二種類の叩き方があり、リズムを支えるドラムのような役割があります。本場スペインでは手拍子専門のアーティスト(パルメーロ)がいるほど、フラメンコを支える重要な役割を担っています。</p>
+      <div class="font-monospace px-4 mb-5">
+        <h2 class="text-center">STEP1</h2>
+        <h2 class="text-center fs-xlarge fs-md-xxlarge fw-bold mb-4">パルマ(手拍子)の叩き方紹介</h2>
+        <div class="card rounded bg-color border card-shadow-dark border-white border-1 text-white py-2 px-sm-2 p-md-4">
+          <div class="card-body mb-3 mb-lg-5">
+            <h4 class="card-title border-bottom border-2 d-inline-block fs-larger fs-md-xlarge fs-lg-xxlarge mb-3">1. フラメンコのパルマとは？</h4>
+            <div class="card-text fs-lg-larger px-2">
+              <p class=" mb-1">手拍子を表します。<br>セコ（高い音）・ソルダ（低い音）の二種類の叩き方があり、リズムを支えるドラムのような役割があります。</p>
+              <p>本場スペインでは手拍子専門のアーティスト(パルメーロ)がいるほど、フラメンコを支える重要な役割を担っています。</p>
+            </div>
           </div>
           <div class="card-body">
-            <h4 class="card-title text-start fs-3 mb-3">叩き方紹介</h4>
-            <div class="row row-cols-2 mb-5">
-              <div class="col px-3">
-                <h5 class="card-text">セコ（高い音）</h5>
+            <h4 class="card-title border-bottom border-2 d-inline-block fs-larger fs-md-xlarge fs-lg-xxlarge mb-3">2. 叩き方紹介</h4>
+            <div class="row px-sm-3">
+              <div class="col me-lg-3">
+                <h5 class="card-text fs-large fs-md-larger fs-lg-xlarge">★ セコ（高い音）</h5>
                 <div class="ratio ratio-16x9 ">
                   <iframe class="rounded" src="https://www.youtube.com/embed/32uA1pBfG38" title="YouTube video" allowfullscreen></iframe>
                 </div>
                 <%# <iframe width="560" height="315" src="https://www.youtube.com/embed/32uA1pBfG38" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> %>
               </div>
-              <div class="col px-3">
-                <h5 class="card-text">ソルダ（低い音）</h5>
+              <div class="w-100 d-lg-none pt-2"></div>
+              <div class="col">
+                <h5 class="card-text fs-large fs-md-larger fs-lg-xlarge pt-3">★ ソルダ（低い音）</h5>
                 <div class="ratio ratio-16x9">
                   <iframe class="rounded" src="https://www.youtube.com/embed/UHfeQC1aL1Y" title="YouTube video" allowfullscreen></iframe>
                 </div>
                 <%# <iframe width="560" height="315" src="https://www.youtube.com/embed/UHfeQC1aL1Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> %>
               </div>
+              <div class="card-text text-center pt-4 pb-1 pb-lg-0 pt-xl-5">
+                <p class="fs-lg-xlarge mb-0">ソルダ(低い音)の方が簡単に叩くことができます！<br>好きな叩き方で真似てみましょう！</p>
+              </div>
             </div>
-            <p class="card-text text-center fs-5 mb-4">比較的ソルダ(低い音)の方が簡単に叩くことができます！<br>まずは形から好きな叩き方で真似てみてみましょう！</p>
           </div>
         </div>
       </div>
-      <div class="w-75 mt-5 pt-5">
-        <h2>STEP2: 流れる音に合わせてパルマ(手拍子)を叩こう！</h2>
-      </div>
-      <div class="d-flex flex-column align-items-center w-75 mt-3 mb-5">
-        <div class="card rounded bg-color-tutorial p-4">
-          <p class="text-center text-white fs-4 mb-4">↓↓好きな難易度を選択して録音開始！↓↓</p>
-          <%= render "layouts/guest_tutorial/level_btn", {btn_name: "難易度☆：テンポに合わせて叩こう", level_name: "easy" }%>
-          <%= render "layouts/guest_tutorial/level_btn", {btn_name: "難易度☆☆：リズムに合わせて叩こう", level_name: "normal" }%>
-          <%= render "layouts/guest_tutorial/level_btn", {btn_name: "難易度☆☆☆：メロディーに合わせて叩こう", level_name: "hard" }%>
+      <div class="font-monospace px-4 my-3 my-lg-5 pb-4 pb-lg-5">
+        <h2 class="text-center">STEP2</h2>
+        <h2 class="text-center fs-xlarge fs-md-xxlarge fw-bold mb-4 mb-lg-5">音源に合わせてパルマ(手拍子)を録音しよう</h2>
+        <%# <p class="text-center text-white pt-2 mb-4">難易度を選択!</p> %>
+        <div class="row flex-column flex-lg-row align-items-center justify-content-lg-center">
+          <div class="col-11 col-sm-7 col-md-5 col-lg-4 mb-2 mb-lg-4">
+            <p class="text-white border-bottom border-2 fs-larger fs-md-xlarge fs-lg-xxlarge mb-2">初級☆</p>
+            <%= render "layouts/guest_tutorial/level_btn", {btn_name: "テンポに合わせて叩こう", level_name: "easy" }%>
+          </div>
+          <div class="w-100 d-none d-lg-block"></div>
+          <div class="col-11 col-sm-7 col-md-5 col-lg-4 mb-2 me-lg-5">
+            <p class="text-white border-bottom border-2 fs-larger fs-md-xlarge fs-lg-xxlarge mb-2">中級☆☆</p>
+            <%= render "layouts/guest_tutorial/level_btn", {btn_name: "リズムに合わせて叩こう", level_name: "normal" }%>
+          </div>
+          <div class="col-11 col-sm-7 col-md-5 col-lg-4 mb-2 ms-lg-5">
+            <p class="text-white border-bottom border-2 fs-larger fs-md-xlarge fs-lg-xxlarge mb-2">上級☆☆☆</p>
+            <%= render "layouts/guest_tutorial/level_btn", {btn_name: "メロディーに合わせて叩こう", level_name: "hard" }%>
+          </div>
         </div>
       </div>
     </div>

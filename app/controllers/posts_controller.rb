@@ -80,7 +80,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to posts_path, flash: {success: "編集しました"}
+      redirect_to posts_path, flash: {success: "更新しました"}
     else
       flash.now[:danger] = @post.errors.full_messages.to_sentence
       render :edit

@@ -13,11 +13,29 @@
   height: 50px;
 }
 
+.header-offcanvas-custom-width {
+  @media (max-width: 575px) {
+    max-width: 50%;
+  }
+  @media (min-width: 576px) and (max-width: 767px) {
+    max-width: 30%;
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    max-width: 25%;
+  }
+}
+
 .btn-custom {
   // background-color: #BD1A37;
-  background: linear-gradient(to bottom, #ac0929, #d6657a);
+  background: linear-gradient(to bottom, #ac0929, #ef5672);
   // シャドウ追加 参考： https://coosy.co.jp/blog/css-hovereffect/
   box-shadow: 0px 5px 1px #83061bf5;
+}
+
+.btn-tutorial-custom {
+  // background-color: #BD1A37;
+  // シャドウ追加 参考： https://coosy.co.jp/blog/css-hovereffect/
+  box-shadow: 0px 5px 1px #214f3a;
 }
 
 .stop-btn {
@@ -118,6 +136,10 @@
   display: none;
 }
 
+.nav-link:hover {
+  background-color: #2b3035;
+}
+
 // トップページアコーディオン
 // アコーディオン表示後の見出しの背景色を調整
 .accordion-button:not(.collapsed) {
@@ -159,9 +181,9 @@ a.hover-test {
 
 
 // トップページのレイアウト
-.top-title-size {
-  font-size: 3.5rem;
-}
+// .top-title-size {
+//   font-size: 3.5rem;
+// }
 
 .castom-size {
   font-size: 3.5rem;
@@ -172,10 +194,10 @@ a.top-anchor-link {
 }
 
 .top-wrapper {
-  min-height: 800px;
+  min-height: 600px;
   max-width: 100%;
   background-image: url(../images/bkg_image.jpg);
-  // height: calc(100vh - 50px);
+  height: calc(100vh - 50px);
   position: relative;
   background-position: center;
   background-size: cover;
@@ -204,16 +226,169 @@ a.top-anchor-link {
 }
 
 
-/* 画像を暗くするオーバーレイ (参考： https://dezanari.com/css-img-darken/)  */
-// .top-wrapper::before {
-//   content: '';
-//   /* ↓暗いオーバーレイを半透明で配置 */
-//   background-color: rgba(0, 0, 0, 0.4);
-//   /* ↓全体を覆うように配置 */
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   display: block;
-// }
+.app-use-image {
+  width: 200px;
+  height: 400px;
+}
+
+
+// トップページ：録音説明カード
+// 投稿編集：フォームカード
+.bg-dark-card {
+  background-color: #565b65;
+}
+
+
+// トップページ: カルーセル内カードの高さ・画像サイズの調整
+.carousel-inner .card {
+  height: 780px;
+}
+.app-use-image {
+  width: 350px;
+  height: 400px;
+}
+
+
+// レスポンシブ対応（メディアクエリ）
+@media (max-width: 575px) {
+  .carousel-inner .card {
+    height: 630px;
+  }
+  .app-use-image {
+    width: 225px;
+    height: 300px;
+  }
+  // トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
+  .app-use-section .container {
+    max-width: 400px;
+  }
+}
+
+
+@media (min-width: 997px) {
+  .app-use-image {
+    width: 450px;
+    height: 400px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .app-use-image {
+    width: 630px;
+    height: 380px;
+  }
+
+  // プロフィール編集: カード幅調整
+  .profile-show-section .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 992px) {
+  // 投稿詳細: カード幅の調整
+  .post-show-section .container {
+    max-width: 820px;
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+  // トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
+  .app-use-section .container {
+    max-width: 540px;
+  }
+
+  // 投稿詳細ページ: カード幅の調整
+  .post-show-section .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1399px) {
+  // プロフィール編集: カード幅調整
+  .profile-show-section .container {
+    max-width: 960px;
+  }
+}
+
+
+
+// フォントサイズ調整
+//参考 https://ricordo.blog/archives/328#3
+.fs-10px { font-size: 10px !important; }
+.fs-11px { font-size: 11px !important; }
+.fs-12px { font-size: 12px !important; }
+.fs-13px { font-size: 13px !important; }
+.fs-14px { font-size: 14px !important; }
+.fs-15px { font-size: 15px !important; }
+.fs-16px { font-size: 16px !important; }
+.fs-normal { font-size: normal !important; }
+.fs-medium { font-size: medium !important; }
+.fs-small { font-size: small !important; }
+.fs-xsmall { font-size: x-small !important; }
+.fs-xxsmall { font-size: xx-small !important; }
+.fs-large { font-size: large !important; }
+.fs-larger { font-size: larger !important; }
+.fs-xlarge { font-size: x-large !important; }
+.fs-xxlarge { font-size: xx-large !important; }
+.fs-xxxlarge { font-size: xxx-large !important; }
+
+@media (min-width: 576px) {
+  .fs-sm-10px { font-size: 10px !important; }
+  .fs-sm-11px { font-size: 11px !important; }
+  .fs-sm-12px { font-size: 12px !important; }
+  .fs-sm-13px { font-size: 13px !important; }
+  .fs-sm-14px { font-size: 14px !important; }
+  .fs-sm-15px { font-size: 15px !important; }
+  .fs-sm-16px { font-size: 16px !important; }
+  .fs-sm-normal { font-size: normal !important; }
+  .fs-sm-medium { font-size: medium !important; }
+  .fs-sm-small { font-size: small !important; }
+  .fs-sm-xsmall { font-size: x-small !important; }
+  .fs-sm-xxsmall { font-size: xx-small !important; }
+  .fs-sm-large { font-size: large !important; }
+  .fs-sm-larger { font-size: larger !important; }
+  .fs-sm-xlarge { font-size: x-large !important; }
+  .fs-sm-xxlarge { font-size: xx-large !important; }
+  .fs-sm-xxxlarge { font-size: xxx-large !important; }
+}
+
+@media (min-width: 768px) {
+  .fs-md-10px { font-size: 10px !important; }
+  .fs-md-11px { font-size: 11px !important; }
+  .fs-md-12px { font-size: 12px !important; }
+  .fs-md-13px { font-size: 13px !important; }
+  .fs-md-14px { font-size: 14px !important; }
+  .fs-md-15px { font-size: 15px !important; }
+  .fs-md-16px { font-size: 16px !important; }
+  .fs-md-normal { font-size: normal !important; }
+  .fs-md-medium { font-size: medium !important; }
+  .fs-md-small { font-size: small !important; }
+  .fs-md-xsmall { font-size: x-small !important; }
+  .fs-md-xxsmall { font-size: xx-small !important; }
+  .fs-md-large { font-size: large !important; }
+  .fs-md-larger { font-size: larger !important; }
+  .fs-md-xlarge { font-size: x-large !important; }
+  .fs-md-xxlarge { font-size: xx-large !important; }
+  .fs-md-xxxlarge { font-size: xxx-large !important; }
+}
+
+@media (min-width: 992px) {
+  .fs-lg-10px { font-size: 10px !important; }
+  .fs-lg-11px { font-size: 11px !important; }
+  .fs-lg-12px { font-size: 12px !important; }
+  .fs-lg-13px { font-size: 13px !important; }
+  .fs-lg-14px { font-size: 14px !important; }
+  .fs-lg-15px { font-size: 15px !important; }
+  .fs-lg-16px { font-size: 16px !important; }
+  .fs-lg-normal { font-size: normal !important; }
+  .fs-lg-medium { font-size: medium !important; }
+  .fs-lg-small { font-size: small !important; }
+  .fs-lg-xsmall { font-size: x-small !important; }
+  .fs-lg-xxsmall { font-size: xx-small !important; }
+  .fs-lg-large { font-size: large !important; }
+  .fs-lg-larger { font-size: larger !important; }
+  .fs-lg-xlarge { font-size: x-large !important; }
+  .fs-lg-xxlarge { font-size: xx-large !important; }
+  .fs-lg-xxxlarge { font-size: xxx-large !important; }
+}

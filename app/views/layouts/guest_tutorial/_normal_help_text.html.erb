@@ -1,9 +1,9 @@
-<div class="card border border-2 border-white bg-color card-shadow-dark w-75">
-  <div class="card-body text-white">
+<div class="card border border-2 border-white bg-color card-shadow-dark">
+  <div class="card-body text-white p-sm-4">
     <div class="card-text">
-      <div class="mb-5">
-        <h3>タパとは？</h3>
-        <p>ギター奏法の一つ。音をミュートしてジャカジャカと鳴らす弾き方<br>リズム出しなどに使われる。</p>
+      <div class="mb-4 mb-md-5">
+        <h3 class="border-bottom border-2 d-inline-block">タパとは？</h3>
+        <p class="fs-medium fs-md-large">ギター奏法の一つ。音をミュートしてジャカジャカと鳴らす弾き方<br>リズム出しなどに使われる。</p>
       </div>
       <%# <div class="mb-4">
         <h3>使い方説明</h3>
@@ -16,12 +16,12 @@
       </div> %>
       <div class="row">
         <div class="col" id="role-model-container">
-          <h3>お手本</h3>
+          <h3 class="border-bottom border-2 d-inline-block">お手本</h3>
           <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_data_url: "/test.mp3" %>
           <%#= render "layouts/guest_tutorial/audio_slider", slider_type: "model-audio", slider_size: "100" %>
         </div>
         <div class="col" id="collab-source-container">
-          <h3>コラボ音源</h3>
+          <h3 class="border-bottom border-2 d-inline-block">コラボ音源</h3>
           <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_data_url: "/test.mp3" %>
           <%#= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100" %>
         </div>

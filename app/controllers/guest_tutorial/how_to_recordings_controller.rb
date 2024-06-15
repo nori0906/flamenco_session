@@ -9,4 +9,9 @@ class GuestTutorial::HowToRecordingsController < ApplicationController
 
   end
 
+  private
+  def how_to_rec_params
+    params.require(:how_to_recordings).permit(:level)
+  end
+
 end

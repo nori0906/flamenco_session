@@ -1,70 +1,71 @@
-<div class="bkg-img-pro">
-  <h1 class="text-white text-center display-5 ps-5 py-3 mb-5">プロフィール</h1>
+<div class="bkg-img-pro profile-show-section">
+  <h1 class="text-white ps-2 ps-md-5 py-4 pb-lg-5">プロフィール</h1>
   <div class="container">
     <%= render partial: 'layouts/flash' %>
-    <div class="d-flex flex-column align-items-center">
-      <div class="w-75 mb-4">
-
-        <div class="card bg-color-pro w-100 mb-5">
-          <table class="table rounded text-center">
-            <tr>
-              <th class="table-th-color border border-1 rounded border-dark text-white">プロフィール画像</th>
-              <th class="table-th-color border border-1 rounded border-dark text-white">ユーザーネーム</th>
-            </tr>
-            <tr>
-
-              <%# FIXME: 画像ファイルが正しく読みこまえれない場合一、時的にデフォルトアバターを表示させる 23/12/24 %>
-              <%# <td rowspan="3" class="table-td-color border border-1 border-dark pt-4"> %>
-                <%#= image_tag("#{@user.avatar}", class: 'rounded-circle', size: '100x100') %>
-              <%# </td> %>
-              <td rowspan="3" class="table-td-color border border-1 border-dark pt-4">
-                <%= avatar_image_tag(@user, 'rounded-circle', '100x100') %>
-              </td>
+    <div class="d-flex flex-column align-items-center px-lg-5 mx-lg-5">
+      <div class="card bg-color-pro w-100 mb-5">
+        <table class="table rounded text-center">
+          <tr>
+            <th class="table-th-color border border-1 rounded border-dark text-white">プロフィール画像</th>
+            <th class="table-th-color border border-1 rounded border-dark text-white">ユーザーネーム</th>
+          </tr>
+          <tr>
+            <%# FIXME: 画像ファイルが正しく読みこまえれない場合一、時的にデフォルトアバターを表示させる 23/12/24 %>
+            <%# <td rowspan="3" class="table-td-color border border-1 border-dark pt-4"> %>
+              <%#= image_tag("#{@user.avatar}", class: 'rounded-circle', size: '100x100') %>
+            <%# </td> %>
+            <td rowspan="3" class="table-td-color border border-1 border-dark pt-4">
+              <%= avatar_image_tag(@user, 'rounded-circle border border-secondary', '100x100') %>
+            </td>
 
 
-              <td class="table-td-color border border-1 border-dark text-white py-3"><%= @user.name %></td>
-            </tr>
-            <tr>
-              <th class="table-th-color border border-1 rounded border-dark text-white">メール</th>
-            </tr>
-            <tr>
-              <td class="table-td-color border border-1 border-dark text-white py-3"><%= @user.email %></td>
-            </tr>
-          </table>
-          <div class="table-td-color px-4 pb-3 text-center">
-            <%= link_to '編集', edit_profile_path, class: 'btn btn-success float-right w-100 fs-5' %>
-          </div>
-        </div>
-
-        <h2 class="text-white text-center">~~ My投稿一覧 ~~</h2>
-        <div class="card bg-color-pro w-100 pt-2">
-          <div  class="card-body">
-            <ul class="nav nav-tabs">
-              <li class="nav-item">
-                <%= link_to '公開', profile_path(@user, format: :js, type: 'published'), remote: true, data: { type: 'js' }, class: "nav-link active #{active_class_for_type('published')}", id: 'js-published', area: { current: area_current_for_type('published') } %>
-                <%# <a class="nav-link active" aria-current="page" href="#">Active</a> %>
-              </li>
-              <li class="nav-item">
-                <%= link_to '非公開', profile_path(@user, format: :js, type: 'unpublished'), remote: true, data: { type: 'js' }, class: "nav-link #{active_class_for_type('unpublished')}",id: 'js-unpublished', area: { current: area_current_for_type('unpublished') } %>
-                <%# <a class="nav-link" href="#">Link</a> %>
-              </li>
-              <li class="nav-item">
-                <%# <a class="nav-link" href="#">Link</a> %>
-              </li>
-              <li class="nav-item">
-                <%# <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> %>
-              </li>
-            </ul>
-            <div class="my-4" id="select_posts">
-              <%= render partial: 'shared/posts_list', locals: { posts: @published_posts } %>
-            </div>
+            <td class="table-td-color border border-1 border-dark text-white py-3"><%= @user.name %></td>
+          </tr>
+          <tr>
+            <th class="table-th-color border border-1 rounded border-dark text-white">メール</th>
+          </tr>
+          <tr>
+            <td class="table-td-color border border-1 border-dark text-white py-3"><%= @user.email %></td>
+          </tr>
+        </table>
+        <div class="table-td-color px-4 pb-3 text-center">
+          <div class="row justify-content-center">
+            <%= link_to '編集する', edit_profile_path, class: 'btn btn-success btn-tutorial-custom rounded-pill btn-lg col-5 col-sm-4 col-md-3' %>
           </div>
         </div>
       </div>
+
+      <div class="card bg-color-pro w-100 py-2 mb-3">
+        <h2 class="text-white text-center py-3">My投稿一覧</h2>
+        <div  class="card-body px-2 px-sm-3">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <%= link_to '公開', profile_path(@user, format: :js, type: 'published'), remote: true, data: { type: 'js' }, class: "nav-link active #{active_class_for_type('published')}", id: 'js-published', area: { current: area_current_for_type('published') } %>
+              <%# <a class="nav-link active" aria-current="page" href="#">Active</a> %>
+            </li>
+            <li class="nav-item">
+              <%= link_to '非公開', profile_path(@user, format: :js, type: 'unpublished'), remote: true, data: { type: 'js' }, class: "nav-link #{active_class_for_type('unpublished')}",id: 'js-unpublished', area: { current: area_current_for_type('unpublished') } %>
+              <%# <a class="nav-link" href="#">Link</a> %>
+            </li>
+            <li class="nav-item">
+              <%# <a class="nav-link" href="#">Link</a> %>
+            </li>
+            <li class="nav-item">
+              <%# <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> %>
+            </li>
+          </ul>
+          <div class="mt-4" id="select_posts">
+            <%= render partial: 'shared/posts_list', locals: { posts: @published_posts } %>
+          </div>
+        </div>
+      </div>
+      <%# <div class="mb-4 mx-5 px-5">
+
+      </div> %>
     </div>
-    
-
-
 
   </div>
 </div>
+
+<%= javascript_pack_tag 'audio-playback' %>
+<%= javascript_pack_tag 'post-text-ellipsis.js' %>
