@@ -4,12 +4,16 @@ class PostsController < ApplicationController
   before_action :ensure_correct_user, only: %i[edit update destroy]
 
   def index
-    browser = request.browser
-    if browser == "Chrome" || browser == "Edge"
-      @posts = Post.published.where(ext_type: "webm").order(created_at: :desc)
-    elsif browser == "Safari"
-      @posts = Post.published.where(ext_type: "mp4").order(created_at: :desc)
-    end
+    # 24/6/21 chromeでmp4、safariでwebmが再生されるようになったのでコメントアウト
+    # FIXME: デバイスごとの対応状況の確認次第では変更必要
+    # browser = request.browser
+    # if browser == "Chrome" || browser == "Edge"
+    #   @posts = Post.published.where(ext_type: "webm").order(created_at: :desc)
+    # elsif browser == "Safari"
+    #   @posts = Post.published.where(ext_type: "mp4").order(created_at: :desc)
+    # end
+    
+    @posts =Post.published.order(created_at: :desc)
   end
 
   def show

@@ -127,8 +127,8 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // ブラウザを特定
-    const ua = window.navigator.userAgent.toLowerCase() //ブラウザのユーザーエージェントを取得（小文字に変換）し変数uaに格納
-    const chrome = (ua.indexOf('chrome') !== -1) && (ua.indexOf('edge') === -1) && (ua.indexOf('opr') === -1); // ブラウザがchromeかどうかを確認し、結果の真偽値を変数に格納
+    // const ua = window.navigator.userAgent.toLowerCase() //ブラウザのユーザーエージェントを取得（小文字に変換）し変数uaに格納
+    // const chrome = (ua.indexOf('chrome') !== -1) && (ua.indexOf('edge') === -1) && (ua.indexOf('opr') === -1); // ブラウザがchromeかどうかを確認し、結果の真偽値を変数に格納
 
     // オーディオ制約を設定
     // console.log('オーディオ制約A');
@@ -173,13 +173,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // MIMEタイプを指定
     // サポート状況を確認し、変数に格納
-    if (MediaRecorder.isTypeSupported('audio/mp4')) {
-      mime = 'audio/mp4'
-    } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+    if (MediaRecorder.isTypeSupported('audio/webm')) {
       mime = 'audio/webm'
+    } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+      mime = 'audio/mp4'
     } else {
       alert( 'not supported')
     };
+    console.log("mime:", mime);
     // サブタイプ名を取得
     const mimeToSubType = {
       'audio/mp4': 'm4a',
