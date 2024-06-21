@@ -11,7 +11,7 @@ CarrierWave.configure do |config|
       aws_access_key_id: ENV['ACCESS_KEY_ID'],
       aws_secret_access_key: ENV['SECRET_ACCESS_KEY'],
 
-      # FIXME: ローカル時のproduction設定
+      # FIXME: ローカル/production設定
       # aws_access_key_id:  Rails.application.credentials.dig(:aws, :access_key_id),
       # aws_secret_access_key: Rails.application.credentials.dig(:aws, :secret_access_key),
 

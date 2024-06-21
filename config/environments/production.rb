@@ -23,7 +23,7 @@ Rails.application.configure do
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
 
-  # FIXME: ローカル時のproduction設定
+  # FIXME: ローカル/production設定
   # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # 2022/10/26 Renderでデプロイする際に変更 renderのドキュメント（https://render.com/docs/deploy-rails#go-production-ready）
@@ -81,7 +81,7 @@ Rails.application.configure do
     user_name: ENV['GMAIL_ADDRESS'],  #Gmailアドレス（RENDERで管理）
     password: ENV['GMAIL_PASSWORD'],  #アプリパスワード（RENDERで管理）
 
-    # ローカル環境用
+    # FIXME: ローカル環境用
     # user_name: Rails.application.credentials.gmail[:user_name],  #Gmailアドレス（credentials.yml.encで管理）
     # password: Rails.application.credentials.gmail[:password],  #アプリパスワード（credentials.yml.encで管理）
 
