@@ -2,7 +2,7 @@
   <h1 class="text-white ps-2 ps-md-5 py-4 pb-lg-5">投稿一覧</h1>
   <div class="row justify-content-center">
     <%= render partial: 'layouts/flash' %>
-    <div class="col-11 col-sm-10 col-md-9 col-xxl-8">
+    <div class="col-11 col-sm-10 col-md-9 col-lg-8 col-xxl-8">
       <div class="row justify-content-center mb-5">
         <% if logged_in? %>
           <%= link_to "新規録音/投稿", new_post_path, class: "btn btn-custom rounded-pill col-6 col-sm-4 py-3 px-1 me-sm-5 text-white border border-dark fw-bold fs-lg-larger", type: "button" %>
@@ -23,7 +23,7 @@
                   <%= post.user.name %>
                 </div>
                 <% unless @root_collab_post %>
-                    <%= link_to 'セッションする', new_post_path(audio_flg: "posted_audio", collab_post_id: post.id), type: "button", class: "btn btn-custom rounded-pill text-white border border-dark fw-bold fs-small fs-lg-medium py-2 mb-1 ms-1" %>
+                    <%= link_to 'セッションする', new_post_path(audio_flg: "posted_audio", collab_post_id: post.id), type: "button", class: "btn btn-custom rounded-pill text-white border border-dark fw-bold fs-small fs-lg-smaller py-2 mb-1 ms-1" %>
                 <% end %>
               </div>
 
