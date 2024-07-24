@@ -3,19 +3,19 @@
     <div class="card-text">
       <div class="mb-4 mb-md-5">
         <h3 class="d-inline-block border-bottom border-3 fw-semibold fs-large fs-sm-larger fs-md-xlarge">ポイント</h3>
-        <ul class="fs-medium fs-md-large">
+        <ul class="fw-medium fs-medium fs-md-large ps-4 pe-3">
           <li>最初に始まるクリック音に合わせてパルマ(手拍子)を叩き始めよう!</li>
           <li>ギターのメロディにつられないようにキープ!</li>
         </ul>
       </div>
       <div class="row">
-        <div class="col col-lg-10 col-xl-9 col-xxl-8" id="role-model-container">
+        <div class="col col-md-10 col-lg-11 col-xxl-10" id="role-model-container">
           <h3 class="d-inline-block border-bottom border-3 fw-semibold fs-large fs-sm-larger fs-md-xlarge">お手本</h3>
           <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_data_url: "/test.mp3" %>
           <%#= render "layouts/guest_tutorial/audio_slider", slider_type: "model-audio", slider_size: "100" %>
         </div>
         <div class="w-100 mt-4"></div>
-        <div class="col col-lg-10 col-xl-9 col-xxl-8" id="collab-source-container">
+        <div class="col col-md-10 col-lg-11 col-xxl-10" id="collab-source-container">
           <h3 class="d-inline-block border-bottom border-3 fw-semibold fs-large fs-sm-larger fs-md-xlarge">コラボ音源</h3>
           <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_data_url: "/test.mp3" %>
           <%#= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100" %>
