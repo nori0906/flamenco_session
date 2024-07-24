@@ -1,9 +1,8 @@
-<div class="bkg-img">
-  <h1 class="text-white text-left ps-2 ps-md-5 py-3 pb-lg-4">投稿編集</h1>
-  <div class="container">
+<div class="container bkg-img">
+  <h1 class="text-white ps-2 ps-md-5 py-4 pb-lg-5">投稿編集</h1>
+  <div class="row justify-content-center">
     <%= render partial: 'layouts/flash' %>
-
-    <div class="mx-2 mx-md-5 px-lg-5 pb-3">
+    <div class="col-11 col-sm-10 col-md-8 col-lg-9 col-xl-8 col-xxl-7 pb-5">
       <%= form_with model: @post, local: true do |f| %>
         <div class="row card bg-dark-card py-4 px-lg-5 mx-lg-5">
           <div  class="mb-4 px-3 px-sm-5">
@@ -38,8 +37,8 @@
         </div>
       <% end %>
     </div>
-
   </div>
 </div>
+
 
 <%= javascript_pack_tag 'audio-playback' %>

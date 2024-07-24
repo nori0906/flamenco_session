@@ -2,7 +2,7 @@ module GuestTutorial::HowToRecordingsHelper
   def by_level_title(level)
     case level
     when "easy"
-      {type: "初級☆", title: "クリック音に合わせてパルマ(手拍子)を叩いてみよう!"}
+      {type: "初級☆", title: "クリック音に合わせてパルマ(手拍子)を叩こう!"}
     when "normal"
       {type: "中級☆☆", title: "ギターのタパに合わせてパルマ(手拍子)を叩こう!"}
     when "hard"

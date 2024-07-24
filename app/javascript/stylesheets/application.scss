@@ -57,7 +57,7 @@
 
 
 .bg-color {
-  background-color: #960822;
+  background-color: #960822ed;
   // background-color: #990923;
 }
 
@@ -226,12 +226,6 @@ a.top-anchor-link {
 }
 
 
-.app-use-image {
-  width: 200px;
-  height: 400px;
-}
-
-
 // トップページ：録音説明カード
 // 投稿編集：フォームカード
 .bg-dark-card {
@@ -240,76 +234,94 @@ a.top-anchor-link {
 
 
 // トップページ: カルーセル内カードの高さ・画像サイズの調整
-.carousel-inner .card {
-  height: 780px;
-}
-.app-use-image {
-  width: 350px;
-  height: 400px;
-}
+// .carousel-inner .card {
+//   height: 600px;
+// }
+// .app-use-image {
+//   width: 300px;
+//   height: 300px;
+// }
 
 
 // レスポンシブ対応（メディアクエリ）
 @media (max-width: 575px) {
   .carousel-inner .card {
-    height: 630px;
+    height: 580px;
   }
   .app-use-image {
-    width: 225px;
-    height: 300px;
+    width: 180px;
+    height: 250px;
   }
-  // トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
-  .app-use-section .container {
-    max-width: 400px;
+  // // トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
+  // .app-use-section .container {
+  //   max-width: 400px;
+  // }
+}
+
+// レスポンシブ対応（メディアクエリ）
+@media (min-width: 576px) and (max-width: 996px) {
+  .carousel-inner .card {
+    height: 600px;
   }
+  .app-use-image {
+    width: 300px;
+    height: 250px;
+  }
+  
 }
 
 
 @media (min-width: 997px) {
+  .carousel-inner .card {
+    height: 600px;
+  }
   .app-use-image {
-    width: 450px;
-    height: 400px;
+    width: 350px;
+    height: 250px;
   }
 }
 
 @media (min-width: 1400px) {
+  .carousel-inner .card {
+    height: 650px;
+  }
   .app-use-image {
-    width: 630px;
-    height: 380px;
+    width: 450px;
+    height: 300px;
   }
 
-  // プロフィール編集: カード幅調整
-  .profile-show-section .container {
-    max-width: 1140px;
-  }
+  // // プロフィール編集: カード幅調整
+  // .profile-show-section .container {
+  //   max-width: 1140px;
+  // }
 }
 
-@media (min-width: 992px) {
-  // 投稿詳細: カード幅の調整
-  .post-show-section .container {
-    max-width: 820px;
-  }
-}
+// @media (min-width: 992px) {
+//   // 投稿詳細: カード幅の調整
+//   .post-show-section .container {
+//     max-width: 820px;
+//   }
+// }
 
 
-@media (min-width: 768px) and (max-width: 991px) {
-  // トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
-  .app-use-section .container {
-    max-width: 540px;
-  }
+// @media (min-width: 768px) and (max-width: 991px) {
+//   // トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
+//   .app-use-section .container {
+//     max-width: 540px;
+//   }
 
-  // 投稿詳細ページ: カード幅の調整
-  .post-show-section .container {
-    max-width: 720px;
-  }
-}
+//   // 投稿詳細ページ: カード幅の調整
+//   .post-show-section .container {
+//     max-width: 720px;
+//   }
+// }
 
-@media (min-width: 992px) and (max-width: 1399px) {
-  // プロフィール編集: カード幅調整
-  .profile-show-section .container {
-    max-width: 960px;
-  }
-}
+// @media (min-width: 992px) and (max-width: 1399px) {
+//   // プロフィール編集: カード幅調整
+//   .profile-show-section .container {
+//     max-width: 960px;
+//   }
+// }
 
 
 
@@ -322,8 +334,9 @@ a.top-anchor-link {
 .fs-14px { font-size: 14px !important; }
 .fs-15px { font-size: 15px !important; }
 .fs-16px { font-size: 16px !important; }
-.fs-normal { font-size: normal !important; }
+.fs-smaller { font-size: smaller !important; }
 .fs-medium { font-size: medium !important; }
+.fs-smaller { font-size: smaller; }
 .fs-small { font-size: small !important; }
 .fs-xsmall { font-size: x-small !important; }
 .fs-xxsmall { font-size: xx-small !important; }
@@ -333,6 +346,26 @@ a.top-anchor-link {
 .fs-xxlarge { font-size: xx-large !important; }
 .fs-xxxlarge { font-size: xxx-large !important; }
 
+@media (max-width: 576px) {
+  .fs-sm-max-10px { font-size: 10px !important; }
+  .fs-sm-max-11px { font-size: 11px !important; }
+  .fs-sm-max-12px { font-size: 12px !important; }
+  .fs-sm-max-13px { font-size: 13px !important; }
+  .fs-sm-max-14px { font-size: 14px !important; }
+  .fs-sm-max-15px { font-size: 15px !important; }
+  .fs-sm-max-16px { font-size: 16px !important; }
+  .fs-sm-max-smaller { font-size: smaller !important; }
+  .fs-sm-max-medium { font-size: medium !important; }
+  .fs-sm-max-smaller { font-size: smaller; }
+  .fs-sm-max-small { font-size: small !important; }
+  .fs-sm-max-xsmall { font-size: x-small !important; }
+  .fs-sm-max-xxsmall { font-size: xx-small !important; }
+  .fs-sm-max-large { font-size: large !important; }
+  .fs-sm-max-larger { font-size: larger !important; }
+  .fs-sm-max-xlarge { font-size: x-large !important; }
+  .fs-sm-max-xxlarge { font-size: xx-large !important; }
+  .fs-sm-max-xxxlarge { font-size: xxx-large !important; }
+}
 @media (min-width: 576px) {
   .fs-sm-10px { font-size: 10px !important; }
   .fs-sm-11px { font-size: 11px !important; }
@@ -341,8 +374,9 @@ a.top-anchor-link {
   .fs-sm-14px { font-size: 14px !important; }
   .fs-sm-15px { font-size: 15px !important; }
   .fs-sm-16px { font-size: 16px !important; }
-  .fs-sm-normal { font-size: normal !important; }
+  .fs-sm-smaller { font-size: smaller !important; }
   .fs-sm-medium { font-size: medium !important; }
+  .fs-sm-smaller { font-size: smaller; }
   .fs-sm-small { font-size: small !important; }
   .fs-sm-xsmall { font-size: x-small !important; }
   .fs-sm-xxsmall { font-size: xx-small !important; }
@@ -361,7 +395,7 @@ a.top-anchor-link {
   .fs-md-14px { font-size: 14px !important; }
   .fs-md-15px { font-size: 15px !important; }
   .fs-md-16px { font-size: 16px !important; }
-  .fs-md-normal { font-size: normal !important; }
+  .fs-md-smaller { font-size: smaller !important; }
   .fs-md-medium { font-size: medium !important; }
   .fs-md-small { font-size: small !important; }
   .fs-md-xsmall { font-size: x-small !important; }
@@ -381,7 +415,7 @@ a.top-anchor-link {
   .fs-lg-14px { font-size: 14px !important; }
   .fs-lg-15px { font-size: 15px !important; }
   .fs-lg-16px { font-size: 16px !important; }
-  .fs-lg-normal { font-size: normal !important; }
+  .fs-lg-smaller { font-size: smaller !important; }
   .fs-lg-medium { font-size: medium !important; }
   .fs-lg-small { font-size: small !important; }
   .fs-lg-xsmall { font-size: x-small !important; }
@@ -391,4 +425,24 @@ a.top-anchor-link {
   .fs-lg-xlarge { font-size: x-large !important; }
   .fs-lg-xxlarge { font-size: xx-large !important; }
   .fs-lg-xxxlarge { font-size: xxx-large !important; }
+}
+
+@media (min-width: 1200px) {
+  .fs-xl-10px { font-size: 10px !important; }
+  .fs-xl-11px { font-size: 11px !important; }
+  .fs-xl-12px { font-size: 12px !important; }
+  .fs-xl-13px { font-size: 13px !important; }
+  .fs-xl-14px { font-size: 14px !important; }
+  .fs-xl-15px { font-size: 15px !important; }
+  .fs-xl-16px { font-size: 16px !important; }
+  .fs-xl-smaller { font-size: smaller !important; }
+  .fs-xl-medium { font-size: medium !important; }
+  .fs-xl-small { font-size: small !important; }
+  .fs-xl-xsmall { font-size: x-small !important; }
+  .fs-xl-xxsmall { font-size: xx-small !important; }
+  .fs-xl-large { font-size: large !important; }
+  .fs-xl-larger { font-size: larger !important; }
+  .fs-xl-xlarge { font-size: x-large !important; }
+  .fs-xl-xxlarge { font-size: xx-large !important; }
+  .fs-xl-xxxlarge { font-size: xxx-large !important; }
 }
