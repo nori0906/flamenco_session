@@ -1,7 +1,7 @@
 <div class="container bkg-img-index text-white">
   <h1 class="ps-2 ps-md-5 py-4 pb-lg-5">RECORDING</h1>
   <div class="row justify-content-center">
-    <div class="col-11 col-sm-10 col-lg-7 col-xxl-6 font-monospace px-3">
+    <div class="col-11 col-sm-10 col-lg-9 font-monospace px-3">
       <div class="text-center fs-xlarge fs-md-xxlarge mb-4" id="level-select">
         <%# how_to_recordings_helper.rbでメソッド作成 %>
         <h2 class=""><%= by_level_title(@level)[:type] %></h2>
@@ -19,15 +19,17 @@
             <%= render "layouts/guest_tutorial/recording_btn" %>
           </div>
           <div class="w-100"></div>
-          <div class="col-11 col-md-7 col-lg-11 pt-4">
+          <div class="col-11 col-md-7 col-lg-9 col-xxl-7 pt-4">
             <%= render "layouts/guest_tutorial/audio_slider", slider_type: "tutorial-record", slider_size: "100" %>
           </div>
         </div>
       </div>
 
       <% if @level == 'hard' %>
-        <div class="d-flex justify-content-center pb-5">
-          <%= link_to "みんなの投稿を見る", guest_index_path, class: "btn btn-success btn-lg btn-tutorial-custom text-white rounded-pill fw-bold fs-large fs-sm-xlarge py-3 px-4" , type: "button" %>
+        <div class="row justify-content-center pb-5">
+          <%= link_to "戻る", guest_tutorial_introductions_path, class: "btn btn-success btn-tutorial-custom col-5 col-sm-4 col-md-3 col-xl-2 text-white rounded-pill fw-bold fs-large fs-sm-larger fs-lg-xlarge py-2 py-xxl-3 me-sm-4" , type: "button" %>
+          <div class="w-100 d-sm-none mt-3"></div>
+          <%= link_to "投稿を見る", guest_index_path, class: "btn btn-success  btn-tutorial-custom col-5 col-sm-4 col-md-3 col-xl-2 text-white rounded-pill fw-bold fs-large fs-sm-larger fs-lg-xlarge py-2 py-xxl-3" , type: "button" %>
         </div>
       <% else %>
         <div class="d-flex justify-content-center pb-5">
