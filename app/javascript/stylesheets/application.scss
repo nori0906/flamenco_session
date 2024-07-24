@@ -207,10 +207,13 @@ a.top-anchor-link {
   background-repeat: no-repeat;
 }
 
-
 .bkg-overlay {
   background-color: rgba(0, 0, 0, 0.4);
   position: absolute;
+}
+
+mark {
+ background-color: #198754;
 }
 
 // プロフィール
@@ -266,7 +269,6 @@ a.top-anchor-link {
     width: 300px;
     height: 250px;
   }
-  
 }
 
 
