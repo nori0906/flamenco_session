@@ -89,6 +89,9 @@
 .bg-dark-custom {
   background-color: #434549;
 }
+.bg-dark-transparent-custom {
+  background-color: #434549e8;
+}
 .bg-dark-sub-custom {
   background-color: #393b3f;
 }
@@ -252,10 +255,6 @@ a.top-anchor-link {
     width: 180px;
     height: 250px;
   }
-  // // トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
-  // .app-use-section .container {
-  //   max-width: 400px;
-  // }
 }
 
 // レスポンシブ対応（メディアクエリ）
@@ -289,40 +288,7 @@ a.top-anchor-link {
     width: 450px;
     height: 300px;
   }
-
-  // // プロフィール編集: カード幅調整
-  // .profile-show-section .container {
-  //   max-width: 1140px;
-  // }
 }
-
-// @media (min-width: 992px) {
-//   // 投稿詳細: カード幅の調整
-//   .post-show-section .container {
-//     max-width: 820px;
-//   }
-// }
-
-
-// @media (min-width: 768px) and (max-width: 991px) {
-//   // トップページ: アプリ解説セクション/コンテナのレスポンシブ対応
-//   .app-use-section .container {
-//     max-width: 540px;
-//   }
-
-//   // 投稿詳細ページ: カード幅の調整
-//   .post-show-section .container {
-//     max-width: 720px;
-//   }
-// }
-
-// @media (min-width: 992px) and (max-width: 1399px) {
-//   // プロフィール編集: カード幅調整
-//   .profile-show-section .container {
-//     max-width: 960px;
-//   }
-// }
-
 
 
 // フォントサイズ調整
