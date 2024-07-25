@@ -1,41 +1,43 @@
-<div class="container bkg-img">
-  <h1 class="text-white ps-2 ps-md-5 py-4 pb-lg-5">投稿編集</h1>
-  <div class="row justify-content-center">
+<div class="bkg-img">
+  <div class="container">
+    <h1 class="text-white ps-2 ps-md-5 py-4 pb-lg-5">投稿編集</h1>
     <%= render partial: 'layouts/flash' %>
-    <div class="col-11 col-sm-10 col-md-8 col-lg-9 col-xl-8 col-xxl-7 pb-5">
-      <%= form_with model: @post, local: true do |f| %>
-        <div class="row card bg-dark-card py-4 px-lg-5 mx-lg-5">
-          <div  class="mb-4 px-3 px-sm-5">
-            <%= f.label :title, "タイトル", class: "form-label text-white fs-xlarge mb-1" %>
-            <%= f.text_field :title, class: "form-control form-control-lg w-100", placeholder: "タイトル" %>
-          </div>
-          <div  class="mb-4 px-3 px-sm-5">
-            <%= f.label :body, "内容", class: "form-label text-white fs-xlarge mb-1" %>
-            <%= f.text_area :body, class: "form-control form-control-lg", rows: "3" %>
-          </div>
-          <div  class="d-flex flex-column mb-4 px-3 px-sm-5">
-            <%= f.label :status, "表示設定", class: "form-label text-white fs-xlarge mb-1" %>
-            <div class="pt-1 ps-4">
-              <%= f.radio_button :status, :published %>
-              <%= f.label :status_published, "公開", class: "form-label text-white fs-larger" %>
+    <div class="row justify-content-center">
+      <div class="col-10 col-md-8 col-lg-9 pb-5">
+        <%= form_with model: @post, local: true do |f| %>
+          <div class="row card bg-dark-card py-4 px-lg-5 mx-lg-5">
+            <div  class="mb-4 px-3 px-sm-5">
+              <%= f.label :title, "タイトル", class: "form-label text-white fs-xlarge mb-1" %>
+              <%= f.text_field :title, class: "form-control form-control-lg w-100", placeholder: "タイトル" %>
             </div>
-            <div class="ps-4">
-              <%= f.radio_button :status, :unpublished %>
-              <%= f.label :status_unpublished, "非公開", class: "form-label text-white fs-larger" %>
+            <div  class="mb-4 px-3 px-sm-5">
+              <%= f.label :body, "内容", class: "form-label text-white fs-xlarge mb-1" %>
+              <%= f.text_area :body, class: "form-control form-control-lg", rows: "3" %>
+            </div>
+            <div  class="d-flex flex-column mb-4 px-3 px-sm-5">
+              <%= f.label :status, "表示設定", class: "form-label text-white fs-xlarge mb-1" %>
+              <div class="pt-1 ps-4">
+                <%= f.radio_button :status, :published %>
+                <%= f.label :status_published, "公開", class: "form-label text-white fs-larger" %>
+              </div>
+              <div class="ps-4">
+                <%= f.radio_button :status, :unpublished %>
+                <%= f.label :status_unpublished, "非公開", class: "form-label text-white fs-larger" %>
+              </div>
+            </div>
+            <div class="audio px-3 px-sm-5 pb-1">
+              <p class="text-white fs-xlarge mb-1">録音音声</p>
+              <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_blob_url: @post.voice %>
+              <%#= audio_tag(url_for(@post.voice), id: "record", controls: true) %>
+              <%# <button type="button" class="btn btn-outline-secondary mb-3" id="playback">再生する</button> %>
+            </div>
+            <div class="d-flex justify-content-center pt-4">
+              <%= f.submit "更新する",  class: "btn btn-success btn-tutorial-custom rounded-pill fw-bold fs-large col-4 col-sm-3 py-3 me-3 me-sm-3" %>
+              <%= link_to "戻る", posts_path, class: "btn btn-outline-success btn-tutorial-custom rounded-pill btn-profile-custom fw-bold fs-large col-4 col-sm-3 py-3 ms-sm-3" %>
             </div>
           </div>
-          <div class="audio px-3 px-sm-5 pb-1">
-            <p class="text-white fs-xlarge mb-1">録音音声</p>
-            <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_blob_url: @post.voice %>
-            <%#= audio_tag(url_for(@post.voice), id: "record", controls: true) %>
-            <%# <button type="button" class="btn btn-outline-secondary mb-3" id="playback">再生する</button> %>
-          </div>
-          <div class="d-flex justify-content-center pt-4">
-            <%= f.submit "更新する",  class: "btn btn-success btn-tutorial-custom rounded-pill fw-bold fs-large col-4 col-sm-3 py-3 me-3 me-sm-3" %>
-            <%= link_to "戻る", posts_path, class: "btn btn-outline-success btn-tutorial-custom rounded-pill btn-profile-custom fw-bold fs-large col-4 col-sm-3 py-3 ms-sm-3" %>
-          </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
