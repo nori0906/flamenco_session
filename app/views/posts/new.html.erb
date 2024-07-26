@@ -7,7 +7,7 @@
     <% if @audio_flg.present? && @audio_flg == "default_audio" %>
       <div class="d-flex flex-column align-items-center mb-5">
         <h3 class="text-white text-start mb-4">↓↓ 元音源を確認 ↓↓</h3>
-        <div class="col-10 col-sm-8 col-lg-7">
+        <div class="col-10 col-sm-8 col-lg-6">
           <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_data_url: "/test.mp3" %>
           <%#= render "shared/audio_player", audio_container_class: "js-default-audio-container", slider_size: "50" %>
         </div>
@@ -15,7 +15,7 @@
     <% elsif @audio_flg.present? && @audio_flg == "posted_audio" %>
       <div class="d-flex flex-column align-items-center mb-5">
         <h3 class="text-white text-start mb-4">↓↓ 元音源を確認 ↓↓</h3>
-        <div class="col-10 col-sm-8 col-lg-7">
+        <div class="col-10 col-sm-8 col-lg-6">
           <%= render "layouts/guest_tutorial/audio_slider", slider_type: "audio", slider_size: "100", audio_blob_url: @collab_post.voice  %>
           <%#= render "shared/audio_player", audio_container_class: "js-posted-audio-container", audio_blob: @collab_post.voice, slider_size: "50" %>
         </div>
@@ -77,7 +77,7 @@
 
               <%# 隠しフィールドを追加して、Blob IDを保存できるようにする %>
               <%= f.hidden_field :voice_blob_id, id: 'post_voice_blob_id' %>
-              
+
               <%# 録音音声を表示 %>
               <div class="audio px-3 px-sm-5 pb-1">
                 <p class="text-white fs-xlarge mb-1">録音音声</p>
