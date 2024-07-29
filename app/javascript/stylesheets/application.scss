@@ -252,43 +252,43 @@ mark {
 // レスポンシブ対応（メディアクエリ）
 @media (max-width: 575px) {
   .carousel-inner .card {
-    height: 580px;
+    height: 625px;
   }
   .app-use-image {
-    width: 180px;
-    height: 250px;
+    width: 171px;
+    height: 304px;
   }
 }
 
 // レスポンシブ対応（メディアクエリ）
-@media (min-width: 576px) and (max-width: 996px) {
+@media (min-width: 576px) and (max-width: 991px) {
   .carousel-inner .card {
-    height: 600px;
+    height: 540px;
   }
   .app-use-image {
     width: 300px;
-    height: 250px;
+    height: 200px;
   }
 }
 
 
-@media (min-width: 997px) {
+@media (min-width: 992px) {
   .carousel-inner .card {
-    height: 600px;
+    height: 610px;
   }
   .app-use-image {
-    width: 350px;
-    height: 250px;
+    width: 360px;
+    height: 240px;
   }
 }
 
 @media (min-width: 1400px) {
   .carousel-inner .card {
-    height: 650px;
+    height: 645px;
   }
   .app-use-image {
-    width: 450px;
-    height: 300px;
+    width: 390px;
+    height: 260px;
   }
 }
 
