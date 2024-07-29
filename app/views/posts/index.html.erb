@@ -1,9 +1,9 @@
 <div class="bkg-img">
   <h1 class="text-white ps-2 ps-md-5 py-4 pb-lg-5">投稿一覧</h1>
   <div class="container">
-    <%= render partial: 'layouts/flash' %>
     <div class="row justify-content-center">
       <div class="col-11 col-lg-10 col-xl-9 col-xxl-8">
+        <%= render partial: 'layouts/flash' %>
         <div class="row justify-content-center mb-5">
           <% if logged_in? %>
             <%= link_to "新規録音/投稿", new_post_path, class: "btn btn-custom rounded-pill col-6 col-sm-4 py-3 px-1 me-sm-5 text-white border border-dark fw-bold fs-lg-larger", type: "button" %>
