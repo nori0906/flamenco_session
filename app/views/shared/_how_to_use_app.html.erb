@@ -24,18 +24,17 @@
                     <div class="card-text">
                       <h4 class="fw-bold border-bottom border-2 fst-italic fs-larger fs-sm-xlarge mb-2 mb-sm-4">チュートリアルへ移動</h4>
                       <ol class="fw-medium mb-0">
-                        <li><p class="fs-medium fs-lg-larger mb-2">トップページ「はじめる」を押す</p></li>
-                        <li><p class="fs-medium fs-lg-larger mb-1">チュートリアルを選択</p></li>
+                        <li><p class="fs-medium fs-lg-larger mb-2">「はじめる」を押す</p></li>
+                        <li><p class="fs-medium fs-lg-larger mb-1">「チュートリアル」を選択</p></li>
                         <ul class="list-unstyled">
-                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-1">※ 「投稿を見る」を押すと投稿一覧へ移動</p></li>
-                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-0">※ 新規投稿はログインすると可能</p></li>
+                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-0">※ 右上メニューの「チュートリアル」でも可能</p></li>
                         </ul>
                       </ol>
                     </div>
                   </div>
                   <%# 画像は仮で設定 %>
                   <div class="text-center">
-                    <%= image_pack_tag "media/images/s_tutorial_1.gif", class: "rounded-3 app-use-image" %>
+                    <%= image_pack_tag "media/images/how_to_use_app/pc_tutorial_1.gif", class: "rounded-3 app-use-image" %>
                   </div>
                 </div>
               </div>
@@ -48,15 +47,15 @@
                       <ol class="fw-medium mb-0">
                         <li><p class="fs-medium fs-lg-larger mb-2">解説を確認</p></li>
                         <li><p class="fs-medium fs-lg-larger mb-1">難易度を選択し、録音画面へ移動</p></li>
-                        <ul class="list-unstyled">
+                        <%# <ul class="list-unstyled">
                           <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-0">※ 難易度1または2で感覚をつかもう！</p></li>
-                        </ul>
+                        </ul> %>
                       </ol>
                     </div>
                   </div>
                   <%# 画像は仮で設定 %>
                   <div class="text-center">
-                    <%= image_pack_tag "media/images/tutorial_2.gif", class: "rounded-3 app-use-image" %>
+                    <%= image_pack_tag "media/images/how_to_use_app/pc_tutorial_2.gif", class: "rounded-3 app-use-image" %>
                   </div>
                 </div>
               </div>
@@ -78,7 +77,7 @@
                   </div>
                   <%# 画像は仮で設定 %>
                   <div class="text-center">
-                    <%= image_pack_tag "media/images/録音テキスト1.png", class: "rounded-3 app-use-image" %>
+                    <%= image_pack_tag "media/images/how_to_use_app/pc_tutorial_3.gif", class: "rounded-3 app-use-image" %>
                   </div>
                 </div>
               </div>
@@ -118,18 +117,21 @@
                     <div class="card-text">
                       <h4 class="fw-bold border-bottom border-2 fst-italic fs-larger fs-sm-xlarge mb-2 mb-sm-4">録音画面へ移動</h4>
                       <ol class="fw-medium mb-0">
-                        <li><p class="fs-medium fs-lg-larger mb-1">「はじめる」or「MENU」から投稿一覧に移動</p></li>
+                        <li><p class="fs-medium fs-lg-larger mb-1">「はじめる」→「投稿一覧」を選択</p></li>
                         <ul class="list-unstyled">
-                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-1">※ 新規投稿するにはログインが必要です</p></li>
-                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-2">※ 録音のみであれば未ログインでも可能です</p></li>
+                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-2">※ 右上メニューの「投稿一覧」でも可能</p></li>
                         </ul>
-                        <li><p class="fs-medium fs-lg-larger mb-0">「新規録音/投稿」を押す</p></li>
+                        <li><p class="fs-medium fs-lg-larger mb-1">「新規録音/投稿」を押す</p></li>
+                        <ul class="list-unstyled">
+                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-1">※ 新規投稿するにはログインが必要</p></li>
+                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-2">※ 未ログインでも録音までは可能</p></li>
+                        </ul>
                       </ol>
                     </div>
                   </div>
                   <%# 画像は仮で設定 %>
                   <div class="text-center">
-                    <%= image_pack_tag "media/images/録音テキスト1.png", class: "rounded-3 app-use-image" %>
+                    <%= image_pack_tag "media/images/how_to_use_app/pc_recording_1.gif", class: "rounded-3 app-use-image" %>
                   </div>
                 </div>
               </div>
@@ -141,14 +143,17 @@
                       <h4 class="fw-bold border-bottom border-2 fst-italic fs-larger fs-sm-xlarge mb-2 mb-sm-4">録音開始</h4>
                       <ol class="fw-medium mb-0">
                         <li><p class="fs-medium fs-lg-larger mb-2">「REC/STOP」で音声を録音</p></li>
+                        <ul class="list-unstyled">
+                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-2">※ スピーカー上で流れる音声が録音される</p></li>
+                        </ul>
                         <li><p class="fs-medium fs-lg-larger mb-2">「PLAY/PAUSE」で音声を確認</p></li>
-                        <li><p class="fs-medium fs-lg-larger mb-0">「NEXT」で投稿フォームへ移動</p></li>
+                        <li><p class="fs-medium fs-lg-larger mb-0">「次へ」で投稿フォームへ移動</p></li>
                       </ol>
                     </div>
                   </div>
                   <%# 画像は仮で設定 %>
                   <div class="text-center">
-                    <%= image_pack_tag "media/images/録音テキスト1.png", class: "rounded-3 app-use-image" %>
+                    <%= image_pack_tag "media/images/how_to_use_app/pc_recording_2.gif", class: "rounded-3 app-use-image" %>
                   </div>
                 </div>
               </div>
@@ -166,7 +171,7 @@
                   </div>
                   <%# 画像は仮で設定 %>
                   <div class="text-center">
-                    <%= image_pack_tag "media/images/録音テキスト1.png", class: "rounded-3 app-use-image" %>
+                    <%= image_pack_tag "media/images/how_to_use_app/pc_post.gif", class: "rounded-3 app-use-image" %>
                   </div>
                 </div>
               </div>
@@ -208,16 +213,16 @@
                       <ol class="fw-medium mb-0">
                         <li><p class="fs-medium fs-lg-larger mb-2">投稿一覧画面に移動</p></li>
                         <li><p class="fs-medium fs-lg-larger mb-2">気になる投稿を見つける</p></li>
-                        <li><p class="fs-medium fs-lg-larger mb-1">各投稿のセッションを押す</p></li>
+                        <li><p class="fs-medium fs-lg-larger mb-1">「セッション」を押す</p></li>
                         <ul class="list-unstyled">
-                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-0">※ ①ではサンプル音源のセッション録音になる</p></li>
+                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-0">※ 最上部の「セッション」ボタンはサンプル音源になる</p></li>
                         </ul>
                       </ol>
                     </div>
                   </div>
                   <%# 画像は仮で設定 %>
                   <div class="text-center">
-                    <%= image_pack_tag "media/images/録音テキスト1.png", class: "rounded-3 app-use-image" %>
+                    <%= image_pack_tag "media/images/how_to_use_app/pc_collab_1.gif", class: "rounded-3 app-use-image" %>
                   </div>
                 </div>
               </div>
@@ -228,18 +233,18 @@
                     <div class="card-text">
                       <h4 class="fw-bold border-bottom border-2 fst-italic fs-larger fs-sm-xlarge mb-2 mb-sm-4">セッション録音開始</h4>
                       <ol class="fw-medium mb-0">
-                        <li><p class="fs-medium fs-lg-larger mb-1">REC/STOPボタンで音声を録音</p></li>
+                        <li><p class="fs-medium fs-lg-larger mb-1">「REC/STOP」で音声を録音</p></li>
                         <ul class="list-unstyled">
-                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-2">※ スピーカー上で流した音声を録音します</p></li>
+                          <li><p class="fs-small fs-sm-smaller fs-lg-medium ms-2 mb-2">※ スピーカー上で流れる音声が録音される</p></li>
                         </ul>
-                        <li><p class="fs-medium fs-lg-larger mb-2">PLAY/PAUSEボタンでコラボ音声確認</p></li>
-                        <li><p class="fs-medium fs-lg-larger mb-0">NEXTボタンで投稿フォームへ移動</p></li>
+                        <li><p class="fs-medium fs-lg-larger mb-2">「PLAY/PAUSE」でコラボ音声確認</p></li>
+                        <li><p class="fs-medium fs-lg-larger mb-0">「次へ」で投稿フォームへ移動</p></li>
                       </ol>
                     </div>
                   </div>
                   <%# 画像は仮で設定 %>
                   <div class="text-center">
-                    <%= image_pack_tag "media/images/録音テキスト1.png", class: "rounded-3 app-use-image" %>
+                    <%= image_pack_tag "media/images/how_to_use_app/pc_collab_2.gif", class: "rounded-3 app-use-image" %>
                   </div>
                 </div>
               </div>
@@ -251,13 +256,13 @@
                       <h4 class="fw-bold border-bottom border-2 fst-italic fs-larger fs-sm-xlarge mb-2 mb-sm-4">投稿する</h4>
                       <ol class="fw-medium mb-0">
                         <li><p class="fs-medium fs-lg-larger mb-2">タイトル・詳細・公開設定を記入</p></li>
-                        <li><p class="fs-medium fs-lg-larger mb-0">投稿ボタンを押して投稿完了</p></li>
+                        <li><p class="fs-medium fs-lg-larger mb-0">「投稿」を押して投稿完了</p></li>
                       </ol>
                     </div>
                   </div>
                   <%# 画像は仮で設定 %>
                   <div class="text-center">
-                    <%= image_pack_tag "media/images/録音テキスト1.png", class: "rounded-3 app-use-image" %>
+                    <%= image_pack_tag "media/images/how_to_use_app/pc_post.gif", class: "rounded-3 app-use-image" %>
                   </div>
                 </div>
               </div>
