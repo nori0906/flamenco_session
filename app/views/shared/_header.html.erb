@@ -42,12 +42,12 @@
       </div>
       <%# PCサイズのメニュー表示 (lg<=) %>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav fw-semibold fs-lg-smaller fs-xl-medium ms-auto mb-2 mb-lg-0">
-          <li><%= link_to "投稿一覧", posts_path, class: "nav-link text-white" %></li>
-          <li><%= link_to "チュートリアル", guest_tutorial_introductions_path, class: "nav-link text-white" %></li>
+        <ul class="navbar-nav fw-semibold fs-lg-smaller fs-xl-medium ms-auto">
+          <li><%= link_to "投稿一覧", posts_path, class: "nav-link text-white mt-1" %></li>
+          <li><%= link_to "チュートリアル", guest_tutorial_introductions_path, class: "nav-link text-white mt-1" %></li>
           <%# アクセス制限 %>
           <% if logged_in? %>
-            <li><%= link_to "録音する", new_post_path, class: "nav-link text-white" %></li>
+            <li><%= link_to "録音する", new_post_path, class: "nav-link text-white mt-1" %></li>
             <li>
               <div class="dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -62,10 +62,8 @@
                 </div>
               </div>
             </li>
-            
           <% else %>
-            
-            <li><%= link_to 'ログイン/登録', login_path, class: 'nav-link text-white' %></li>
+            <li><%= link_to 'ログイン/登録', login_path, class: 'nav-link text-white mt-1' %></li>
           <% end %>
         </ul>
       </div>
