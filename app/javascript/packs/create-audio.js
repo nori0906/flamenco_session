@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "noiseSuppression": false
       }
     };
-  
+
 
     // MIMEタイプを指定
     // サポート状況を確認し、変数に格納
@@ -237,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
       mediaRecorder.addEventListener('stop', async () => {
         // constにすると値を引き渡せない?
         audioBlob = new Blob(recordedChunks, {type: mime});
+        console.log('録音後audioBlob：', audioBlob);
         resolve(audioBlob);
       });
     })
@@ -260,11 +261,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
+  /// ダウンロード用 ///
+  // // ボタン要素を取得
+  // const dlBtn = document.getElementById('js-dl-btn')
+  // console.log('ダウンロード要素:', dlBtn)
+
+  // // クリック時に音声をダウンロード
+  // dlBtn.addEventListener('click', function() {
+  //   if (audioBlob) {
+  //     downloadAudio(audioBlob);
+  //   } else {
+  //     console.log('録音データがありません');
+  //   }
+  // });
+
+  // // ダウンロード処理を実行
+  // function downloadAudio(blob) {
+  //   const url = URL.createObjectURL(blob); // BlobをオブジェクトURLに変換
+  //   const a = document.createElement('a'); // <a>タグを作成
+  //   a.style.display = 'none';
+  //   a.href = url;
+  //   a.download = 'recorded_audio.webm'; // ファイル名と拡張子を指定
+  //   document.body.appendChild(a);
+  //   a.click(); // <a>タグをクリックしてダウンロードを開始
+  //   URL.revokeObjectURL(url); // オブジェクトURLを解放
+  //   document.body.removeChild(a); // <a>タグを削除
+  // }
+
+
+
+
   /// 再生 ///
   // 再生・停止・音声コントローラー処理
   async function playBackControls(displayType) {
     console.log('playBackControls実行');
-    /// 再生処理に関するDOM取得 ///
+    // 再生処理に関するDOM取得 //
     recordPlayback = document.querySelector(`.${displayType}-record-playback`);
     recordStop = document.querySelector(`.${displayType}-record-stop`);
     playbackTime = document.querySelector(`.${displayType}-record-playback-time`);
@@ -274,7 +306,9 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(playbackTime);
     console.log(slider);
 
-    /// 関数 ///
+
+
+    // 関数 //
     // 再生・一時停止
     function playRecording() {
       if (audioBuffer) {
@@ -410,11 +444,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    /// イベント ///
+
+    // イベント //
     recordPlayback.addEventListener('click', handlePlayBack);
     recordStop.addEventListener('click', handlePlayBack);
     slider.addEventListener('input', async (event) => sliderHandring(event));
   }
+
 
 
 
@@ -459,6 +495,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
   /// ボタン活性設定 ///
   function setButtonStatus() {
     const buttonStatus = {
@@ -485,6 +522,7 @@ document.addEventListener('DOMContentLoaded', function () {
     recordPlayback.disabled = currentState.playback; //再生ボタン
     recordStop.disabled = currentState.pause; //一時停止ボタン
   }
+
 
 
 
@@ -516,6 +554,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('response確認:', response);
     return response;
   }
+
 
 
 
@@ -559,7 +598,6 @@ document.addEventListener('DOMContentLoaded', function () {
   //// イベント・関数の実行 ////
   /// 事前に実行 ///
   console.log("create-audio実行");
-  
   // 表示されている録音画面がチュートリアルか投稿かを確認し、結果を変数に格納することで画面を判別する
   /// 音声スライダーのボタンタグに定義済みのクラス`<%= "#{slider_type}" %>-playback`から確認している
   if (document.querySelector('.post-record-playback')) {
@@ -569,10 +607,9 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('チュートリアル画面のDOMを取得:tutorial');
     activeScreen = 'tutorial'
   }
-  
+
   // 録音再生用のDOMを表示画面（投稿かチュートリアル）に合わせて取得できるようにしておく
   playBackControls(activeScreen);
-
 
   // 録音時のコラボ音源を設定
   collabSourceSetting();
@@ -581,9 +618,10 @@ document.addEventListener('DOMContentLoaded', function () {
   settingRecordData();
 
 
+
   /// イベント ///
   // 録音
-  // 録音完了したら、結果（blobデータ）を受け取ってバッファを作成する
+  /// 録音完了したら、結果（blobデータ）を受け取ってバッファを作成する
   recordButton.addEventListener('click', () => {
       recording().then( async (blob) => {
         await createAudioBuffer(blob);
@@ -591,6 +629,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("An error occurred during recording or decoding: ", e);
       })
     });
+
 
   // 録音停止
   stopButton.addEventListener('click', stopRecording);
