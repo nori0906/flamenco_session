@@ -9,7 +9,6 @@ class Post < ApplicationRecord
 
   validates :title, presence: true
   validates :body, length: { maximum: 100 }
-  validates :collab_src, numericality: true, if: :collab_src?
 
 
   # 投稿の公開・非公開設定
