@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "UserSessions", type: :system do
-  before do
-    driven_by(:rack_test)
-  end
 
   # ユーザーはログインできる
   scenario "user can login" do
@@ -48,10 +45,8 @@ RSpec.describe "UserSessions", type: :system do
     within ".offcanvas-body" do
       click_on "ログアウト"
     end
-    save_and_open_page
     expect(page).to have_text "ログイン"
     expect(page).to have_text "ログアウトしました"
     expect(page).to have_current_path login_path
   end
-  
 end
