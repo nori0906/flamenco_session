@@ -45,7 +45,8 @@
           </div>
           <p class="fw-medium fs-large fs-sm-larger fw-medium">フラメンコ音楽で<br class="d-block d-sm-none">繋がる・体験する・発見する</p>
         </div>
-        <div class="row justify-content-center pt-4 pt-sm-1 pt-lg-4 pb-4 pb-md-4">
+        <%# 遷移ボタン %>
+        <div class="row justify-content-center pt-4 pt-sm-1 pt-lg-4 pb-4 pb-md-4" id="rspec-system-spec">
           <%= link_to "はじめる", posts_path, class: "col-6 col-sm-3 btn btn-custom text-white border border-dark rounded-pill fw-semibold fs-lg-xlarge py-3 mb-4 mb-sm-0 me-sm-4 me-lg-5" , type: "button", data: { bs_toggle: "modal", bs_target: "#gusetModal" } %>
           <div class="w-100 d-sm-none"></div>
           <%= link_to "ログイン", login_path, class: "col-6 col-sm-3 btn btn-custom text-white border border-dark rounded-pill fw-semibold fs-lg-xlarge py-3 ms-sm-4 ms-lg-5", type: "button" %>
