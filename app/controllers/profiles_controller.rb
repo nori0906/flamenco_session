@@ -3,6 +3,7 @@ class ProfilesController < ApplicationController
 
   def show
     # ブラウザによって対応しているMIMEが異なるため、ブラウザに対応する投稿一覧を取得 要見直し23/8/7
+    # FIXME: 仕様要確認 25/3/7
     browser = request.browser
     if browser == "Chrome" || browser == "Edge"
       user_posts = @user.posts.where(ext_type: "webm")

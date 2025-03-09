@@ -31,8 +31,9 @@
           <%= render "layouts/guest_tutorial/recording_btn" %>
         </div>
         <div class="w-100"></div>
-        <div class="col-10 col-sm-8 col-lg-6 pt-5">
+        <div class="col-10 col-sm-8 col-lg-6 pt-5" id="rspec-system-spec">
           <%= render "layouts/guest_tutorial/audio_slider", slider_type: "post-record", slider_size: "100" %>
+          <%# 録音完了後にボタン表示 %>
           <div class="d-flex justify-content-center pt-5">
             <% if logged_in? %>
               <button type="button" class="btn btn-success btn-lg btn-tutorial-custom text-white rounded-pill fw-bold fs-xlarge py-3 px-5 none" id="buttonNext" >次へ</button>
