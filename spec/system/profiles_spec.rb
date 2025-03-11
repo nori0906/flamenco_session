@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Profiles", type: :system, js: true do
  
   # ユーザーは名前を変更できる
-  scenario "user can update their name" do
+  scenario "user update own name" do
     # ユーザーをデータベースに登録
     user = User.create(
       name: "田中",
@@ -43,7 +43,7 @@ RSpec.describe "Profiles", type: :system, js: true do
   
   
   # ユーザーはメールアドレスを変更できる
-  scenario "user can update their email" do
+  scenario "user update own email" do
     # ユーザーをデータベースに登録
     user = User.create(
       name: "田中",
@@ -84,7 +84,7 @@ RSpec.describe "Profiles", type: :system, js: true do
   
 
   # ユーザーはプロフィール画像を変更できる
-  scenario "user can update their profile image" do
+  scenario "user update own profile image" do
     # ユーザーをデータベースに登録
     user = User.create(
       name: "田中",
@@ -123,8 +123,8 @@ RSpec.describe "Profiles", type: :system, js: true do
   end
 
   
-  # ユーザーは自身の投稿を確認できる
-  scenario "user can see their own posts" do
+  # ユーザーは自身の投稿を閲覧できる
+  scenario "user views own posts" do
     # ユーザーをデータベースに登録
     user = User.create(
       name: "田中",
