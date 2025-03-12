@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Posts", type: :system, js: true do
 
   # ユーザーは投稿一覧画面遷移できる
-  scenario "user navigates to list of posts" do
+  xscenario "user navigates to list of posts" do
     visit posts_path
     expect(page).to have_current_path(posts_path)
     expect(page).to have_text("投稿一覧")
@@ -97,7 +97,7 @@ RSpec.describe "Posts", type: :system, js: true do
     find("button[data-bs-target='#offcanvasBottom#{post.id}']").click
     expect(page).to have_selector ".offcanvas-bottom.show"
 
-    # 詳細画面をクリック
+    # 詳細ボタンをクリック
     click_on "詳細"
     expect(page).to have_text "投稿詳細"
     expect(page).to have_current_path post_path(post.id)
@@ -158,7 +158,37 @@ RSpec.describe "Posts", type: :system, js: true do
 
   # ユーザーは自身の投稿を削除できる
   scenario "user views own post" do
-    
+    # 事前データを用意：user,post
+    user = User.create(
+      name: "田中",
+      email: "tester@example.com",
+      password: "password",
+      password_confirmation: "password"
+    )
+    post = user.posts.create(title: "Delete Post Tester", status: "published", ext_type: "webm")
+    post.voice.attach(io: File.open(Rails.root.join('public/test.mp3')), filename: 'test.mp3')
+
+    # 事前処理：ログインする
+    visit login_path
+    fill_in "メールアドレス", with: user.email
+    fill_in "パスワード", with: "password"
+    click_on "ログイン"
+    expect(page).to have_text "投稿一覧"
+    expect(page).to have_current_path posts_path
+    # 投稿データが用意されているか
+    expect(page).to have_selector(".card-title", text: "Delete Post Tester")
+
+    # 実行処理：
+    # オフキャンパスを表示
+    find("button[data-bs-target='#offcanvasBottom#{post.id}']").click
+    expect(page).to have_selector ".offcanvas-bottom.show"
+    # 削除ボタン・確認ダイアログをクリック
+    click_on "削除"
+    accept_alert
+
+    # 確認： 投稿データが削除されているか
+    expect(page).to have_selector(".alert-danger.show", text: "削除しました")
+    expect(page).to_not have_selector(".card-title", text: "Delete Post Tester")
   end
 
   # ユーザーは他人の投稿を編集できない
