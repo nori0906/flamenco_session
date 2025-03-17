@@ -3,11 +3,51 @@ require 'rails_helper'
 RSpec.describe "Posts", type: :system, js: true do
 
   # ユーザーは投稿一覧画面遷移できる
-  xscenario "user navigates to list of posts" do
+  scenario "user navigates to list of posts" do
     visit posts_path
     expect(page).to have_current_path(posts_path)
     expect(page).to have_text("投稿一覧")
   end
+
+
+  # ユーザーは投稿内のメニュー(オフキャパス)を開くことができる
+  scenario "user opens the offcanvas in a post" do
+    # ユーザーをデータベースに登録
+    user = User.create(
+      name: "田中",
+      email: "tester@example.com",
+      password: "password",
+      password_confirmation: "password"
+    )
+    # 投稿データを作成
+    post = user.posts.create(
+      title: "tester post",
+      status: "published",
+      ext_type: "webm"
+    )
+    post.voice.attach(
+      io: File.open(Rails.root.join('public/test.mp3')),
+      filename: 'test.mp3'
+    )
+    
+    # ログインする
+    visit login_path
+    fill_in "メールアドレス", with: user.email
+    fill_in "パスワード", with: "password"
+    click_on "ログイン"
+    expect(page).to have_text "投稿一覧"
+    expect(page).to have_current_path posts_path
+    
+    # オフキャンパスを表示
+    find("button[data-bs-target='#offcanvasBottom#{post.id}']").click
+    expect(page).to have_selector ".offcanvas-bottom.show"
+
+    # 各ボタンを確認
+    expect(page).to have_selector(".offcanvas-bottom", text: "詳細")
+    expect(page).to have_selector(".offcanvas-bottom", text: "編集")
+    expect(page).to have_selector(".offcanvas-bottom", text: "削除")
+  end
+
 
   # FIXME: recording専用のシステムスペックを作成したほうが良さそう 25/3/10
   # 録音を完了する
@@ -28,10 +68,10 @@ RSpec.describe "Posts", type: :system, js: true do
     click_on "ログイン"
 
     visit new_post_path
-    save_and_open_page
     click_on "REC"
     expect(page).to have_text "次へ"
   end
+
 
   # FIXME: マイク許可を通過する方法がわからないため保留 25/3/4
   # ユーザーは新しい投稿を作成できる
@@ -73,8 +113,9 @@ RSpec.describe "Posts", type: :system, js: true do
 
   end
 
+
   # ユーザーは自身の投稿を閲覧できる
-  xscenario "user views own post" do
+  scenario "user views own post" do
     # ユーザーをデータベースに登録
     user = User.create(
       name: "田中",
@@ -82,8 +123,15 @@ RSpec.describe "Posts", type: :system, js: true do
       password: "password",
       password_confirmation: "password"
     )
-    post = user.posts.create(title: "tester post", status: "published", ext_type: "webm")
-    post.voice.attach(io: File.open(Rails.root.join('public/test.mp3')), filename: 'test.mp3')
+    post = user.posts.create(
+      title: "tester post",
+      status: "published",
+      ext_type: "webm"
+    )
+    post.voice.attach(
+      io: File.open(Rails.root.join('public/test.mp3')),
+      filename: 'test.mp3'
+    )
     
     # ログインする
     visit login_path
@@ -103,8 +151,9 @@ RSpec.describe "Posts", type: :system, js: true do
     expect(page).to have_current_path post_path(post.id)
   end
 
+
   # ユーザーは自身の投稿を編集できる
-  xscenario "user update own post" do
+  scenario "user update own post" do
     # ユーザーをデータベースに登録
     user = User.create(
       name: "田中",
@@ -112,13 +161,18 @@ RSpec.describe "Posts", type: :system, js: true do
       password: "password",
       password_confirmation: "password"
     )
+    
+    # 投稿データを用意
     post = user.posts.create(
       title: "tester post",
       status: "published",
       ext_type: "webm"
-      )
-    post.voice.attach(io: File.open(Rails.root.join('public/test.mp3')), filename: 'test.mp3')
-    
+    )
+    post.voice.attach(
+      io: File.open(Rails.root.join('public/test.mp3')),
+      filename: 'test.mp3'
+    )
+
     # ログインする
     visit login_path
     fill_in "メールアドレス", with: user.email
@@ -126,9 +180,14 @@ RSpec.describe "Posts", type: :system, js: true do
     click_on "ログイン"
     expect(page).to have_text "投稿一覧"
     expect(page).to have_current_path posts_path
+
+    # オフキャンパスを表示
+    find("button[data-bs-target='#offcanvasBottom#{post.id}']").click
+    expect(page).to have_selector ".offcanvas-bottom.show"
+    expect(page).to have_selector(".offcanvas-bottom", text: "編集")
     
-    # 投稿詳細画面に遷移
-    visit edit_post_path(post.id)
+    # 編集画面に遷移
+    click_on "編集"
     expect(page).to have_text "投稿編集"
     expect(page).to have_current_path edit_post_path(post.id)
     
@@ -156,17 +215,27 @@ RSpec.describe "Posts", type: :system, js: true do
     expect(page).to have_selector(".card-body", text: "Add text")
   end
 
+
   # ユーザーは自身の投稿を削除できる
-  scenario "user views own post" do
-    # 事前データを用意：user,post
+  scenario "user delete own post" do
+    # 事前データを用意
     user = User.create(
       name: "田中",
       email: "tester@example.com",
       password: "password",
       password_confirmation: "password"
     )
-    post = user.posts.create(title: "Delete Post Tester", status: "published", ext_type: "webm")
-    post.voice.attach(io: File.open(Rails.root.join('public/test.mp3')), filename: 'test.mp3')
+
+    # 投稿データを用意
+    post = user.posts.create(
+      title: "Delete Post Tester",
+      status: "published",
+      ext_type: "webm"
+    )
+    post.voice.attach(
+      io: File.open(Rails.root.join('public/test.mp3')),
+      filename: 'test.mp3'
+    )
 
     # 事前処理：ログインする
     visit login_path
@@ -185,21 +254,94 @@ RSpec.describe "Posts", type: :system, js: true do
     # 削除ボタン・確認ダイアログをクリック
     click_on "削除"
     accept_alert
-
+    
     # 確認： 投稿データが削除されているか
     expect(page).to have_selector(".alert-danger.show", text: "削除しました")
     expect(page).to_not have_selector(".card-title", text: "Delete Post Tester")
   end
 
+
   # ユーザーは他人の投稿を編集できない
-  scenario "user views own post" do
-    
+  scenario "user can't edit other users'posts" do
+    # ユーザーデータを用意
+    user1 = User.create(
+      name: "田中",
+      email: "tester@example.com",
+      password: "password",
+      password_confirmation: "password"
+    )
+    user2 = User.create(
+      name: "山田",
+      email: "tester2@example.com",
+      password: "password",
+      password_confirmation: "password"
+    )
+  
+    # 投稿データを用意(user2)
+    post = user2.posts.create(
+      title: "tester post",
+      status: "published",
+      ext_type: "webm"
+    )
+    post.voice.attach(
+      io: File.open(Rails.root.join('public/test.mp3')),
+      filename: 'test.mp3'
+    )
+
+    # 事前処理：ログインする
+    visit login_path
+    fill_in "メールアドレス", with: user1.email
+    fill_in "パスワード", with: "password"
+    click_on "ログイン"
+    expect(page).to have_text "投稿一覧"
+    expect(page).to have_current_path posts_path
+
+    # 編集ボタンがないかを確認
+    find("button[data-bs-target='#offcanvasBottom#{post.id}']").click
+    expect(page).to have_selector ".offcanvas-bottom.show"
+    expect(page).to_not have_selector(".offcanvas-bottom", text: "編集")
   end
 
+
   # ユーザーは他人の投稿を削除できない
-  scenario "user views own post" do
-    
-  end
+  scenario "user can't delete other users'posts" do
+    # ユーザーデータを用意
+    user1 = User.create(
+      name: "田中",
+      email: "tester@example.com",
+      password: "password",
+      password_confirmation: "password"
+    )
+    user2 = User.create(
+      name: "山田",
+      email: "tester2@example.com",
+      password: "password",
+      password_confirmation: "password"
+    )
   
+    # 投稿データを用意(user2)
+    post = user2.posts.create(
+      title: "tester post",
+      status: "published",
+      ext_type: "webm"
+    )
+    post.voice.attach(
+      io: File.open(Rails.root.join('public/test.mp3')),
+      filename: 'test.mp3'
+    )
+
+    # 事前処理：ログインする
+    visit login_path
+    fill_in "メールアドレス", with: user1.email
+    fill_in "パスワード", with: "password"
+    click_on "ログイン"
+    expect(page).to have_text "投稿一覧"
+    expect(page).to have_current_path posts_path
+
+    # 編集ボタンがないかを確認
+    find("button[data-bs-target='#offcanvasBottom#{post.id}']").click
+    expect(page).to have_selector ".offcanvas-bottom.show"
+    expect(page).to_not have_selector(".offcanvas-bottom", text: "削除")
+  end
 
 end
