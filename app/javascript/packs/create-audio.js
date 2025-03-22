@@ -536,8 +536,25 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('subType:', subType);
     formData.append('recording[voice]', audioBlob, `recording.${subType}`);
     resetAudioData();
-    
-    console.log('after/formData:', audioBlob);
+
+    console.log('after/audioBlob:', audioBlob);
+    console.log('after/formData:', formData);
+
+
+    // システムテスト：CSRFトークンがあるかを確認 25/3/23
+    // const meta = document.querySelector('meta[name="csrf-token"]');
+    // if (meta) {
+    //   const token = meta.getAttribute('content');
+    //   console.log('CSRFトークン:', token);
+    // } else {
+    //   console.warn('CSRFメタタグが見つかりませんでした');
+    // }
+    // console.log('メタ:', meta);
+
+
+    // CSRFトークンを取得
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
     // 非同期（Ajax）でサーバーに音声データを送信
     const response = await axios({
       method: 'post',
@@ -545,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function () {
       data: formData,
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        'X-CSRF-TOKEN': token
       }
     }).catch((e) => {
       console.log(e);
