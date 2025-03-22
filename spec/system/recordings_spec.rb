@@ -2,11 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Recordings", type: :system, js: true do
   
-  # before(:each) do
-  #   type = page.evaluate_script('typeof navigator.mediaDevices')
-  #   puts "typeof navigator.mediaDevices: #{type}"
-  # end
-
   # 録音を完了する
   scenario "user finish recording" do
     user = User.create(

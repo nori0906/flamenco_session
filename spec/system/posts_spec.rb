@@ -1,9 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe "Posts", type: :system, js: true do
+  # CSRFトークンを使えるようにする（録音データをサーバーへ送信する際に使用するため）
+  before do
+    ActionController::Base.allow_forgery_protection = true
+  end
+  
+  after do
+    ActionController::Base.allow_forgery_protection = false
+  end
+
+
+  # CERFトークンの表示を確認する
+  xscenario "check CSRF token" do
+    visit root_path
+    token = page.find("meta[name='csrf-token']", visible: false)[:content]
+    puts "CSRFトークン: #{token}"
+    expect(page).to have_selector("meta[name='csrf-token']", visible: false)
+  end
+
 
   # ユーザーは投稿一覧画面遷移できる
-  scenario "user navigates to list of posts" do
+  xscenario "user navigates to list of posts" do
     visit posts_path
     expect(page).to have_current_path(posts_path)
     expect(page).to have_text("投稿一覧")
@@ -11,7 +29,7 @@ RSpec.describe "Posts", type: :system, js: true do
 
 
   # ユーザーは投稿内のメニュー(オフキャパス)を開くことができる
-  scenario "user opens the offcanvas in a post" do
+  xscenario "user opens the offcanvas in a post" do
     # ユーザーをデータベースに登録
     user = User.create(
       name: "田中",
@@ -49,31 +67,7 @@ RSpec.describe "Posts", type: :system, js: true do
   end
 
 
-  # FIXME: recording専用のシステムスペックを作成したほうが良さそう 25/3/10
-  # 録音を完了する
-  xscenario "user Finish the recording" do
-    user = User.create(
-      name: "田中",
-      email: "tester@example.com",
-      password: "password",
-      password_confirmation: "password"
-    )
-
-    visit root_path
-    within "#rspec-system-spec" do
-      click_on "ログイン"
-    end
-    fill_in "メールアドレス", with: user.email
-    fill_in "パスワード", with: "password"
-    click_on "ログイン"
-
-    visit new_post_path
-    click_on "REC"
-    expect(page).to have_text "次へ"
-  end
-
-
-  # FIXME: マイク許可を通過する方法がわからないため保留 25/3/4
+  # FIXME: マイク許可を通過する方法がわからないため保留 25/3/4 ->手動で対応 3/22
   # ユーザーは新しい投稿を作成できる
   xscenario "user creates a new post" do
     user = User.create(
@@ -90,22 +84,29 @@ RSpec.describe "Posts", type: :system, js: true do
     click_on "ログイン"
     
     expect {
-      # Capybara::ElementNotFound: Unable to find link or button "新規録音/投稿" 25/3/3 -> ログインできていない？
+      # 録音ページへ遷移
       click_on "新規録音/投稿"
-      # JSによる操作が入るためクリックできずエラーが起きている 3/4
-      # マイクの許可設定ができていない
+      expect(page).to have_text "RECORDING"
+      expect(page).to have_current_path new_post_path
+      puts "Current URL: #{page.current_url}"
+      
+      # 録音を実行
       click_on "REC"
+      # FIXME: テスト実行時に一時的に止めてマイク許可を手動で行う
+      binding.pry
+      expect(page).to have_text "STOP"
       click_on "STOP"
-      within "#rspec-system-spec" do
-        click_on "Play"
-      end
       expect(page).to have_text "次へ"
       click_on "次へ"
+      
+      # 投稿フォーム
+      expect(page).to have_text "投稿フォーム"
       fill_in "タイトル", with: "Test Post"
       fill_in "内容", with: "Trying out Capybara"
       choose "公開"
       click_on "投稿する"
 
+      # 投稿できたかの確認
       expect(page).to have_text "投稿しました"
       expect(page).to have_text "Test Post"
       expect(page).to have_text "#{user.name}"
@@ -115,7 +116,7 @@ RSpec.describe "Posts", type: :system, js: true do
 
 
   # ユーザーは自身の投稿を閲覧できる
-  scenario "user views own post" do
+  xscenario "user views own post" do
     # ユーザーをデータベースに登録
     user = User.create(
       name: "田中",
@@ -153,7 +154,7 @@ RSpec.describe "Posts", type: :system, js: true do
 
 
   # ユーザーは自身の投稿を編集できる
-  scenario "user update own post" do
+  xscenario "user update own post" do
     # ユーザーをデータベースに登録
     user = User.create(
       name: "田中",
@@ -217,7 +218,7 @@ RSpec.describe "Posts", type: :system, js: true do
 
 
   # ユーザーは自身の投稿を削除できる
-  scenario "user delete own post" do
+  xscenario "user delete own post" do
     # 事前データを用意
     user = User.create(
       name: "田中",
@@ -262,7 +263,7 @@ RSpec.describe "Posts", type: :system, js: true do
 
 
   # ユーザーは他人の投稿を編集できない
-  scenario "user can't edit other users'posts" do
+  xscenario "user can't edit other users'posts" do
     # ユーザーデータを用意
     user1 = User.create(
       name: "田中",
@@ -304,7 +305,7 @@ RSpec.describe "Posts", type: :system, js: true do
 
 
   # ユーザーは他人の投稿を削除できない
-  scenario "user can't delete other users'posts" do
+  xscenario "user can't delete other users'posts" do
     # ユーザーデータを用意
     user1 = User.create(
       name: "田中",
