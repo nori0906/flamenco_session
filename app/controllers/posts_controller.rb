@@ -65,7 +65,7 @@ class PostsController < ApplicationController
     # Postに録音データをアタッチ
     @post.voice.attach(voice_blob)
     
-    #MMIMEタイプ（サブタイプ名）をPostに格納
+    # MIMEタイプ（サブタイプ名）をPostに格納 -> 元々safariでwebmできなかったため、ブラウザごとに投稿データを扱うために「ext_type」を作成したが現在、safariでwebmが使用できるようになった（2024年）
     mime_type = @post.voice.content_type
     mime_subtype = mime_type.split("/").last
     @post.ext_type = mime_subtype
