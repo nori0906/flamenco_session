@@ -17,7 +17,6 @@ RSpec.describe "UserSessions", type: :system do
     fill_in "メールアドレス", with: user.email
     fill_in "パスワード", with: "password"
     click_on "ログイン"
-    binding.pry
     expect(page).to have_text "投稿一覧"
     expect(page).to have_text "ログインしました"
     expect(page).to have_current_path posts_path
