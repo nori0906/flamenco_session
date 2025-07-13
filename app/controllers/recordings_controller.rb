@@ -2,6 +2,11 @@ class RecordingsController < ApplicationController
 
   # サーバーへ送られた録音データを一時保存し、blob Idをクライアントへ返す
   def create
+    # voiceの存在判定
+    if audio_params[:voice].blank?
+      render json: { error: "ファイルが空です" }, status: :unprocessable_entity and return
+    end
+
     # MIMEタイプを取得＆許可する値を定義
     mime_type = audio_params[:voice].content_type
     permitted_mime_types =  ["audio/webm", "audio/mp4"]
