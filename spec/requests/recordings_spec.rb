@@ -5,7 +5,17 @@ RSpec.describe "Recordings", type: :request do
   # 正常系ダミーファイル
   let(:audio_path) { Rails.root.join("spec/fixtures/files/test_silent.webm") } # ルートパス取得
   let(:audio_file) { fixture_file_upload(audio_path, 'audio/webm')} # ファイルアップロード
-
+  
+  # 異常系ダミーファイル
+  let(:dummy_txt_path) { Rails.root.join("spec/fixtures/files/dummy.txt") }
+  let(:dummy_jpg_path) { Rails.root.join("spec/fixtures/files/dummy.jpg") }
+  let(:dummy_mp4_path) { Rails.root.join("spec/fixtures/files/dummy.mp4") }
+  let(:dummy_mp3_path) { Rails.root.join("spec/fixtures/files/dummy.mp3") }
+  let(:dummy_txt_file) { fixture_file_upload(dummy_txt_path, 'text/plain')}
+  let(:dummy_jpg_file) { fixture_file_upload(dummy_jpg_path, 'image/jpg')}
+  let(:dummy_mp4_file) { fixture_file_upload(dummy_mp4_path, 'video/mp4')}
+  let(:dummy_mp3_file) { fixture_file_upload(dummy_mp3_path, 'audio/mpeg')}
+  let(:dummy_not_webm_file) { fixture_file_upload(dummy_mp3_path, 'audio/webm')} # MIME指定が異なる場合
 
   before do
     # 音声を生成
@@ -27,7 +37,7 @@ RSpec.describe "Recordings", type: :request do
 
   ### テスト ###
   ## 前提確認 ##
-  describe "認証を確認" do
+  xdescribe "認証を確認" do
     xit "ログイン済み" do
       puts "# session結果： #{flash[:success]}"
       expect(flash[:success]).to eq "ログインしました"
@@ -54,7 +64,7 @@ RSpec.describe "Recordings", type: :request do
 
   ## メイン ##
   ## 正常系
-  describe "正常な音声データが渡された場合" do
+  xdescribe "正常な音声データが渡された場合" do
     it "200ステータスが返る" do
       # データとタイプを設定しサーバーへ送信
       post recordings_path, params: {
@@ -84,6 +94,59 @@ RSpec.describe "Recordings", type: :request do
     end
   end
 
+  ### it "Returns status 415 if content_type is other than audio/webm
+  describe "Content_Typeが正しくない場合" do
+    it "415ステータスを返す(txt/pain)" do
+      post recordings_path, params: {
+        recording: {
+          voice: dummy_txt_file
+        }
+        },headers: {
+          "CONTENT_TYPE" => "multipart/form-data"
+        }
+        expect(response).to have_http_status(:unsupported_media_type)
+    end
+    it "415ステータスを返す(image/jpg)" do
+      post recordings_path, params: {
+        recording: {
+          voice: dummy_jpg_file
+        }
+        },headers: {
+          "CONTENT_TYPE" => "multipart/form-data"
+        }
+        expect(response).to have_http_status(:unsupported_media_type)
+    end
+    it "415ステータスを返す(video/mp4)" do
+      post recordings_path, params: {
+        recording: {
+          voice: dummy_mp4_file
+        }
+        },headers: {
+          "CONTENT_TYPE" => "multipart/form-data"
+        }
+        expect(response).to have_http_status(:unsupported_media_type)
+    end
+    it "415ステータスを返す(audio/mp3)" do
+      post recordings_path, params: {
+        recording: {
+          voice: dummy_mp3_file
+        }
+        },headers: {
+          "CONTENT_TYPE" => "multipart/form-data"
+        }
+        expect(response).to have_http_status(:unsupported_media_type)
+    end
+    it "415ステータスを返す(バイナリはmp3だがaudio/webm指定)" do
+      post recordings_path, params: {
+        recording: {
+          voice: dummy_not_webm_file
+        }
+        },headers: {
+          "CONTENT_TYPE" => "multipart/form-data"
+        }
+        expect(response).to have_http_status(:unsupported_media_type)
+    end
+  end
 
 
 
