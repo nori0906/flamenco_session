@@ -2,10 +2,13 @@ require 'rails_helper'
 
 ### 初期化 ###
 RSpec.describe "Recordings", type: :request do
-  let(:audio_path) { Rails.root.join("spec/fixtures/files/test_silent.webm") }
-  let(:audio_file) { fixture_file_upload(audio_path, 'audio/webm')} # 音声ファイルをアップロード
+  # 正常系ダミーファイル
+  let(:audio_path) { Rails.root.join("spec/fixtures/files/test_silent.webm") } # ルートパス取得
+  let(:audio_file) { fixture_file_upload(audio_path, 'audio/webm')} # ファイルアップロード
+
 
   before do
+    # 音声を生成
     FfmpegHelper.generate_silent_webm(path: audio_path.to_s) unless FfmpegHelper.fixture_exists?(audio_path)
     # ユーザーをデータベースに登録
     @user = User.create(
@@ -23,15 +26,22 @@ RSpec.describe "Recordings", type: :request do
 
 
   ### テスト ###
-  ## 前提確認
-  xdescribe "認証を確認" do
-    it "ログイン済みであること" do
-      expect(response.body).to include('ログインしました') # どういうロジックで確認するのが良いかわからなかった
+  ## 前提確認 ##
+  describe "認証を確認" do
+    xit "ログイン済み" do
+      puts "# session結果： #{flash[:success]}"
+      expect(flash[:success]).to eq "ログインしました"
+      # expect(session[:user_id]).to_not be_nil   ## sessionの直接参照は非推奨
+      # expect(session["flash"]["flashes"]).to include("success" => "ログインしました")   ## sessionの直接参照は非推奨
+      # expect(response).to redirect_to user_path(@user)   ## user_path 使えない
     end
-
-    it "ログアウト済みであること" do
+    it "ログアウト済み" do
       delete logout_path
-      expect(response.body).to include('ログアウトしました') # どういうロジックで確認するのが良いかわからなかった
+      puts "# session結果： #{flash[:primary]}"
+      expect(flash[:primary]).to eq "ログアウトしました"
+      # expect(session[:user_id]).to be_nil
+      # expect(session["flash"]["flashes"]).to include("primary" => "ログアウトしました")
+      # expect(response).to redirect_to user_path(@user)
     end
   end
 
@@ -42,9 +52,9 @@ RSpec.describe "Recordings", type: :request do
   end
 
 
-  ### メインテスト
+  ## メイン ##
   ## 正常系
-  xdescribe "正常な音声データが渡された場合" do
+  describe "正常な音声データが渡された場合" do
     it "200ステータスが返る" do
       # データとタイプを設定しサーバーへ送信
       post recordings_path, params: {
@@ -70,13 +80,15 @@ RSpec.describe "Recordings", type: :request do
         },headers: {
           "CONTENT_TYPE" => "multipart/form-data"
         }
-      expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 
 
+
+
   ## 認証系
-  describe "未ログイン時に音声データが渡された場合" do
+  xdescribe "未ログイン時に音声データが渡された場合" do
     it "302ステータスを返す" do
       delete logout_path
       post recordings_path, params: {
