@@ -7,17 +7,25 @@ class RecordingsController < ApplicationController
       render json: { error: "ファイルが空です" }, status: :unprocessable_entity and return
     end
 
-    # MIMEタイプを取得＆許可する値を定義
-    mime_type = audio_params[:voice].content_type
-    permitted_mime_types =  ["audio/webm", "audio/mp4"]
+    # 許可するMIMEを定義
+    ## safariでもwebmが再生できるようになったためwebmのみ指定 25/7/23
+    ## FIXME: その他の関連ファイルも修正する
+    permitted_mime_types =  ["audio/webm"]
+    # Content-TypeのMIMEを取得
+    content_type = audio_params[:voice].content_type
+    tempfile = audio_params[:voice].tempfile
+    filename = audio_params[:voice].original_filename
+    # バイナリのMIMEを取得
+    mime_type = Marcel::MimeType.for(tempfile, name: filename)
 
-    # MIMEタイプのチェック：真の場合にblobを作成
-    if permitted_mime_types.include?(mime_type)
+
+    # MIMEが有効かを判定し、真の場合にblobを作成
+    if permitted_mime_types.include?(content_type) && permitted_mime_types.include?(mime_type)
       # attachの場合、データベースへ保存されないとblobを参照できないため、直接blobを作成
       blob = ActiveStorage::Blob.create_after_upload!(
         io: audio_params[:voice].open,
-        filename: audio_params[:voice].original_filename,
-        content_type: audio_params[:voice].content_type
+        filename: filename,
+        content_type: content_type
       )
       blob_url = rails_blob_path(blob)
 
@@ -30,7 +38,8 @@ class RecordingsController < ApplicationController
         render json: { error: 'Failed to create blob' }, status: 500
       end
     else
-      render json: { error: 'Unsupported MIME type' }, status: 415
+      # ステータス415
+      render json: { error: 'Unsupported MIME type' }, status: :unsupported_media_type
     end
   rescue => e
     render json: { error: e.message }, status: 500
