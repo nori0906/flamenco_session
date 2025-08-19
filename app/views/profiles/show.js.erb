@@ -1,8 +1,10 @@
 <%# 選択中のタブにactive(クラス属性)を付与 %>
 function isActive(selectedStatus, notSelectedStatus) {
+  <%# HTMLで該当要素を取得するための値を定義 %>
   const selectedElm = $('#js-' + selectedStatus);
   const notSelectedElm = $('#js-' + notSelectedStatus);
 
+  <%# アクティブ・非アクティブを変更 %>
   if (!(selectedElm.hasClass('active'))) {
     selectedElm.addClass('active');
     notSelectedElm.removeClass('active');
