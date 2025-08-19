@@ -3,21 +3,22 @@ class ProfilesController < ApplicationController
 
   def show
     # ブラウザによって対応しているMIMEが異なるため、ブラウザに対応する投稿一覧を取得 要見直し23/8/7
-    # FIXME: 仕様要確認 25/3/7
-    browser = request.browser
-    if browser == "Chrome" || browser == "Edge"
-      user_posts = @user.posts.where(ext_type: "webm")
-    elsif browser == "Safari"
-      user_posts = @user.posts.where(ext_type: "m4a")
-    end
+    # FIXME: safariでもwebm再生が可能になったため、MIMEの分岐が不要になった 25/3/7
+    # browser = request.browser
+    # if browser == "Chrome" || browser == "Edge"
+    #   user_posts = @user.posts.where(ext_type: "webm")
+    # elsif browser == "Safari"
+    #   user_posts = @user.posts.where(ext_type: "m4a")
+    # end
+    
 
     respond_to do |format|
       format.html {
-        @published_posts = user_posts.published.order(created_at: :desc)
+        @published_posts = @user.posts.published.order(created_at: :desc)
       }
       format.js {
-        @published_posts = user_posts.published.order(created_at: :desc) if params[:type] == "published"
-        @unpublished_posts = user_posts.unpublished.order(created_at: :desc) if params[:type] == "unpublished"
+        @published_posts = @user.posts.published.order(created_at: :desc) if params[:type] == "published"
+        @unpublished_posts = @user.posts.unpublished.order(created_at: :desc) if params[:type] == "unpublished"
       }
     end
   end
