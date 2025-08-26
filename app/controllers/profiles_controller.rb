@@ -11,7 +11,6 @@ class ProfilesController < ApplicationController
     #   user_posts = @user.posts.where(ext_type: "m4a")
     # end
     
-
     respond_to do |format|
       format.html {
         @published_posts = @user.posts.published.order(created_at: :desc)
