@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="fs-xlarge fs-md-xxlarge mb-4" id="level-select">
-        <%# how_to_recordings_helper.rbでメソッド作成 %>
+        <%# 見出しを分岐：how_to_recordings_helper.rbでメソッド作成 %>
         <h2 class="text-center fw-semibold"><%= by_level_title(@level)[:type] %></h2>
         <h2 class="text-start text-md-center fw-semibold"><%= by_level_title(@level)[:title] %></h2>
       </div>
@@ -29,6 +29,8 @@
           </div>
         </div>
 
+        <%# 上級レベルの画面の場合：投稿一覧への導線を促すようにボタンを追加 %>
+        <%# その他の画面の場合：次のステップへの動線を促すようにレベル選定画面へのボタン追加 %>
         <% if @level == 'hard' %>
           <div class="row justify-content-center pb-5">
             <%= link_to "投稿を見る", guest_index_path, class: "btn btn-success  btn-tutorial-custom col-5 col-sm-4 col-md-3 col-xl-3 text-white rounded-pill fw-bold fs-large fs-sm-larger fs-lg-xlarge py-2 py-xxl-3 me-sm-4" , type: "button" %>

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 ### 初期化 ###
-RSpec.describe "Recordings", type: :request do
+RSpec.describe "Recordings#create", type: :request do
   # 正常系ダミーファイル
   let(:audio_path) { Rails.root.join("spec/fixtures/files/test_silent.webm") } # ルートパス取得
   let(:audio_file) { fixture_file_upload(audio_path, 'audio/webm')} # ファイルアップロード

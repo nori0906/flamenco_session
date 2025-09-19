@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Profiles", type: :request do
+RSpec.describe "Profiles#show", type: :request do
 
   # 前提条件など記載
   before do
