@@ -18,7 +18,7 @@ RSpec.describe "guest_tutorial/how_to_recordings#index", type: :request do
       end
       %w[easy normal hard].each { |level_val| it_behaves_like "有効なレベルの結果", level_val }
     end
-      
+    
     context "無効なlevelの場合" do
       # 無効値を用意
       INVALID_LEVEL = "super"
@@ -28,7 +28,7 @@ RSpec.describe "guest_tutorial/how_to_recordings#index", type: :request do
           request_call
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(guest_tutorial_introductions_path)
-  
+          
           # # json検証が必要な場合（how_to_recordings_controller#index）
           # expect(response).to have_http_status(:not_found)
           # if level_val.blank?
